@@ -15,9 +15,12 @@ class Patient(db.Model):
     last_name = db.Column('lname_tx', db.String(100), nullable=False)
     email_tx = db.Column(db.String(100), unique=True, nullable=False)
     ic_card_tx = db.Column(db.String(20), nullable=False)
+    practitioner_id = db.Column(db.Integer, db.ForeignKey('Practitioner.practitioner_id'), nullable=False)
+    provider_id = db.Column(db.Integer, db.ForeignKey('Provider.provider_id'), nullable=False)
     active_fl = db.Column(db.Boolean(), default=1)
     created_dt = db.Column(db.DateTime(timezone=True), server_default=func.now())
     update_dt = db.Column(db.DateTime(timezone=True), nullable=True)
+
     Appointments = db.relationship('Appointment', backref='Patient', lazy=True)
     Immunizations = db.relationship('Immunization', backref='Patient', lazy=True)
 
@@ -62,12 +65,15 @@ class Practitioner(db.Model):
     last_name = db.Column(db.String(100), nullable=False)
     email_address = db.Column(db.String(100), unique=True, nullable=False)
     ic_card_tx = db.Column(db.String(20), nullable=False)
+    provider_id = db.Column(db.Integer, db.ForeignKey('Provider.provider_id'), nullable=False)
     doctor_fl = db.Column(db.Boolean())
     active_fl = db.Column(db.Boolean(), default=1)
     created_dt = db.Column(db.DateTime(timezone=True), server_default=func.now())
     update_dt = db.Column(db.DateTime(timezone=True), nullable=True)
+
     Appointments = db.relationship('Appointment', backref='Practitioner', lazy=True)
     Immunizations = db.relationship('Immunization', backref='Practitioner', lazy=True)
+    Patients = db.relationship('Patient', backref='Practitioner', lazy=True)
 
     def __init__(self, data):
         self.first_name = data.get('first_name')
@@ -113,6 +119,11 @@ class Provider(db.Model):
     created_dt = db.Column(db.DateTime(timezone=True), server_default=func.now())
     update_dt = db.Column(db.DateTime(timezone=True), nullable=True)
 
+    Practitioners = db.relationship('Practitioner', backref='Provider', lazy=True)
+    Patients = db.relationship('Patient', backref='Provider', lazy=True)
+    Appointments = db.relationship('Appointment', backref='Provider', lazy=True)
+    Immunizations = db.relationship('Immunization', backref='Provider', lazy=True)
+
     def __init__(self, data):
         self.name_tx = data.get('name')
         self.author = data.get('site_admin_email')
@@ -154,6 +165,7 @@ class Vaccine(db.Model):
     active_fl = db.Column(db.Boolean(), default=1)
     created_dt = db.Column(db.DateTime(timezone=True), server_default=func.now())
     update_dt = db.Column(db.DateTime(timezone=True), nullable=True)
+
     Immunizations = db.relationship('Immunization', backref='Vaccine', lazy=True)
 
     def __init__(self, data):
@@ -190,6 +202,7 @@ class Appointment(db.Model):
     appointment_id = db.Column(db.Integer, primary_key=True)
     patient_id = db.Column(db.Integer, db.ForeignKey('Patient.patient_id'), nullable=False)
     scheduled_by_practitioner_id = db.Column(db.Integer, db.ForeignKey('Practitioner.practitioner_id'), nullable=False)
+    provider_id = db.Column(db.Integer, db.ForeignKey('Provider.provider_id'), nullable=False)
     appointment_date = db.Column(db.DateTime(timezone=True), nullable=False)
     active_fl = db.Column(db.Boolean(), default=1)
     created_dt = db.Column(db.DateTime(timezone=True), server_default=func.now())
@@ -230,6 +243,7 @@ class Immunization(db.Model):
     patient_id = db.Column(db.Integer, db.ForeignKey('Patient.patient_id'), nullable=False)
     practitioner_id = db.Column(db.Integer, db.ForeignKey('Practitioner.practitioner_id'), nullable=False)
     vaccine_id = db.Column(db.Integer, db.ForeignKey('Vaccine.vaccine_id'), nullable=False)
+    provider_id = db.Column(db.Integer, db.ForeignKey('Provider.provider_id'), nullable=False)
     administered_dt = db.Column(db.DateTime(timezone=True), nullable=False)
     active_fl = db.Column(db.Boolean(), default=1)
     created_dt = db.Column(db.DateTime(timezone=True), server_default=func.now())
@@ -284,7 +298,7 @@ class RolePermission(db.Model):
     __tablename__ = 'RolePermission'
 
     role_permission_id = db.Column(db.Integer, primary_key=True)
-    role_id = db.Column(db.Integer, nullable=False, unique=True, primary_key=True)
+    role_id = db.Column(db.Integer, unique=True, nullable=False, primary_key=True)
     permission_id = db.Column(db.Integer, db.ForeignKey('Permissions.permissions_id'), nullable=False)
     Role = db.relationship('Users', backref='RolePermission', lazy=True)
 
@@ -310,3 +324,24 @@ class Users(db.Model):
     @staticmethod
     def get_user_based_on_email(user_email):
         return Users.query.get(user_email=user_email)
+
+
+class Logs(db.Model):
+    __tablename__ = 'Logs'
+
+    log_id = db.Column(db.Integer, primary_key=True)
+    msg = db.Column(db.Text, nullable=False)
+    trace = db.Column(db.Text, nullable=False)
+    method = db.Column(db.String(10), nullable=False)
+    error_code = db.Column(db.Integer, nullable=False)
+    created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
+
+    def __init__(self, data):
+        self.msg = data.get('message')
+        self.trace = data.get('traceback')
+        self.method = data.get('method')
+        self.error_code = data.get('error_code')
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()

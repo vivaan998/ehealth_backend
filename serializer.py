@@ -2,8 +2,8 @@ from marshmallow import Schema, fields, validate, validates, ValidationError
 from marshmallow.validate import Range
 
 
-class SongsSchema(Schema):
-    id = fields.Int(dump_only=True)
+class PostPatient(Schema):
+    patient_id = fields.Int(dump_only=True)
     name = fields.String(required=True, validate=validate.Length(min=1))
     duration = fields.Integer(strict=True, required=True, validate=[Range(min=1, error="Value must only be a positive "
                                                                                        "integer")])
