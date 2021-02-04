@@ -298,9 +298,9 @@ class RolePermission(db.Model):
     __tablename__ = 'RolePermission'
 
     role_permission_id = db.Column(db.Integer, primary_key=True)
-    role_id = db.Column(db.Integer, unique=True, nullable=False, primary_key=True)
+    role_id = db.Column(db.String(10), nullable=False)
     permission_id = db.Column(db.Integer, db.ForeignKey('Permissions.permissions_id'), nullable=False)
-    Role = db.relationship('Users', backref='RolePermission', lazy=True)
+    
 
     @staticmethod
     def get_all():
@@ -317,7 +317,7 @@ class Users(db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
     user_email = db.Column(db.String(100), nullable=False, unique=True)
     hash_password = db.Column(db.Text, nullable=False)
-    security_role = db.Column(db.Integer, db.ForeignKey('RolePermission.role_id'), nullable=False)
+    security_role = db.Column(db.Integer, nullable=False)
 
     @staticmethod
     def get_user_based_on_email(user_email):
