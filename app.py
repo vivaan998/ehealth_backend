@@ -7,7 +7,8 @@ def create_app():
     app = Flask(__name__)
     app.config['DEBUG'] = True
     import model
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://admin:admin@localhost:5432/eHealth'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:attache123@attache-dev-db1.c00qcl0ls8g4.us-east-1' \
+                                            '.rds.amazonaws.com:5432/eHealth '
     db.init_app(app)
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     # app.register_blueprint(bp_authenticate, url_prefix='/api/v1/authenticate')

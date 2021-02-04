@@ -318,8 +318,6 @@ class Users(db.Model):
     user_email = db.Column(db.String(100), nullable=False, unique=True)
     hash_password = db.Column(db.Text, nullable=False)
     security_role = db.Column(db.Integer, db.ForeignKey('RolePermission.role_id'), nullable=False)
-    token = db.Column(db.Text, nullable=True)
-    last_login = db.Column(db.DateTime(timezone=True), nullable=True)
 
     @staticmethod
     def get_user_based_on_email(user_email):
