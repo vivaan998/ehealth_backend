@@ -1,6 +1,8 @@
 from sqlalchemy.sql import func
 from sqlalchemy.ext.declarative import declarative_base
 from config import db
+from sqlalchemy.orm import load_only
+from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.ext.hybrid import hybrid_property
 
 Base = declarative_base()
@@ -291,7 +293,8 @@ class Permissions(db.Model):
 
     @staticmethod
     def get_permissions(permission_ids):
-        return Permissions.query.filter(Permissions.permissions_id.in_(permission_ids)).values('permission')
+        return [model.permission for model in Permissions.query.filter(Permissions.permissions_id.in_(permission_ids)).
+                options(load_only('permission')).all()]
 
 
 class RolePermission(db.Model):
@@ -300,7 +303,6 @@ class RolePermission(db.Model):
     role_permission_id = db.Column(db.Integer, primary_key=True)
     role_id = db.Column(db.String(10), nullable=False)
     permission_id = db.Column(db.Integer, db.ForeignKey('Permissions.permissions_id'), nullable=False)
-    
 
     @staticmethod
     def get_all():
@@ -308,7 +310,8 @@ class RolePermission(db.Model):
 
     @staticmethod
     def get_permissions(role_id):
-        return RolePermission.query.filter(role_id=role_id).values('permission_id')
+        return [model.permission_id for model in RolePermission.query.filter(RolePermission.role_id == role_id).
+                options(load_only('permission_id')).all()]
 
 
 class Users(db.Model):
@@ -319,9 +322,15 @@ class Users(db.Model):
     hash_password = db.Column(db.Text, nullable=False)
     security_role = db.Column(db.Integer, nullable=False)
 
+    def password(self):
+        self.hash_password = generate_password_hash(self.hash_password).decode('utf8')
+
+    def check_password(self, password):
+        return check_password_hash(self.hash_password, password)
+
     @staticmethod
-    def get_user_based_on_email(user_email):
-        return Users.query.get(user_email=user_email)
+    def get_user(user_email):
+        return Users.query.filter(Users.user_email == user_email).one()
 
 
 class Logs(db.Model):
