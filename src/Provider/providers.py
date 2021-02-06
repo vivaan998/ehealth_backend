@@ -6,6 +6,7 @@ from model import Users, Provider
 from serializer import ProviderSchema, UsersSchema
 from config import PROVIDER
 from src.excecptions.app_exception import BadRequestException, UnAuthorizedException, ServerException
+from src.excecptions.pagination import pagination
 
 PROVIDERS_SCHEMA = ProviderSchema()
 USER_SCHEMA = UsersSchema()
@@ -16,13 +17,21 @@ class ProvidersAPI(Resource):
     @jwt_required
     def get(self):
         try:
+            page = request.args.get('page', 1)
+            search = request.args.get('search', None)
             user = get_jwt_identity()
+
             if user['role'] != 100:
                 raise UnAuthorizedException('You are not authorized')
 
-            providers = Provider.get_all()
+            providers = Provider.get_all(page, search)
             if providers:
-                return make_response(jsonify(PROVIDERS_SCHEMA.dump(providers, many=True)), 200)
+                prev_page, next_page = pagination('providers', providers, search)
+                return make_response(jsonify({
+                    "previous_page": prev_page,
+                    "next_page": next_page,
+                    "result": PROVIDERS_SCHEMA.dump(providers.items, many=True)
+                }), 200)
             else:
                 return make_response(jsonify([]), 200)
 

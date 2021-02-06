@@ -2,7 +2,7 @@ import sqlalchemy.orm.exc as ex
 from sqlalchemy.sql import func
 from sqlalchemy.ext.declarative import declarative_base
 from config import db
-from sqlalchemy.orm import load_only
+from sqlalchemy import or_, and_
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.ext.hybrid import hybrid_property
 
@@ -146,8 +146,12 @@ class Provider(db.Model):
         db.session.commit()
 
     @staticmethod
-    def get_all():
-        return Provider.query.all()
+    def get_all(page, search):
+        if not search:
+            return Provider.query.paginate(int(page), 1, error_out=True)
+        else:
+            return Provider.query.filter(or_(Provider.name_tx.contains(search), Provider.site_admin_email.contains(
+                search))).paginate(int(page), 1, error_out=True)
 
     @staticmethod
     def get_one(provider_id):
@@ -330,6 +334,13 @@ class Users(db.Model):
             user = None
 
         return user
+
+    @staticmethod
+    def get_all(page, search):
+        if not search:
+            return Users.query.paginate(int(page), 1, error_out=True)
+        else:
+            return Users.query.filter(or_(Users.user_email.contains(search))).paginate(int(page), 1, error_out=True)
 
 
 class Logs(db.Model):

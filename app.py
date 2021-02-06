@@ -5,6 +5,7 @@ from flask_jwt_extended import JWTManager
 from src.Provider.providers import ProvidersAPI
 from src.Authentication.authenticate import MenuAPI, LoginAPI
 from flask_restful import Api
+from flask_cors import CORS, cross_origin
 
 
 # 'postgresql://vivek:vivek@localhost:5432/eHealth'
@@ -24,10 +25,12 @@ if __name__ == '__main__':
     app = create_app()
     jwt = JWTManager(app)
     api = Api(app)
+    cors = CORS(app)
+    app.config['CORS_HEADERS'] = 'Content-Type'
 
-    api.add_resource(LoginAPI, '/api/v1/auth/login')
-    api.add_resource(MenuAPI, '/api/v1/auth/menu')
-    api.add_resource(ProvidersAPI, '/api/v1/providers/')
+    api.add_resource(LoginAPI, '/api/v1/auth/login', endpoint='login')
+    api.add_resource(MenuAPI, '/api/v1/auth/menu', endpoint='menu')
+    api.add_resource(ProvidersAPI, '/api/v1/providers/', endpoint='providers')
 
 
     @app.errorhandler(AppException)
