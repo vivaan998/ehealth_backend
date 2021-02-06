@@ -1,3 +1,4 @@
+import sqlalchemy.orm.exc as ex
 from sqlalchemy.sql import func
 from sqlalchemy.ext.declarative import declarative_base
 from config import db
@@ -23,8 +24,8 @@ class Patient(db.Model):
     created_dt = db.Column(db.DateTime(timezone=True), server_default=func.now())
     update_dt = db.Column(db.DateTime(timezone=True), nullable=True)
 
-    Appointments = db.relationship('Appointment', backref='Patient', lazy=True)
-    Immunizations = db.relationship('Immunization', backref='Patient', lazy=True)
+    Appointments = db.relationship('Appointment', backref='Patient', lazy="joined")
+    Immunizations = db.relationship('Immunization', backref='Patient', lazy="joined")
 
     def __init__(self, data):
         self.first_name = data.get('first_name')
@@ -65,7 +66,7 @@ class Practitioner(db.Model):
     practitioner_id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(100), nullable=False)
     last_name = db.Column(db.String(100), nullable=False)
-    email_address = db.Column(db.String(100), unique=True, nullable=False)
+    email_tx = db.Column(db.String(100), unique=True, nullable=False)
     ic_card_tx = db.Column(db.String(20), nullable=False)
     provider_id = db.Column(db.Integer, db.ForeignKey('Provider.provider_id'), nullable=False)
     doctor_fl = db.Column(db.Boolean())
@@ -73,14 +74,14 @@ class Practitioner(db.Model):
     created_dt = db.Column(db.DateTime(timezone=True), server_default=func.now())
     update_dt = db.Column(db.DateTime(timezone=True), nullable=True)
 
-    Appointments = db.relationship('Appointment', backref='Practitioner', lazy=True)
-    Immunizations = db.relationship('Immunization', backref='Practitioner', lazy=True)
+    Appointments = db.relationship('Appointment', backref='Practitioner', lazy="joined")
+    Immunizations = db.relationship('Immunization', backref='Practitioner', lazy="joined")
     Patients = db.relationship('Patient', backref='Practitioner', lazy=True)
 
     def __init__(self, data):
         self.first_name = data.get('first_name')
         self.last_name = data.get('last_name')
-        self.email_address = data.get('email')
+        self.email_tx = data.get('email')
         self.ic_card_tx = data.get('ic_card')
         self.doctor_fl = data.get('is_doctor')
 
@@ -123,12 +124,12 @@ class Provider(db.Model):
 
     Practitioners = db.relationship('Practitioner', backref='Provider', lazy=True)
     Patients = db.relationship('Patient', backref='Provider', lazy=True)
-    Appointments = db.relationship('Appointment', backref='Provider', lazy=True)
-    Immunizations = db.relationship('Immunization', backref='Provider', lazy=True)
+    Appointments = db.relationship('Appointment', backref='Provider', lazy="joined")
+    Immunizations = db.relationship('Immunization', backref='Provider', lazy="joined")
 
     def __init__(self, data):
-        self.name_tx = data.get('name')
-        self.author = data.get('site_admin_email')
+        self.name_tx = data.get('name_tx')
+        self.site_admin_email = data.get('site_admin_email')
 
     def save(self):
         db.session.add(self)
@@ -168,7 +169,7 @@ class Vaccine(db.Model):
     created_dt = db.Column(db.DateTime(timezone=True), server_default=func.now())
     update_dt = db.Column(db.DateTime(timezone=True), nullable=True)
 
-    Immunizations = db.relationship('Immunization', backref='Vaccine', lazy=True)
+    Immunizations = db.relationship('Immunization', backref='Vaccine', lazy="joined")
 
     def __init__(self, data):
         self.name_tx = data.get('vaccine_name')
@@ -203,7 +204,7 @@ class Appointment(db.Model):
 
     appointment_id = db.Column(db.Integer, primary_key=True)
     patient_id = db.Column(db.Integer, db.ForeignKey('Patient.patient_id'), nullable=False)
-    scheduled_by_practitioner_id = db.Column(db.Integer, db.ForeignKey('Practitioner.practitioner_id'), nullable=False)
+    practitioner_id = db.Column(db.Integer, db.ForeignKey('Practitioner.practitioner_id'), nullable=False)
     provider_id = db.Column(db.Integer, db.ForeignKey('Provider.provider_id'), nullable=False)
     appointment_date = db.Column(db.DateTime(timezone=True), nullable=False)
     active_fl = db.Column(db.Boolean(), default=1)
@@ -212,7 +213,7 @@ class Appointment(db.Model):
 
     def __init__(self, data):
         self.patient_id = data.get('patient_id')
-        self.scheduled_by_practitioner_id = data.get('practitioner_id')
+        self.practitioner_id = data.get('practitioner_id')
         self.appointment_date = data.get('appointment_date')
 
     def save(self):
@@ -285,33 +286,20 @@ class Permissions(db.Model):
 
     permissions_id = db.Column(db.Integer, primary_key=True)
     permission = db.Column(db.String(100), nullable=False)
-    Permission = db.relationship('RolePermission', backref='Permissions', lazy=True)
-
-    @staticmethod
-    def get_all():
-        return Permissions.query.all()
-
-    @staticmethod
-    def get_permissions(permission_ids):
-        return [model.permission for model in Permissions.query.filter(Permissions.permissions_id.in_(permission_ids)).
-                options(load_only('permission')).all()]
+    Permission = db.relationship('RolePermission', backref='Permissions', lazy="joined")
 
 
 class RolePermission(db.Model):
     __tablename__ = 'RolePermission'
 
     role_permission_id = db.Column(db.Integer, primary_key=True)
-    role_id = db.Column(db.String(10), nullable=False)
+    role_id = db.Column(db.Integer, nullable=False)
     permission_id = db.Column(db.Integer, db.ForeignKey('Permissions.permissions_id'), nullable=False)
 
     @staticmethod
-    def get_all():
-        return RolePermission.query.all()
-
-    @staticmethod
     def get_permissions(role_id):
-        return [model.permission_id for model in RolePermission.query.filter(RolePermission.role_id == role_id).
-                options(load_only('permission_id')).all()]
+        query = db.session.query(RolePermission).join(Permissions).filter(RolePermission.role_id == role_id)
+        return [model.Permissions.permission for model in query]
 
 
 class Users(db.Model):
@@ -322,15 +310,26 @@ class Users(db.Model):
     hash_password = db.Column(db.Text, nullable=False)
     security_role = db.Column(db.Integer, nullable=False)
 
-    def password(self):
-        self.hash_password = generate_password_hash(self.hash_password).decode('utf8')
+    def __init__(self, data):
+        self.user_email = data.get('user_email')
+        self.hash_password = generate_password_hash(data.get('hash_password'))
+        self.security_role = data.get('security_role')
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
 
     def check_password(self, password):
         return check_password_hash(self.hash_password, password)
 
     @staticmethod
     def get_user(user_email):
-        return Users.query.filter(Users.user_email == user_email).one()
+        try:
+            user = Users.query.filter(Users.user_email == user_email).one()
+        except ex.NoResultFound:
+            user = None
+
+        return user
 
 
 class Logs(db.Model):

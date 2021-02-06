@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 7590409924b0
+Revision ID: 657b117f3d7d
 Revises: 
-Create Date: 2021-02-04 12:06:25.416205
+Create Date: 2021-02-06 12:25:27.817431
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '7590409924b0'
+revision = '657b117f3d7d'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -64,7 +64,7 @@ def upgrade():
     sa.Column('practitioner_id', sa.Integer(), nullable=False),
     sa.Column('first_name', sa.String(length=100), nullable=False),
     sa.Column('last_name', sa.String(length=100), nullable=False),
-    sa.Column('email_address', sa.String(length=100), nullable=False),
+    sa.Column('email_tx', sa.String(length=100), nullable=False),
     sa.Column('ic_card_tx', sa.String(length=20), nullable=False),
     sa.Column('provider_id', sa.Integer(), nullable=False),
     sa.Column('doctor_fl', sa.Boolean(), nullable=True),
@@ -73,11 +73,11 @@ def upgrade():
     sa.Column('update_dt', sa.DateTime(timezone=True), nullable=True),
     sa.ForeignKeyConstraint(['provider_id'], ['Provider.provider_id'], ),
     sa.PrimaryKeyConstraint('practitioner_id'),
-    sa.UniqueConstraint('email_address')
+    sa.UniqueConstraint('email_tx')
     )
     op.create_table('RolePermission',
     sa.Column('role_permission_id', sa.Integer(), nullable=False),
-    sa.Column('role_id', sa.String(length=10), nullable=False),
+    sa.Column('role_id', sa.Integer(), nullable=False),
     sa.Column('permission_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['permission_id'], ['Permissions.permissions_id'], ),
     sa.PrimaryKeyConstraint('role_permission_id')
@@ -101,15 +101,15 @@ def upgrade():
     op.create_table('Appointment',
     sa.Column('appointment_id', sa.Integer(), nullable=False),
     sa.Column('patient_id', sa.Integer(), nullable=False),
-    sa.Column('scheduled_by_practitioner_id', sa.Integer(), nullable=False),
+    sa.Column('practitioner_id', sa.Integer(), nullable=False),
     sa.Column('provider_id', sa.Integer(), nullable=False),
     sa.Column('appointment_date', sa.DateTime(timezone=True), nullable=False),
     sa.Column('active_fl', sa.Boolean(), nullable=True),
     sa.Column('created_dt', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=True),
     sa.Column('update_dt', sa.DateTime(timezone=True), nullable=True),
     sa.ForeignKeyConstraint(['patient_id'], ['Patient.patient_id'], ),
+    sa.ForeignKeyConstraint(['practitioner_id'], ['Practitioner.practitioner_id'], ),
     sa.ForeignKeyConstraint(['provider_id'], ['Provider.provider_id'], ),
-    sa.ForeignKeyConstraint(['scheduled_by_practitioner_id'], ['Practitioner.practitioner_id'], ),
     sa.PrimaryKeyConstraint('appointment_id')
     )
     op.create_table('Immunization',

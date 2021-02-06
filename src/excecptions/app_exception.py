@@ -18,3 +18,8 @@ class NotFoundException(AppException):
 class ServerException(AppException):
     def __init__(self, error=None):
         super().__init__(error, 500)
+
+
+class UnAuthorizedException(AppException):
+    def __init__(self, error=None):
+        super().__init__(error, 401)

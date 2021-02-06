@@ -1,15 +1,18 @@
 from flask import Flask, make_response, jsonify
 from src.excecptions.app_exception import AppException
-from config import db
+from config import db, POSTGRES_DB_URL
 from flask_jwt_extended import JWTManager
-from src.Authentication.api import auth_blueprint
+from src.Provider.providers import ProvidersAPI
+from src.Authentication.authenticate import MenuAPI, LoginAPI
+from flask_restful import Api
 
+
+# 'postgresql://vivek:vivek@localhost:5432/eHealth'
 
 def create_app():
     app = Flask(__name__)
     app.config['DEBUG'] = True
-    import model
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:attache123@attache-dev-db1.c00qcl0ls8g4.us-east-1.rds.amazonaws.com:5432/eHealth'
+    app.config['SQLALCHEMY_DATABASE_URI'] = POSTGRES_DB_URL
     db.init_app(app)
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['JWT_SECRET_KEY'] = 't1NP63m4wnBg6nyHYKfmc2TpCOGI4nss'
@@ -20,23 +23,28 @@ def create_app():
 if __name__ == '__main__':
     app = create_app()
     jwt = JWTManager(app)
+    api = Api(app)
 
-    app.register_blueprint(auth_blueprint, url_prefix='/api/v1/auth')
+    api.add_resource(LoginAPI, '/api/v1/auth/login')
+    api.add_resource(MenuAPI, '/api/v1/auth/menu')
+    api.add_resource(ProvidersAPI, '/api/v1/providers/')
 
 
     @app.errorhandler(AppException)
     def app_error(err):
         app.logger.exception(err)
-        return make_response(jsonify(err.error), err.http_code)
+        return make_response(jsonify({'error': err.error}), err.http_code)
 
 
     @app.errorhandler(Exception)
     def handle_generic_error(err):
         app.logger.exception(err)
-        return make_response(jsonify({'error': err}), 500)
+        return make_response(jsonify({'error': 'There is some issue, please contact support'}), 500)
+
 
     @jwt.invalid_token_loader
     def missing_JWT_token(msg):
         return make_response(jsonify({'error': 'Invalid token'}), 400)
 
-    app.run(host='127.0.0.1', port='5000')
+
+    app.run(host='0.0.0.0', port='5000')
