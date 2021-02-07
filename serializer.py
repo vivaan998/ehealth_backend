@@ -6,7 +6,7 @@ class BaseSchema(Schema):
     first_name = fields.String(required=True, validate=validate.Length(min=1))
     last_name = fields.String(required=True, validate=validate.Length(min=1))
     email_tx = fields.Email(required=True, validate=validate.Length(min=1))
-    ic_card_tx = fields.String(required=True, validate=validate.Length(min=20))
+    ic_card_tx = fields.String(required=True, validate=validate.Length(max=20))
     active_fl = fields.Boolean()
     created_dt = fields.DateTime()
     update_dt = fields.DateTime()

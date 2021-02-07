@@ -67,7 +67,6 @@ class PractitionersAPI(Resource):
             }
 
             data.pop('password')
-
             result = PRACTITIONERS_SCHEMA.load(data=data)
             practitioner = Practitioner(result)
             user_result = USER_SCHEMA.load(data=user_data)

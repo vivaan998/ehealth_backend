@@ -44,6 +44,7 @@ class MenuAPI(Resource):
         try:
             user = get_jwt_identity()
             permissions = RolePermission.get_permissions(user['role'])
-            return make_response(jsonify({'data': permissions}), 200)
+            user['name'] = Users.get_name(user['role'], user['email'])
+            return make_response(jsonify({'menu': permissions, 'data': user}), 200)
         except Exception as e:
             raise ServerException('There is some error, please contact support')
