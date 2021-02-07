@@ -320,6 +320,8 @@ class Permissions(db.Model):
 
     permissions_id = db.Column(db.Integer, primary_key=True)
     permission = db.Column(db.String(100), nullable=False)
+    icon = db.Column(db.String(50), nullable=False)
+    url = db.Column(db.String(100), nullable=False)
     Permission = db.relationship('RolePermission', backref='Permissions', lazy="joined")
 
 
@@ -333,7 +335,11 @@ class RolePermission(db.Model):
     @staticmethod
     def get_permissions(role_id):
         query = db.session.query(RolePermission).join(Permissions).filter(RolePermission.role_id == role_id)
-        return [model.Permissions.permission for model in query]
+        return [{
+                "title": model.Permissions.permission,
+                "icon": model.Permissions.icon,
+                "url": model.Permissions.url
+                } for model in query]
 
 
 class Users(db.Model):
@@ -370,13 +376,17 @@ class Users(db.Model):
         try:
             if role == 50:
                 name = Provider.get_by_email(email).name_tx
+                designation = 'Provider'
             elif role == 10:
                 name = Practitioner.get_by_email(email).first_name + Practitioner.get_by_email(email).last_name
+                designation = 'Practitioner'
             elif role == 0:
                 name = Patient.get_by_email(email).first_name + Patient.get_by_email(email).last_name
+                designation = 'Patient'
             else:
                 name = 'Super User'
-            return name
+                designation = 'Admin'
+            return name, designation
         except ex.NoResultFound:
             raise Exception('No user found')
 
