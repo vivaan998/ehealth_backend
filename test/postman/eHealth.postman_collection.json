@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "6605a444-ec03-4ee2-9248-69c8b510c67b",
+		"_postman_id": "f65f7c4e-d141-4a1f-bcdf-6e90b0c9308f",
 		"name": "eHealth",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -13,7 +13,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI1OTg2MjQsIm5iZiI6MTYxMjU5ODYyNCwianRpIjoiMzhmNTZkNGMtZmJmOC00NDhmLWI0Y2QtNzkxMDIyMDkwMjA4IiwiZXhwIjoxNjEzMjAzNDI0LCJpZGVudGl0eSI6eyJpZCI6MiwiZW1haWwiOiJzc2dhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjo1MH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.7pgS6NwHcOjfEQ-RfS4_40d_uazKhzoaIqCeGl2oSaI",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI3ODE3NTAsIm5iZiI6MTYxMjc4MTc1MCwianRpIjoiMTJjNTk3NzUtMTBkMi00NzZiLTk1MGUtMjllOGVlMDNiN2IyIiwiZXhwIjoxNjEzMzg2NTUwLCJpZGVudGl0eSI6eyJpZCI6OSwiZW1haWwiOiJqdXN0aW5AZ21haWwuY29tIiwicm9sZSI6MH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.DmFBfakGtrkkugNcgF6u5UiTwzIQzy8RW-ted81_U40",
 							"type": "string"
 						}
 					]
@@ -44,7 +44,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"ssgadmin@gmail.com\",\n    \"password\": \"ssgadmin\"\n}",
+					"raw": "{\n    \"email\": \"justin@gmail.com\",\n    \"password\": \"justin\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -117,7 +117,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI1OTg2MjQsIm5iZiI6MTYxMjU5ODYyNCwianRpIjoiMzhmNTZkNGMtZmJmOC00NDhmLWI0Y2QtNzkxMDIyMDkwMjA4IiwiZXhwIjoxNjEzMjAzNDI0LCJpZGVudGl0eSI6eyJpZCI6MiwiZW1haWwiOiJzc2dhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjo1MH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.7pgS6NwHcOjfEQ-RfS4_40d_uazKhzoaIqCeGl2oSaI",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI2MDg4NjAsIm5iZiI6MTYxMjYwODg2MCwianRpIjoiOWY2YjkzZTktNzk0NS00NjdjLWIzMGItM2RlYzA0MGU2OWNjIiwiZXhwIjoxNjEzMjEzNjYwLCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.mQT8X5gZ7X_gPi-20b5T8NcP-RYswX3ZeJRC5WnFo0w",
 							"type": "string"
 						}
 					]
@@ -125,7 +125,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/api/v1/providers/",
+					"raw": "http://localhost:5000/api/v1/providers/?search=acda",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -135,6 +135,158 @@
 						"api",
 						"v1",
 						"providers",
+						""
+					],
+					"query": [
+						{
+							"key": "search",
+							"value": "acda"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Practitioners",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI3ODA3OTUsIm5iZiI6MTYxMjc4MDc5NSwianRpIjoiODM0OTY4NmMtYjkzNS00MjJjLWIyNGMtMTdhYzRlNzRhYjNhIiwiZXhwIjoxNjEzMzg1NTk1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0aZYuVbFwkCC9z1ITIBtuAFZaPYmovGcqHeFlYDm3LY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/practitioners/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"practitioners",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Practitioners",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI2ODMzMjMsIm5iZiI6MTYxMjY4MzMyMywianRpIjoiNmNkMjc3YjgtYjA4Ny00MDUwLWFmYjEtMzcxNTdiM2M3ZmE4IiwiZXhwIjoxNjEzMjg4MTIzLCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.aHNPk7wtvY5_0HhkNsIZtHHh-wGwjKQh1CokFgIcqIs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"first_name\": \"Harshil\",\n    \"last_name\": \"Patel\",\n    \"email_tx\": \"harshil@gmail.com\",\n    \"ic_card_tx\": \"ABD-1s23-a2cssa\",\n    \"provider_id\": 1,\n    \"doctor_fl\": 1,\n    \"password\": \"harshil\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/practitioners/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"practitioners",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Patients",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI3ODE2MzcsIm5iZiI6MTYxMjc4MTYzNywianRpIjoiYmUzNjcyYzctNzYwMi00NjFhLWEzMTMtYzNmZjhkMGE5NmVmIiwiZXhwIjoxNjEzMzg2NDM3LCJpZGVudGl0eSI6eyJpZCI6MiwiZW1haWwiOiJzc2dhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjo1MH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.1nPseYKKkBDIrquqacV46jJb5gT4-CZWJHOkBR-HmKQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/patients/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"patients",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Patient",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI3ODE0NDAsIm5iZiI6MTYxMjc4MTQ0MCwianRpIjoiMDJmY2UyOGMtMmNmZC00MmY4LWFmMDItMDY1OGM5NWYyMzNjIiwiZXhwIjoxNjEzMzg2MjQwLCJpZGVudGl0eSI6eyJpZCI6MywiZW1haWwiOiJ2aXZla0BnbWFpbC5jb20iLCJyb2xlIjoxMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.FV0n62MiFA3lKkQIqYubJbLKWH4AdSw-VoyZ01m6-ys",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"first_name\": \"Justin\",\n    \"last_name\": \"Patel\",\n    \"email_tx\": \"justin@gmail.com\",\n    \"ic_card_tx\": \"CD12-ab23-scs23a\",\n    \"provider_id\": null,\n    \"practitioner_id\": null,\n    \"password\": \"justin\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/patients/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"patients",
 						""
 					]
 				}

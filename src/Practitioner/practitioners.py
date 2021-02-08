@@ -30,7 +30,7 @@ class PractitionersAPI(Resource):
                 raise UnAuthorizedException('You are not authorized')
 
             if practitioner:
-                prev_page, next_page = pagination('practitioner', practitioner, search)
+                prev_page, next_page = pagination('practitioners', practitioner, search)
                 return make_response(jsonify({
                     "previous_page": prev_page,
                     "next_page": next_page,
@@ -50,8 +50,8 @@ class PractitionersAPI(Resource):
             user = get_jwt_identity()
             data = request.get_json()
 
-            if Users.get_user(user_email=data.get('email')):
-                raise BadRequestException(data.get('email') + ' already exists, please login')
+            if Users.get_user(user_email=data.get('email_tx')):
+                raise BadRequestException(data.get('email_tx') + ' already exists, please login')
 
             if user['role'] == 100 or user['role'] == 50:
                 if not data.get('provider_id'):

@@ -30,8 +30,10 @@ class Patient(db.Model):
     def __init__(self, data):
         self.first_name = data.get('first_name')
         self.last_name = data.get('last_name')
-        self.email_tx = data.get('email')
-        self.ic_card_tx = data.get('ic_card')
+        self.email_tx = data.get('email_tx')
+        self.provider_id = data.get('provider_id')
+        self.practitioner_id = data.get('practitioner_id')
+        self.ic_card_tx = data.get('ic_card_tx')
 
     def save(self):
         db.session.add(self)
@@ -53,8 +55,34 @@ class Patient(db.Model):
             return Patient.query.paginate(int(page), 1, error_out=True)
         else:
             return Patient.query.filter(or_(Patient.first_name.contains(search), Patient.last_name.contains(search),
-                                            Patient.email_tx.contains(search), Patient.ic_card_tx.contains(search))).\
-                                        paginate(int(page), 1, error_out=True)
+                                            Patient.email_tx.contains(search), Patient.ic_card_tx.contains(search)),
+                                        Patient.active_fl == True).paginate(int(page), 1, error_out=True)
+
+    @staticmethod
+    def get_patient_by_providers(page, search, provider_id):
+        if not search:
+            return Patient.query.filter(Patient.provider_id == provider_id, Patient.active_fl == True). \
+                paginate(int(page), 1, error_out=True)
+        else:
+            return Practitioner.query.filter(or_(Patient.first_name.contains(search),
+                                                 Patient.last_name.contains(search),
+                                                 Patient.email_tx.contains(search),
+                                                 Patient.ic_card_tx.contains(search)),
+                                             Patient.provider_id == provider_id, Patient.active_fl == True). \
+                paginate(int(page), 1, error_out=True)
+
+    @staticmethod
+    def get_patient_by_practitioners(page, search, practitioner_id):
+        if not search:
+            return Patient.query.filter(Patient.practitioner_id == practitioner_id, Patient.active_fl == True). \
+                paginate(int(page), 1, error_out=True)
+        else:
+            return Practitioner.query.filter(or_(Patient.first_name.contains(search),
+                                                 Patient.last_name.contains(search),
+                                                 Patient.email_tx.contains(search),
+                                                 Patient.ic_card_tx.contains(search)),
+                                             Patient.practitioner_id == practitioner_id, Patient.active_fl == True). \
+                paginate(int(page), 1, error_out=True)
 
     @staticmethod
     def get_one(patient_id):
@@ -62,7 +90,7 @@ class Patient(db.Model):
 
     @staticmethod
     def get_by_email(patient_email):
-        return Patient.query.get(Patient.email_tx == patient_email)
+        return Patient.query.filter(Patient.email_tx == patient_email).one()
 
 
 class Practitioner(db.Model):
@@ -108,25 +136,25 @@ class Practitioner(db.Model):
     @staticmethod
     def get_all(page, search):
         if not search:
-            return Practitioner.query.filter(Practitioner.active_fl == 1).paginate(int(page), 1, error_out=True)
+            return Practitioner.query.filter(Practitioner.active_fl == True).paginate(int(page), 1, error_out=True)
         else:
             return Practitioner.query.filter(or_(Practitioner.first_name.contains(search),
                                                  Practitioner.last_name.contains(search),
                                                  Practitioner.email_tx.contains(search),
                                                  Practitioner.ic_card_tx.contains(search)),
-                                             Practitioner.active_fl == 1).paginate(int(page), 1, error_out=True)
+                                             Practitioner.active_fl == True).paginate(int(page), 1, error_out=True)
 
     @staticmethod
     def get_practitioners_by_providers(page, search, provider_id):
         if not search:
-            return Practitioner.query.filter(Practitioner.provider_id == provider_id, Practitioner.active_fl == 1).\
+            return Practitioner.query.filter(Practitioner.provider_id == provider_id, Practitioner.active_fl == True). \
                 paginate(int(page), 1, error_out=True)
         else:
             return Practitioner.query.filter(or_(Practitioner.first_name.contains(search),
                                                  Practitioner.last_name.contains(search),
                                                  Practitioner.email_tx.contains(search),
                                                  Practitioner.ic_card_tx.contains(search)),
-                                             Practitioner.provider_id == provider_id, Practitioner.active_fl == 1).\
+                                             Practitioner.provider_id == provider_id, Practitioner.active_fl == True). \
                 paginate(int(page), 1, error_out=True)
 
     @staticmethod
@@ -135,7 +163,7 @@ class Practitioner(db.Model):
 
     @staticmethod
     def get_by_email(practitioner_email):
-        return Practitioner.query.get(Practitioner.email_tx == practitioner_email)
+        return Practitioner.query.filter(Practitioner.email_tx == practitioner_email).one()
 
 
 class Provider(db.Model):
@@ -174,10 +202,10 @@ class Provider(db.Model):
     @staticmethod
     def get_all(page, search):
         if not search:
-            return Provider.query.filter(Provider.active_fl == 1).paginate(int(page), 1, error_out=True)
+            return Provider.query.filter(Provider.active_fl == True).paginate(int(page), 1, error_out=True)
         else:
             return Provider.query.filter(or_(Provider.name_tx.contains(search), Provider.site_admin_email.contains(
-                search)), Provider.active_fl == 1).paginate(int(page), 1, error_out=True)
+                search)), Provider.active_fl == True).paginate(int(page), 1, error_out=True)
 
     @staticmethod
     def get_one(provider_id):
@@ -223,10 +251,10 @@ class Vaccine(db.Model):
     @staticmethod
     def get_all(page, search):
         if not search:
-            return Vaccine.query.filter(Vaccine.active_fl == 1).paginate(int(page), 1, error_out=True)
+            return Vaccine.query.filter(Vaccine.active_fl == True).paginate(int(page), 1, error_out=True)
         else:
             return Vaccine.query.filter(or_(Vaccine.name_tx.contains(search), Vaccine.description_tx.contains(search)),
-                                        Vaccine.active_fl == 1).paginate(int(page), 1, error_out=True)
+                                        Vaccine.active_fl == True).paginate(int(page), 1, error_out=True)
 
     @staticmethod
     def get_one(vaccine_id):
@@ -336,10 +364,10 @@ class RolePermission(db.Model):
     def get_permissions(role_id):
         query = db.session.query(RolePermission).join(Permissions).filter(RolePermission.role_id == role_id)
         return [{
-                "title": model.Permissions.permission,
-                "icon": model.Permissions.icon,
-                "url": model.Permissions.url
-                } for model in query]
+            "title": model.Permissions.permission,
+            "icon": model.Permissions.icon,
+            "url": model.Permissions.url
+        } for model in query]
 
 
 class Users(db.Model):
@@ -378,10 +406,10 @@ class Users(db.Model):
                 name = Provider.get_by_email(email).name_tx
                 designation = 'Provider'
             elif role == 10:
-                name = Practitioner.get_by_email(email).first_name + Practitioner.get_by_email(email).last_name
+                name = Practitioner.get_by_email(email).first_name + " " + Practitioner.get_by_email(email).last_name
                 designation = 'Practitioner'
             elif role == 0:
-                name = Patient.get_by_email(email).first_name + Patient.get_by_email(email).last_name
+                name = Patient.get_by_email(email).first_name + " " + Patient.get_by_email(email).last_name
                 designation = 'Patient'
             else:
                 name = 'Super User'
