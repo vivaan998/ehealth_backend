@@ -13,7 +13,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI3ODE3NTAsIm5iZiI6MTYxMjc4MTc1MCwianRpIjoiMTJjNTk3NzUtMTBkMi00NzZiLTk1MGUtMjllOGVlMDNiN2IyIiwiZXhwIjoxNjEzMzg2NTUwLCJpZGVudGl0eSI6eyJpZCI6OSwiZW1haWwiOiJqdXN0aW5AZ21haWwuY29tIiwicm9sZSI6MH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.DmFBfakGtrkkugNcgF6u5UiTwzIQzy8RW-ted81_U40",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4Njk3MDksIm5iZiI6MTYxMjg2OTcwOSwianRpIjoiZGNiYWQyNDQtNGM3YS00MzMyLWEwYzUtODU3NTNmNDVhNTU1IiwiZXhwIjoxNjEzNDc0NTA5LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.008vd69JXQVhyFtXQHd863GTbatj_E-5j8Q-5XNpZvA",
 							"type": "string"
 						}
 					]
@@ -44,7 +44,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"justin@gmail.com\",\n    \"password\": \"justin\"\n}",
+					"raw": "{\n    \"email\": \"superadmin@gmail.com\",\n    \"password\": \"superadmin\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -76,7 +76,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI1OTg2MjQsIm5iZiI6MTYxMjU5ODYyNCwianRpIjoiMzhmNTZkNGMtZmJmOC00NDhmLWI0Y2QtNzkxMDIyMDkwMjA4IiwiZXhwIjoxNjEzMjAzNDI0LCJpZGVudGl0eSI6eyJpZCI6MiwiZW1haWwiOiJzc2dhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjo1MH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.7pgS6NwHcOjfEQ-RfS4_40d_uazKhzoaIqCeGl2oSaI",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4NTgzMTUsIm5iZiI6MTYxMjg1ODMxNSwianRpIjoiZDc3YTE2Y2ItM2Y4Ni00NjUzLWIwY2UtNWVjZDUwNDFjMDhjIiwiZXhwIjoxNjEzNDYzMTE1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0meWLvQfe4VKewJktRaXebVOhiWiEdYkINHEmwuMPGw",
 							"type": "string"
 						}
 					]
@@ -85,7 +85,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"SSG Hospital\",\n    \"email\": \"ssgadmin@gmail.com\",\n    \"password\": \"ssgadmin\"\n}",
+					"raw": "{\n    \"name\": \"KD Hospital\",\n    \"email\": \"kdadmin@gmail.com\",\n    \"password\": \"kdadmin\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -125,7 +125,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/api/v1/providers/?search=acda",
+					"raw": "http://localhost:5000/api/v1/providers/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -136,12 +136,6 @@
 						"v1",
 						"providers",
 						""
-					],
-					"query": [
-						{
-							"key": "search",
-							"value": "acda"
-						}
 					]
 				}
 			},
@@ -196,7 +190,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"first_name\": \"Harshil\",\n    \"last_name\": \"Patel\",\n    \"email_tx\": \"harshil@gmail.com\",\n    \"ic_card_tx\": \"ABD-1s23-a2cssa\",\n    \"provider_id\": 1,\n    \"doctor_fl\": 1,\n    \"password\": \"harshil\"\n}",
+					"raw": "{\n    \"first_name\": \"Khushi\",\n    \"last_name\": \"Nathani\",\n    \"email_tx\": \"khusi@gmail.com\",\n    \"ic_card_tx\": \"BASC-0910-a00CD\",\n    \"provider_id\": 3,\n    \"doctor_fl\": 0,\n    \"password\": \"khusi\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -228,7 +222,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI3ODE2MzcsIm5iZiI6MTYxMjc4MTYzNywianRpIjoiYmUzNjcyYzctNzYwMi00NjFhLWEzMTMtYzNmZjhkMGE5NmVmIiwiZXhwIjoxNjEzMzg2NDM3LCJpZGVudGl0eSI6eyJpZCI6MiwiZW1haWwiOiJzc2dhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjo1MH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.1nPseYKKkBDIrquqacV46jJb5gT4-CZWJHOkBR-HmKQ",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4NTgzMTUsIm5iZiI6MTYxMjg1ODMxNSwianRpIjoiZDc3YTE2Y2ItM2Y4Ni00NjUzLWIwY2UtNWVjZDUwNDFjMDhjIiwiZXhwIjoxNjEzNDYzMTE1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0meWLvQfe4VKewJktRaXebVOhiWiEdYkINHEmwuMPGw",
 							"type": "string"
 						}
 					]
@@ -260,7 +254,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI3ODE0NDAsIm5iZiI6MTYxMjc4MTQ0MCwianRpIjoiMDJmY2UyOGMtMmNmZC00MmY4LWFmMDItMDY1OGM5NWYyMzNjIiwiZXhwIjoxNjEzMzg2MjQwLCJpZGVudGl0eSI6eyJpZCI6MywiZW1haWwiOiJ2aXZla0BnbWFpbC5jb20iLCJyb2xlIjoxMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.FV0n62MiFA3lKkQIqYubJbLKWH4AdSw-VoyZ01m6-ys",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4NTgzMTUsIm5iZiI6MTYxMjg1ODMxNSwianRpIjoiZDc3YTE2Y2ItM2Y4Ni00NjUzLWIwY2UtNWVjZDUwNDFjMDhjIiwiZXhwIjoxNjEzNDYzMTE1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0meWLvQfe4VKewJktRaXebVOhiWiEdYkINHEmwuMPGw",
 							"type": "string"
 						}
 					]
@@ -269,7 +263,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"first_name\": \"Justin\",\n    \"last_name\": \"Patel\",\n    \"email_tx\": \"justin@gmail.com\",\n    \"ic_card_tx\": \"CD12-ab23-scs23a\",\n    \"provider_id\": null,\n    \"practitioner_id\": null,\n    \"password\": \"justin\"\n}",
+					"raw": "{\n    \"first_name\": \"Janvi\",\n    \"last_name\": \"Jani\",\n    \"email_tx\": \"Janvi@gmail.com\",\n    \"ic_card_tx\": \"12IJ-ab23-scs23a\",\n    \"provider_id\": 1,\n    \"practitioner_id\": 2,\n    \"password\": \"janvi\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -287,6 +281,79 @@
 						"api",
 						"v1",
 						"patients",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Vaccine",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4NTgzMTUsIm5iZiI6MTYxMjg1ODMxNSwianRpIjoiZDc3YTE2Y2ItM2Y4Ni00NjUzLWIwY2UtNWVjZDUwNDFjMDhjIiwiZXhwIjoxNjEzNDYzMTE1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0meWLvQfe4VKewJktRaXebVOhiWiEdYkINHEmwuMPGw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name_tx\": \"Covaxin\",\n    \"doses_required\": 3,\n    \"description_tx\": \"Indian vaccine to shield corona\"\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/vaccines/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"vaccines",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Vaccines",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4NTgzMTUsIm5iZiI6MTYxMjg1ODMxNSwianRpIjoiZDc3YTE2Y2ItM2Y4Ni00NjUzLWIwY2UtNWVjZDUwNDFjMDhjIiwiZXhwIjoxNjEzNDYzMTE1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0meWLvQfe4VKewJktRaXebVOhiWiEdYkINHEmwuMPGw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/vaccines/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"vaccines",
 						""
 					]
 				}

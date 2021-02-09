@@ -12,7 +12,7 @@ class LoginAPI(Resource):
     def post():
         try:
             data = request.get_json()
-            user = Users.get_user(user_email=data.get('email'))
+            user = Users.get_user(user_email=data.get('email'))[0]
             if not user:
                 raise BadRequestException('No user found with this email address')
 

@@ -24,10 +24,10 @@ class PatientsAPI(Resource):
             if user['role'] == 100:
                 patients = Patient.get_all(page, search)
             elif user['role'] == 50:
-                provider_id = Provider.get_by_email(user['email']).provider_id
+                provider_id = Provider.get_by_email(user['email'])[0].provider_id
                 patients = Patient.get_patient_by_providers(page, search, provider_id)
             elif user['role'] == 10:
-                practitioner_id = Practitioner.get_by_email(user['email']).practitioner_id
+                practitioner_id = Practitioner.get_by_email(user['email'])[0].practitioner_id
                 patients = Patient.get_patient_by_practitioners(page, search, practitioner_id)
             else:
                 raise UnAuthorizedException('You are not authorized')
@@ -58,11 +58,11 @@ class PatientsAPI(Resource):
 
             if user['role'] == 100 or user['role'] == 50 or user['role'] == 10:
                 if not data.get('provider_id') and not data.get('practitioner_id'):
-                    practitioner = Practitioner.get_by_email(user['email'])
+                    practitioner = Practitioner.get_by_email(user['email'])[0]
                     data["provider_id"] = practitioner.provider_id
                     data['practitioner_id'] = practitioner.practitioner_id
                 elif not data.get('provider_id'):
-                    data["provider_id"] = Provider.get_by_email(user['email']).provider_id
+                    data["provider_id"] = Provider.get_by_email(user['email']).provider_id[0]
             else:
                 raise UnAuthorizedException('You are not authorized')
 

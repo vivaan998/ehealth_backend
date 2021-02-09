@@ -24,7 +24,7 @@ class PractitionersAPI(Resource):
             if user['role'] == 100:
                 practitioner = Practitioner.get_all(page, search)
             elif user['role'] == 50:
-                provider_id = Provider.get_by_email(user['email']).provider_id
+                provider_id = Provider.get_by_email(user['email'])[0].provider_id
                 practitioner = Practitioner.get_practitioners_by_providers(page, search, provider_id)
             else:
                 raise UnAuthorizedException('You are not authorized')
@@ -55,7 +55,7 @@ class PractitionersAPI(Resource):
 
             if user['role'] == 100 or user['role'] == 50:
                 if not data.get('provider_id'):
-                    provider_id = Provider.get_by_email(user['email']).provider_id
+                    provider_id = Provider.get_by_email(user['email'])[0].provider_id
                     data["provider_id"] = provider_id
             else:
                 raise UnAuthorizedException('You are not authorized')
