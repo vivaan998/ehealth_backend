@@ -39,7 +39,7 @@ if __name__ == '__main__':
     api.add_resource(PatientsAPI, '/api/v1/patients/', endpoint='patients')
     api.add_resource(VaccinesAPI, '/api/v1/vaccines/', endpoint='vaccines')
     api.add_resource(GetProvidersAPI, '/api/v1/get-providers/')
-    api.add_resource(GetPractitionersAPI, '/api/v1/get-practitioner/<provider_id>')
+    api.add_resource(GetPractitionersAPI, '/api/v1/get-practitioners/<provider_id>')
     api.add_resource(GetPatientsAPI, '/api/v1/get-patients/<practitioner_id>')
 
     @app.errorhandler(AppException)
