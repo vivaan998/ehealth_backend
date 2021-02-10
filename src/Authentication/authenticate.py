@@ -1,8 +1,8 @@
 import datetime
 from flask_restful import Resource
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, create_refresh_token
+from flask_jwt_extended import create_access_token, create_refresh_token
 from flask import make_response, request, jsonify
-from model import Users, RolePermission
+from model import Users
 from src.excecptions.app_exception import BadRequestException, ServerException
 
 
@@ -33,19 +33,5 @@ class LoginAPI(Resource):
 
         except BadRequestException as e:
             raise BadRequestException(e.error)
-        except Exception as e:
-            raise ServerException('There is some error, please contact support')
-
-
-class MenuAPI(Resource):
-
-    @jwt_required
-    def get(self):
-        try:
-            user = get_jwt_identity()
-            menu = RolePermission.get_permissions(user['role'])
-            name, designation = Users.get_name(user['role'], user['email'])
-            return make_response(jsonify({'menu': menu, 'data': {'name': name, 'designation': designation,
-                                                                 'role': user['role']}}), 200)
         except Exception as e:
             raise ServerException('There is some error, please contact support')

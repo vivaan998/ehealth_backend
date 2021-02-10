@@ -87,6 +87,10 @@ class Patient(db.Model):
                 paginate(int(page), PER_PAGE, error_out=True)
 
     @staticmethod
+    def get(practitioner_id):
+        return Patient.query.filter(Patient.practitioner_id == practitioner_id, Patient.active_fl == True).all()
+
+    @staticmethod
     def get_one(patient_id):
         return Patient.query.get(patient_id)
 
@@ -158,6 +162,10 @@ class Practitioner(db.Model):
                 paginate(int(page), PER_PAGE, error_out=True)
 
     @staticmethod
+    def get(provider_id):
+        return Practitioner.query.filter(Practitioner.provider_id == provider_id, Practitioner.active_fl == True).all()
+
+    @staticmethod
     def get_one(practitioner_id):
         return Practitioner.query.get(practitioner_id)
 
@@ -208,6 +216,10 @@ class Provider(db.Model):
     @staticmethod
     def get_one(provider_id):
         return Provider.query.get(provider_id)
+
+    @staticmethod
+    def get():
+        return Provider.query.filter(Provider.active_fl == True).all()
 
     @staticmethod
     def get_by_email(provider_email):

@@ -67,3 +67,5 @@ class UsersSchema(Schema):
     user_email = fields.Email(strict=True, required=True)
     hash_password = fields.String(required=True, validate=validate.Length(min=1))
     security_role = fields.Integer(required=True, strict=True)
+
+
