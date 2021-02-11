@@ -6,7 +6,6 @@ from model import Users, Practitioner, Provider
 from serializer import PractitionerSchema, UsersSchema
 from config import PRACTITIONER
 from src.excecptions.app_exception import BadRequestException, UnAuthorizedException, ServerException
-from src.excecptions.pagination import pagination
 
 PRACTITIONERS_SCHEMA = PractitionerSchema()
 USER_SCHEMA = UsersSchema()
@@ -22,19 +21,18 @@ class PractitionersAPI(Resource):
             user = get_jwt_identity()
 
             if user['role'] == 100:
-                practitioner = Practitioner.get_all(page, search)
+                practitioners = Practitioner.get_all(page, search)
             elif user['role'] == 50:
                 provider_id = Provider.get_by_email(user['email'])[0].provider_id
-                practitioner = Practitioner.get_practitioners_by_providers(page, search, provider_id)
+                practitioners = Practitioner.get_practitioners_by_providers(page, search, provider_id)
             else:
                 raise UnAuthorizedException('You are not authorized')
 
-            if practitioner:
-                prev_page, next_page = pagination('practitioners', practitioner, search)
+            if practitioners:
                 return make_response(jsonify({
-                    "previous_page": prev_page,
-                    "next_page": next_page,
-                    "result": PRACTITIONERS_SCHEMA.dump(practitioner.items, many=True)
+                    "previous_page": practitioners.prev_num,
+                    "next_page": practitioners.next_num,
+                    "result": PRACTITIONERS_SCHEMA.dump(practitioners.items, many=True)
                 }), 200)
             else:
                 return make_response(jsonify([]), 200)

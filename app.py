@@ -9,19 +9,19 @@ from src.Vaccine.vaccines import VaccinesAPI
 from src.Authentication.authenticate import LoginAPI
 from src.Common.common import MenuAPI, GetPatientsAPI, GetPractitionersAPI, GetProvidersAPI
 from flask_restful import Api
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 
 
 # 'postgresql://vivek:vivek@localhost:5432/eHealth'
 
 def create_app():
-    app = Flask(__name__)
-    app.config['DEBUG'] = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = POSTGRES_DB_URL
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['JWT_SECRET_KEY'] = 't1NP63m4wnBg6nyHYKfmc2TpCOGI4nss'
+    flask_app = Flask(__name__)
+    flask_app.config['DEBUG'] = True
+    flask_app.config['SQLALCHEMY_DATABASE_URI'] = POSTGRES_DB_URL
+    flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    flask_app.config['JWT_SECRET_KEY'] = 't1NP63m4wnBg6nyHYKfmc2TpCOGI4nss'
 
-    return app
+    return flask_app
 
 
 if __name__ == '__main__':

@@ -6,7 +6,6 @@ from model import Users, Practitioner, Patient, Provider
 from serializer import PatientSchema, UsersSchema
 from config import PATIENT
 from src.excecptions.app_exception import BadRequestException, UnAuthorizedException, ServerException
-from src.excecptions.pagination import pagination
 
 PATIENTS_SCHEMA = PatientSchema()
 USER_SCHEMA = UsersSchema()
@@ -33,10 +32,9 @@ class PatientsAPI(Resource):
                 raise UnAuthorizedException('You are not authorized')
 
             if patients:
-                prev_page, next_page = pagination('patients', patients, search)
                 return make_response(jsonify({
-                    "previous_page": prev_page,
-                    "next_page": next_page,
+                    "previous_page": patients.prev_num,
+                    "next_page": patients.next_num,
                     "result": PATIENTS_SCHEMA.dump(patients.items, many=True)
                 }), 200)
             else:

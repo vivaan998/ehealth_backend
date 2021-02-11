@@ -6,7 +6,6 @@ from model import Users, Provider
 from serializer import ProviderSchema, UsersSchema
 from config import PROVIDER
 from src.excecptions.app_exception import BadRequestException, UnAuthorizedException, ServerException
-from src.excecptions.pagination import pagination
 
 PROVIDERS_SCHEMA = ProviderSchema()
 USER_SCHEMA = UsersSchema()
@@ -26,10 +25,9 @@ class ProvidersAPI(Resource):
 
             providers = Provider.get_all(page, search)
             if providers:
-                prev_page, next_page = pagination('providers', providers, search)
                 return make_response(jsonify({
-                    "previous_page": prev_page,
-                    "next_page": next_page,
+                    "previous_page": providers.prev_num,
+                    "next_page": providers.next_num,
                     "result": PROVIDERS_SCHEMA.dump(providers.items, many=True)
                 }), 200)
             else:
