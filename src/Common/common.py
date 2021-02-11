@@ -118,7 +118,6 @@ class SuperuserPractitionersAPI(Resource):
             page = request.args.get('page', 1)
             search = request.args.get('search', None)
             user = get_jwt_identity()
-            print(user)
             if user['role'] < 50:
                 raise UnAuthorizedException('You are not authorized')
 

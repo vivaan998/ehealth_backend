@@ -9,6 +9,7 @@ from src.Vaccine.vaccines import VaccinesAPI
 from src.Authentication.authenticate import LoginAPI
 from src.Common.common import MenuAPI, GetPatientsAPI, GetPractitionersAPI, GetProvidersAPI, GetVaccinesAPI, \
     SuperuserPatientsAPI, SuperuserPractitionersAPI
+from src.Immunization.immunization import ImmunizationAPI
 from flask_restful import Api
 from flask_cors import CORS, cross_origin
 
@@ -45,6 +46,7 @@ if __name__ == '__main__':
     api.add_resource(GetVaccinesAPI, '/api/v1/get-vaccines/')
     api.add_resource(SuperuserPractitionersAPI, '/api/v1/super-user-practitioner/<provider_id>')
     api.add_resource(SuperuserPatientsAPI, '/api/v1/super-user-patients/<practitioner_id>')
+    api.add_resource(ImmunizationAPI, '/api/v1/immunizations/')
 
     @app.errorhandler(AppException)
     def app_error(err):

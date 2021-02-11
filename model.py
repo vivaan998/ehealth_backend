@@ -138,14 +138,16 @@ class Practitioner(db.Model):
     @staticmethod
     def get_all(page, search):
         if not search:
-            return Practitioner.query.filter(Practitioner.active_fl == True).paginate(int(page), PER_PAGE, error_out=True)
+            return Practitioner.query.filter(Practitioner.active_fl == True).paginate(int(page), PER_PAGE,
+                                                                                      error_out=True)
         else:
             search = search.lower()
             return Practitioner.query.filter(or_(func.lower(Practitioner.first_name.contains(search)),
                                                  func.lower(Practitioner.last_name.contains(search)),
                                                  func.lower(Practitioner.email_tx.contains(search)),
                                                  func.lower(Practitioner.ic_card_tx.contains(search))),
-                                             Practitioner.active_fl == True).paginate(int(page), PER_PAGE, error_out=True)
+                                             Practitioner.active_fl == True).paginate(int(page), PER_PAGE,
+                                                                                      error_out=True)
 
     @staticmethod
     def get_practitioners_by_providers(page, search, provider_id):
@@ -272,6 +274,7 @@ class Vaccine(db.Model):
     def get():
         return Vaccine.query.filter(Vaccine.active_fl == True).all()
 
+
 class Appointment(db.Model):
     __tablename__ = 'Appointment'
 
@@ -324,8 +327,9 @@ class Immunization(db.Model):
     def __init__(self, data):
         self.patient_id = data.get('patient_id')
         self.practitioner_id = data.get('practitioner_id')
+        self.provider_id = data.get('provider_id')
         self.vaccine_id = data.get('vaccine_id')
-        self.administered_dt = data.get('administered_date')
+        self.administered_dt = data.get('administered_dt')
 
     def save(self):
         db.session.add(self)
@@ -338,12 +342,127 @@ class Immunization(db.Model):
         db.session.commit()
 
     @staticmethod
-    def get_all():
-        return Immunization.query.all()
+    def get_all(page, search):
+        if not search:
+            query = db.session.query(Immunization).join(Patient, Immunization.patient_id == Patient.patient_id). \
+                join(Vaccine, Immunization.vaccine_id == Vaccine.vaccine_id). \
+                join(Practitioner, Immunization.practitioner_id == Practitioner.practitioner_id). \
+                join(Provider, Immunization.provider_id == Provider.provider_id).filter(Immunization.active_fl == True). \
+                paginate(int(page), PER_PAGE, error_out=True)
+        else:
+            search = search.lower()
+            query = db.session.query(Immunization).join(Patient, Immunization.patient_id == Patient.patient_id). \
+                join(Vaccine, Immunization.vaccine_id == Vaccine.vaccine_id). \
+                join(Practitioner, Immunization.practitioner_id == Practitioner.practitioner_id). \
+                join(Provider, Immunization.provider_id == Provider.provider_id). \
+                filter(or_(func.lower(Patient.first_name).contains(search),
+                           func.lower(Provider.name_tx).contains(search),
+                           func.lower(Practitioner.first_name).contains(search),
+                           func.lower(Vaccine.name_tx).contains(search)),
+                       Immunization.active_fl == True).paginate(int(page), PER_PAGE, error_out=True)
+        return [{
+            "immunization_id": model.immunization_id,
+            "patient_id": model.patient_id,
+            "practitioner_id": model.practitioner_id,
+            "provider_id": model.provider_id,
+            "vaccine_id": model.vaccine_id,
+            "administered_dt": model.administered_dt,
+            "patient": model.Patient.first_name + " " + model.Patient.last_name,
+            "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
+            "provider": model.Provider.name_tx,
+            "vaccine": model.Vaccine.name_tx,
+        } for model in query.items], query.next_num, query.prev_num
 
     @staticmethod
     def get_one(immunization_id):
         return Immunization.query.get(immunization_id)
+
+    @staticmethod
+    def get_immunization_by_providers(page, search, provider_id):
+        if not search:
+            query = db.session.query(Immunization).join(Patient, Immunization.patient_id == Patient.patient_id). \
+                join(Vaccine, Immunization.vaccine_id == Vaccine.vaccine_id). \
+                join(Practitioner, Immunization.practitioner_id == Practitioner.practitioner_id). \
+                join(Provider, Immunization.provider_id == Provider.provider_id).\
+                filter(Immunization.active_fl == True, Immunization.provider_id == provider_id). \
+                paginate(int(page), PER_PAGE, error_out=True)
+        else:
+            search = search.lower()
+            query = db.session.query(Immunization).join(Patient, Immunization.patient_id == Patient.patient_id). \
+                join(Vaccine, Immunization.vaccine_id == Vaccine.vaccine_id). \
+                join(Practitioner, Immunization.practitioner_id == Practitioner.practitioner_id). \
+                join(Provider, Immunization.provider_id == Provider.provider_id). \
+                filter(or_(func.lower(Patient.first_name).contains(search),
+                           func.lower(Practitioner.first_name).contains(search),
+                           func.lower(Vaccine.name_tx).contains(search)),
+                       Immunization.active_fl == True, Immunization.provider_id == provider_id).\
+                paginate(int(page), PER_PAGE, error_out=True)
+        return [{
+            "immunization_id": model.immunization_id,
+            "patient_id": model.patient_id,
+            "practitioner_id": model.practitioner_id,
+            "provider_id": model.provider_id,
+            "vaccine_id": model.vaccine_id,
+            "administered_dt": model.administered_dt,
+            "patient": model.Patient.first_name + " " + model.Patient.last_name,
+            "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
+            "provider": model.Provider.name_tx,
+            "vaccine": model.Vaccine.name_tx,
+        } for model in query.items], query.next_num, query.prev_num
+
+    @staticmethod
+    def get_immunization_by_practitioners(page, search, practitioner_id):
+        if not search:
+            query = db.session.query(Immunization).join(Patient, Immunization.patient_id == Patient.patient_id). \
+                join(Vaccine, Immunization.vaccine_id == Vaccine.vaccine_id). \
+                join(Practitioner, Immunization.practitioner_id == Practitioner.practitioner_id). \
+                join(Provider, Immunization.provider_id == Provider.provider_id).\
+                filter(Immunization.active_fl == True, Immunization.practitioner_id == practitioner_id). \
+                paginate(int(page), PER_PAGE, error_out=True)
+        else:
+            search = search.lower()
+            query = db.session.query(Immunization).join(Patient, Immunization.patient_id == Patient.patient_id). \
+                join(Vaccine, Immunization.vaccine_id == Vaccine.vaccine_id). \
+                join(Practitioner, Immunization.practitioner_id == Practitioner.practitioner_id). \
+                join(Provider, Immunization.provider_id == Provider.provider_id). \
+                filter(or_(func.lower(Patient.first_name).contains(search),
+                           func.lower(Vaccine.name_tx).contains(search)),
+                       Immunization.active_fl == True, Immunization.practitioner_id == practitioner_id).\
+                paginate(int(page), PER_PAGE, error_out=True)
+        return [{
+            "immunization_id": model.immunization_id,
+            "patient_id": model.patient_id,
+            "practitioner_id": model.practitioner_id,
+            "provider_id": model.provider_id,
+            "vaccine_id": model.vaccine_id,
+            "administered_dt": model.administered_dt,
+            "patient": model.Patient.first_name + " " + model.Patient.last_name,
+            "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
+            "provider": model.Provider.name_tx,
+            "vaccine": model.Vaccine.name_tx,
+        } for model in query.items], query.next_num, query.prev_num
+
+    @staticmethod
+    def get_immunization_by_patients(page, patient_id):
+        query = db.session.query(Immunization).join(Patient, Immunization.patient_id == Patient.patient_id). \
+            join(Vaccine, Immunization.vaccine_id == Vaccine.vaccine_id). \
+            join(Practitioner, Immunization.practitioner_id == Practitioner.practitioner_id). \
+            join(Provider, Immunization.provider_id == Provider.provider_id). \
+            filter(Immunization.active_fl == True, Immunization.patient_id == patient_id).\
+            paginate(int(page), PER_PAGE, error_out=True)
+
+        return [{
+            "immunization_id": model.immunization_id,
+            "patient_id": model.patient_id,
+            "practitioner_id": model.practitioner_id,
+            "provider_id": model.provider_id,
+            "vaccine_id": model.vaccine_id,
+            "administered_dt": model.administered_dt,
+            "patient": model.Patient.first_name + " " + model.Patient.last_name,
+            "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
+            "provider": model.Provider.name_tx,
+            "vaccine": model.Vaccine.name_tx,
+        } for model in query.items], query.next_num, query.prev_num
 
 
 class Permissions(db.Model):
