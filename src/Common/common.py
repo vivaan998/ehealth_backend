@@ -118,8 +118,8 @@ class SuperuserPractitionersAPI(Resource):
             page = request.args.get('page', 1)
             search = request.args.get('search', None)
             user = get_jwt_identity()
-
-            if user['role'] != 100 or user['role'] != 50:
+            print(user)
+            if user['role'] < 50:
                 raise UnAuthorizedException('You are not authorized')
 
             practitioners = Practitioner.get_practitioners_by_providers(page, search, provider_id)
@@ -132,6 +132,8 @@ class SuperuserPractitionersAPI(Resource):
             else:
                 return make_response(jsonify([]), 200)
 
+        except UnAuthorizedException as e:
+            raise UnAuthorizedException(e.error)
         except Exception as e:
             raise ServerException('There is some error, please contact support')
 
@@ -145,7 +147,7 @@ class SuperuserPatientsAPI(Resource):
             search = request.args.get('search', None)
             user = get_jwt_identity()
 
-            if user['role'] != 100 or user['role'] != 50:
+            if user['role'] < 50:
                 raise UnAuthorizedException('You are not authorized')
 
             patients = Patient.get_patient_by_practitioners(page, search, practitioner_id)
@@ -158,5 +160,7 @@ class SuperuserPatientsAPI(Resource):
             else:
                 return make_response(jsonify([]), 200)
 
+        except UnAuthorizedException as e:
+            raise UnAuthorizedException(e.error)
         except Exception as e:
             raise ServerException('There is some error, please contact support')

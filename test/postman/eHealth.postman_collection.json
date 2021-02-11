@@ -359,6 +359,198 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Get Providers",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4Njk3MDksIm5iZiI6MTYxMjg2OTcwOSwianRpIjoiZGNiYWQyNDQtNGM3YS00MzMyLWEwYzUtODU3NTNmNDVhNTU1IiwiZXhwIjoxNjEzNDc0NTA5LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.008vd69JXQVhyFtXQHd863GTbatj_E-5j8Q-5XNpZvA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/get-providers/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"get-providers",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Practitioners of Provider",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4Njk3MDksIm5iZiI6MTYxMjg2OTcwOSwianRpIjoiZGNiYWQyNDQtNGM3YS00MzMyLWEwYzUtODU3NTNmNDVhNTU1IiwiZXhwIjoxNjEzNDc0NTA5LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.008vd69JXQVhyFtXQHd863GTbatj_E-5j8Q-5XNpZvA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/get-practitioners/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"get-practitioners",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Patients of Practitioner",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4Njk3MDksIm5iZiI6MTYxMjg2OTcwOSwianRpIjoiZGNiYWQyNDQtNGM3YS00MzMyLWEwYzUtODU3NTNmNDVhNTU1IiwiZXhwIjoxNjEzNDc0NTA5LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.008vd69JXQVhyFtXQHd863GTbatj_E-5j8Q-5XNpZvA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/get-patients/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"get-patients",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Superuser Practitioners",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMwMjU0OTQsIm5iZiI6MTYxMzAyNTQ5NCwianRpIjoiMjA2MTk5ZDAtOGRjMy00ODE3LTk4ZjctNjNkMzUzNTk2ODQxIiwiZXhwIjoxNjEzNjMwMjk0LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.KZ1mtU4gSZo-e_3F37TLTyhQQEcwuDqB33_QxNsWDsg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/super-user-practitioner/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"super-user-practitioner",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Superuser Patients",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMwMjU0OTQsIm5iZiI6MTYxMzAyNTQ5NCwianRpIjoiMjA2MTk5ZDAtOGRjMy00ODE3LTk4ZjctNjNkMzUzNTk2ODQxIiwiZXhwIjoxNjEzNjMwMjk0LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.KZ1mtU4gSZo-e_3F37TLTyhQQEcwuDqB33_QxNsWDsg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/super-user-patients/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"super-user-patients",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Vaccines",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMwMjU0OTQsIm5iZiI6MTYxMzAyNTQ5NCwianRpIjoiMjA2MTk5ZDAtOGRjMy00ODE3LTk4ZjctNjNkMzUzNTk2ODQxIiwiZXhwIjoxNjEzNjMwMjk0LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.KZ1mtU4gSZo-e_3F37TLTyhQQEcwuDqB33_QxNsWDsg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/get-vaccines/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"get-vaccines",
+						""
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

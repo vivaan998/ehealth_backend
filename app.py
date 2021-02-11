@@ -10,7 +10,7 @@ from src.Authentication.authenticate import LoginAPI
 from src.Common.common import MenuAPI, GetPatientsAPI, GetPractitionersAPI, GetProvidersAPI, GetVaccinesAPI, \
     SuperuserPatientsAPI, SuperuserPractitionersAPI
 from flask_restful import Api
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 
 # 'postgresql://vivek:vivek@localhost:5432/eHealth'
