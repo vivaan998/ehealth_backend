@@ -13,7 +13,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4Njk3MDksIm5iZiI6MTYxMjg2OTcwOSwianRpIjoiZGNiYWQyNDQtNGM3YS00MzMyLWEwYzUtODU3NTNmNDVhNTU1IiwiZXhwIjoxNjEzNDc0NTA5LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.008vd69JXQVhyFtXQHd863GTbatj_E-5j8Q-5XNpZvA",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMwNDIzNTAsIm5iZiI6MTYxMzA0MjM1MCwianRpIjoiOGUwNjFmZTEtMmEyMi00YmYyLWFhZDQtZGNlMTc5YmQ3NDQ1IiwiZXhwIjoxNjEzNjQ3MTUwLCJpZGVudGl0eSI6eyJpZCI6NiwiZW1haWwiOiJvbW5hdGhhbmlAZ21haWwuY29tIiwicm9sZSI6MH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.xO1n7_WF52J9LLWk3tQnIhHJqA2z2SGBwKE3WErfngg",
 							"type": "string"
 						}
 					]
@@ -44,7 +44,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"superadmin@gmail.com\",\n    \"password\": \"superadmin\"\n}",
+					"raw": "{\n    \"email\": \"omnathani@gmail.com\",\n    \"password\": \"omnathani\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -263,7 +263,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"first_name\": \"Janvi\",\n    \"last_name\": \"Jani\",\n    \"email_tx\": \"Janvi@gmail.com\",\n    \"ic_card_tx\": \"12IJ-ab23-scs23a\",\n    \"provider_id\": 1,\n    \"practitioner_id\": 2,\n    \"password\": \"janvi\"\n}",
+					"raw": "{\n    \"first_name\": \"Hansa\",\n    \"last_name\": \"Nathani\",\n    \"email_tx\": \"vivek998@gmail.com\",\n    \"ic_card_tx\": \"xyz-ab23-scs23a\",\n    \"provider_id\": 1,\n    \"practitioner_id\": 2,\n    \"password\": \"hansa\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -408,7 +408,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/api/v1/get-practitioners/4",
+					"raw": "http://localhost:5000/api/v1/get-practitioners/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -418,7 +418,7 @@
 						"api",
 						"v1",
 						"get-practitioners",
-						"4"
+						"1"
 					]
 				}
 			},
@@ -547,6 +547,86 @@
 						"v1",
 						"get-vaccines",
 						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Immunization",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMwNDIzNTAsIm5iZiI6MTYxMzA0MjM1MCwianRpIjoiOGUwNjFmZTEtMmEyMi00YmYyLWFhZDQtZGNlMTc5YmQ3NDQ1IiwiZXhwIjoxNjEzNjQ3MTUwLCJpZGVudGl0eSI6eyJpZCI6NiwiZW1haWwiOiJvbW5hdGhhbmlAZ21haWwuY29tIiwicm9sZSI6MH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.xO1n7_WF52J9LLWk3tQnIhHJqA2z2SGBwKE3WErfngg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"patient_id\": 5,\n    \"practitioner_id\": 2,\n    \"provider_id\": 1,\n    \"vaccine_id\": 1,\n    \"administered_dt\": \"2021-02-11 15:53:10.579394\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/immunizations/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"immunizations",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Immunizations",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMwNDIzNTAsIm5iZiI6MTYxMzA0MjM1MCwianRpIjoiOGUwNjFmZTEtMmEyMi00YmYyLWFhZDQtZGNlMTc5YmQ3NDQ1IiwiZXhwIjoxNjEzNjQ3MTUwLCJpZGVudGl0eSI6eyJpZCI6NiwiZW1haWwiOiJvbW5hdGhhbmlAZ21haWwuY29tIiwicm9sZSI6MH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.xO1n7_WF52J9LLWk3tQnIhHJqA2z2SGBwKE3WErfngg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/immunizations/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"immunizations",
+						""
+					],
+					"query": [
+						{
+							"key": "search",
+							"value": "ssg",
+							"disabled": true
+						}
 					]
 				}
 			},
