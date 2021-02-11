@@ -2,9 +2,8 @@ import sqlalchemy.orm.exc as ex
 from sqlalchemy.sql import func
 from sqlalchemy.ext.declarative import declarative_base
 from config import db
-from sqlalchemy import or_
+from sqlalchemy import or_, desc, asc
 from werkzeug.security import generate_password_hash, check_password_hash
-from sqlalchemy.ext.hybrid import hybrid_property
 
 Base = declarative_base()
 metadata = Base.metadata
@@ -40,51 +39,52 @@ class Patient(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    def update(self, data):
-        for key, item in data.items():
-            setattr(self, key, item)
+    def update(self):
+        self.active_fl = 0
         self.update_dt = func.now()
         db.session.commit()
 
     @staticmethod
     def get_all(page, search):
         if not search:
-            return Patient.query.paginate(int(page), PER_PAGE, error_out=True)
+            return Patient.query.filter(Patient.active_fl == True).order_by(desc(Patient.created_dt)).\
+                paginate(int(page), PER_PAGE, error_out=True)
         else:
             search = search.lower()
             return Patient.query.filter(or_(func.lower(Patient.first_name).contains(search),
-                                            func.lower(Patient.last_name.contains(search)),
-                                            func.lower(Patient.email_tx.contains(search)),
-                                            func.lower(Patient.ic_card_tx.contains(search))),
-                                        Patient.active_fl == True).paginate(int(page), PER_PAGE, error_out=True)
+                                            func.lower(Patient.last_name).contains(search),
+                                            func.lower(Patient.email_tx).contains(search),
+                                            func.lower(Patient.ic_card_tx).contains(search)),
+                                        Patient.active_fl == True).order_by(desc(Patient.created_dt)). \
+                paginate(int(page), PER_PAGE, error_out=True)
 
     @staticmethod
     def get_patient_by_providers(page, search, provider_id):
         if not search:
             return Patient.query.filter(Patient.provider_id == provider_id, Patient.active_fl == True). \
-                paginate(int(page), PER_PAGE, error_out=True)
+                order_by(desc(Patient.created_dt)).paginate(int(page), PER_PAGE, error_out=True)
         else:
             search = search.lower()
-            return Practitioner.query.filter(or_(func.lower(Patient.first_name.contains(search)),
-                                                 func.lower(Patient.last_name.contains(search)),
-                                                 func.lower(Patient.email_tx.contains(search)),
-                                                 func.lower(Patient.ic_card_tx.contains(search))),
+            return Practitioner.query.filter(or_(func.lower(Patient.first_name).contains(search),
+                                                 func.lower(Patient.last_name).contains(search),
+                                                 func.lower(Patient.email_tx).contains(search),
+                                                 func.lower(Patient.ic_card_tx).contains(search)),
                                              Patient.provider_id == provider_id, Patient.active_fl == True). \
-                paginate(int(page), PER_PAGE, error_out=True)
+                order_by(desc(Patient.created_dt)).paginate(int(page), PER_PAGE, error_out=True)
 
     @staticmethod
     def get_patient_by_practitioners(page, search, practitioner_id):
         if not search:
             return Patient.query.filter(Patient.practitioner_id == practitioner_id, Patient.active_fl == True). \
-                paginate(int(page), PER_PAGE, error_out=True)
+                order_by(desc(Patient.created_dt)).paginate(int(page), PER_PAGE, error_out=True)
         else:
             search = search.lower()
-            return Practitioner.query.filter(or_(func.lower(Patient.first_name.contains(search)),
-                                                 func.lower(Patient.last_name.contains(search)),
-                                                 func.lower(Patient.email_tx.contains(search)),
-                                                 func.lower(Patient.ic_card_tx.contains(search))),
+            return Practitioner.query.filter(or_(func.lower(Patient.first_name).contains(search),
+                                                 func.lower(Patient.last_name).contains(search),
+                                                 func.lower(Patient.email_tx).contains(search),
+                                                 func.lower(Patient.ic_card_tx).contains(search)),
                                              Patient.practitioner_id == practitioner_id, Patient.active_fl == True). \
-                paginate(int(page), PER_PAGE, error_out=True)
+                order_by(desc(Patient.created_dt)).paginate(int(page), PER_PAGE, error_out=True)
 
     @staticmethod
     def get(practitioner_id):
@@ -96,7 +96,7 @@ class Patient(db.Model):
 
     @staticmethod
     def get_by_email(patient_email):
-        return Patient.query.filter(Patient.email_tx == patient_email).all()
+        return Patient.query.filter(Patient.email_tx == patient_email, Patient.active_fl == True).all()
 
 
 class Practitioner(db.Model):
@@ -129,39 +129,38 @@ class Practitioner(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    def update(self, data):
-        for key, item in data.items():
-            setattr(self, key, item)
+    def update(self):
+        self.active_fl = 0
         self.update_dt = func.now()
         db.session.commit()
 
     @staticmethod
     def get_all(page, search):
         if not search:
-            return Practitioner.query.filter(Practitioner.active_fl == True).paginate(int(page), PER_PAGE,
-                                                                                      error_out=True)
+            return Practitioner.query.filter(Practitioner.active_fl == True).order_by(asc(Practitioner.first_name)).\
+                paginate(int(page), PER_PAGE, error_out=True)
         else:
             search = search.lower()
-            return Practitioner.query.filter(or_(func.lower(Practitioner.first_name.contains(search)),
-                                                 func.lower(Practitioner.last_name.contains(search)),
-                                                 func.lower(Practitioner.email_tx.contains(search)),
-                                                 func.lower(Practitioner.ic_card_tx.contains(search))),
-                                             Practitioner.active_fl == True).paginate(int(page), PER_PAGE,
-                                                                                      error_out=True)
+            return Practitioner.query.filter(or_(func.lower(Practitioner.first_name).contains(search),
+                                                 func.lower(Practitioner.last_name).contains(search),
+                                                 func.lower(Practitioner.email_tx).contains(search),
+                                                 func.lower(Practitioner.ic_card_tx).contains(search)),
+                                             Practitioner.active_fl == True).order_by(asc(Practitioner.first_name)).\
+                paginate(int(page), PER_PAGE, error_out=True)
 
     @staticmethod
     def get_practitioners_by_providers(page, search, provider_id):
         if not search:
             return Practitioner.query.filter(Practitioner.provider_id == provider_id, Practitioner.active_fl == True). \
-                paginate(int(page), PER_PAGE, error_out=True)
+                order_by(asc(Practitioner.first_name)).paginate(int(page), PER_PAGE, error_out=True)
         else:
             search = search.lower()
-            return Practitioner.query.filter(or_(func.lower(Practitioner.first_name.contains(search)),
-                                                 func.lower(Practitioner.last_name.contains(search)),
-                                                 func.lower(Practitioner.email_tx.contains(search)),
-                                                 func.lower(Practitioner.ic_card_tx.contains(search))),
+            return Practitioner.query.filter(or_(func.lower(Practitioner.first_name).contains(search),
+                                                 func.lower(Practitioner.last_name).contains(search),
+                                                 func.lower(Practitioner.email_tx).contains(search),
+                                                 func.lower(Practitioner.ic_card_tx).contains(search)),
                                              Practitioner.provider_id == provider_id, Practitioner.active_fl == True). \
-                paginate(int(page), PER_PAGE, error_out=True)
+                order_by(asc(Practitioner.first_name)).paginate(int(page), PER_PAGE, error_out=True)
 
     @staticmethod
     def get(provider_id):
@@ -173,7 +172,8 @@ class Practitioner(db.Model):
 
     @staticmethod
     def get_by_email(practitioner_email):
-        return Practitioner.query.filter(Practitioner.email_tx == practitioner_email).all()
+        return Practitioner.query.filter(Practitioner.email_tx == practitioner_email, Practitioner.active_fl == True).\
+            all()
 
 
 class Provider(db.Model):
@@ -199,21 +199,22 @@ class Provider(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    def update(self, data):
-        for key, item in data.items():
-            setattr(self, key, item)
+    def update(self):
+        self.active_fl = 0
         self.update_dt = func.now()
         db.session.commit()
 
     @staticmethod
     def get_all(page, search):
         if not search:
-            return Provider.query.filter(Provider.active_fl == True).paginate(int(page), PER_PAGE, error_out=True)
+            return Provider.query.filter(Provider.active_fl == True).order_by(asc(Provider.name_tx)).paginate(
+                int(page), PER_PAGE, error_out=True)
         else:
             search = search.lower()
-            return Provider.query.filter(or_(func.lower(Provider.name_tx.contains(search)),
-                                             func.lower(Provider.site_admin_email.contains(search))),
-                                         Provider.active_fl == True).paginate(int(page), PER_PAGE, error_out=True)
+            return Provider.query.filter(or_(func.lower(Provider.name_tx).contains(search),
+                                             func.lower(Provider.site_admin_email).contains(search)),
+                                         Provider.active_fl == True).order_by(asc(Provider.name_tx)).\
+                paginate(int(page), PER_PAGE, error_out=True)
 
     @staticmethod
     def get_one(provider_id):
@@ -225,7 +226,7 @@ class Provider(db.Model):
 
     @staticmethod
     def get_by_email(provider_email):
-        return Provider.query.filter(Provider.site_admin_email == provider_email).all()
+        return Provider.query.filter(Provider.site_admin_email == provider_email, Provider.active_fl == True).all()
 
 
 class Vaccine(db.Model):
@@ -250,21 +251,22 @@ class Vaccine(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    def update(self, data):
-        for key, item in data.items():
-            setattr(self, key, item)
+    def update(self):
+        self.active_fl = 0
         self.update_dt = func.now()
         db.session.commit()
 
     @staticmethod
     def get_all(page, search):
         if not search:
-            return Vaccine.query.filter(Vaccine.active_fl == True).paginate(int(page), PER_PAGE, error_out=True)
+            return Vaccine.query.filter(Vaccine.active_fl == True).order_by(asc(Vaccine.name_tx)).\
+                paginate(int(page), PER_PAGE, error_out=True)
         else:
             search = search.lower()
             return Vaccine.query.filter(or_(func.lower(Vaccine.name_tx).contains(search),
                                             func.lower(Vaccine.description_tx).contains(search)),
-                                        Vaccine.active_fl == True).paginate(int(page), PER_PAGE, error_out=True)
+                                        Vaccine.active_fl == True).order_by(asc(Vaccine.name_tx)).\
+                paginate(int(page), PER_PAGE, error_out=True)
 
     @staticmethod
     def get_one(vaccine_id):
@@ -296,9 +298,8 @@ class Appointment(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    def update(self, data):
-        for key, item in data.items():
-            setattr(self, key, item)
+    def update(self):
+        self.active_fl = 0
         self.update_dt = func.now()
         db.session.commit()
 
@@ -335,9 +336,8 @@ class Immunization(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    def update(self, data):
-        for key, item in data.items():
-            setattr(self, key, item)
+    def update(self):
+        self.active_fl = 0
         self.update_dt = func.now()
         db.session.commit()
 
@@ -348,7 +348,7 @@ class Immunization(db.Model):
                 join(Vaccine, Immunization.vaccine_id == Vaccine.vaccine_id). \
                 join(Practitioner, Immunization.practitioner_id == Practitioner.practitioner_id). \
                 join(Provider, Immunization.provider_id == Provider.provider_id).filter(Immunization.active_fl == True). \
-                paginate(int(page), PER_PAGE, error_out=True)
+                order_by(desc(Immunization.created_dt)).paginate(int(page), PER_PAGE, error_out=True)
         else:
             search = search.lower()
             query = db.session.query(Immunization).join(Patient, Immunization.patient_id == Patient.patient_id). \
@@ -359,7 +359,8 @@ class Immunization(db.Model):
                            func.lower(Provider.name_tx).contains(search),
                            func.lower(Practitioner.first_name).contains(search),
                            func.lower(Vaccine.name_tx).contains(search)),
-                       Immunization.active_fl == True).paginate(int(page), PER_PAGE, error_out=True)
+                       Immunization.active_fl == True).order_by(desc(Immunization.created_dt)).\
+                paginate(int(page), PER_PAGE, error_out=True)
         return [{
             "immunization_id": model.immunization_id,
             "patient_id": model.patient_id,
@@ -385,7 +386,7 @@ class Immunization(db.Model):
                 join(Practitioner, Immunization.practitioner_id == Practitioner.practitioner_id). \
                 join(Provider, Immunization.provider_id == Provider.provider_id).\
                 filter(Immunization.active_fl == True, Immunization.provider_id == provider_id). \
-                paginate(int(page), PER_PAGE, error_out=True)
+                order_by(desc(Immunization.created_dt)).paginate(int(page), PER_PAGE, error_out=True)
         else:
             search = search.lower()
             query = db.session.query(Immunization).join(Patient, Immunization.patient_id == Patient.patient_id). \
@@ -396,7 +397,7 @@ class Immunization(db.Model):
                            func.lower(Practitioner.first_name).contains(search),
                            func.lower(Vaccine.name_tx).contains(search)),
                        Immunization.active_fl == True, Immunization.provider_id == provider_id).\
-                paginate(int(page), PER_PAGE, error_out=True)
+                order_by(desc(Immunization.created_dt)).paginate(int(page), PER_PAGE, error_out=True)
         return [{
             "immunization_id": model.immunization_id,
             "patient_id": model.patient_id,
@@ -418,7 +419,7 @@ class Immunization(db.Model):
                 join(Practitioner, Immunization.practitioner_id == Practitioner.practitioner_id). \
                 join(Provider, Immunization.provider_id == Provider.provider_id).\
                 filter(Immunization.active_fl == True, Immunization.practitioner_id == practitioner_id). \
-                paginate(int(page), PER_PAGE, error_out=True)
+                order_by(desc(Immunization.created_dt)).paginate(int(page), PER_PAGE, error_out=True)
         else:
             search = search.lower()
             query = db.session.query(Immunization).join(Patient, Immunization.patient_id == Patient.patient_id). \
@@ -428,7 +429,7 @@ class Immunization(db.Model):
                 filter(or_(func.lower(Patient.first_name).contains(search),
                            func.lower(Vaccine.name_tx).contains(search)),
                        Immunization.active_fl == True, Immunization.practitioner_id == practitioner_id).\
-                paginate(int(page), PER_PAGE, error_out=True)
+                order_by(desc(Immunization.created_dt)).paginate(int(page), PER_PAGE, error_out=True)
         return [{
             "immunization_id": model.immunization_id,
             "patient_id": model.patient_id,
@@ -449,8 +450,7 @@ class Immunization(db.Model):
             join(Practitioner, Immunization.practitioner_id == Practitioner.practitioner_id). \
             join(Provider, Immunization.provider_id == Provider.provider_id). \
             filter(Immunization.active_fl == True, Immunization.patient_id == patient_id).\
-            paginate(int(page), PER_PAGE, error_out=True)
-
+            order_by(desc(Immunization.created_dt)).paginate(int(page), PER_PAGE, error_out=True)
         return [{
             "immunization_id": model.immunization_id,
             "patient_id": model.patient_id,

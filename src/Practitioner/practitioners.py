@@ -81,3 +81,26 @@ class PractitionersAPI(Resource):
             raise BadRequestException('Request data in not proper format.')
         except Exception as e:
             raise ServerException('There is some error, please contact support')
+
+    @jwt_required
+    def put(self):
+        try:
+            user = get_jwt_identity()
+            data = request.get_json()
+            if user['role'] < 50:
+                raise UnAuthorizedException('You are not authorized')
+
+            practitioner = Practitioner.get_one(data['practitioner_id'])
+
+            if practitioner:
+                practitioner.update()
+                return make_response(jsonify({'message': 'Practitioner archived successfully'}), 202)
+            else:
+                raise BadRequestException('No such practitioner found')
+
+        except UnAuthorizedException as e:
+            raise UnAuthorizedException(e.error)
+        except BadRequestException as e:
+            raise BadRequestException(e.error)
+        except Exception as e:
+            raise ServerException('There is some error, please contact support')

@@ -75,3 +75,26 @@ class ImmunizationAPI(Resource):
             raise BadRequestException('Request data in not proper format.')
         except Exception as e:
             raise ServerException('There is some error, please contact support')
+
+    @jwt_required
+    def put(self):
+        try:
+            user = get_jwt_identity()
+            data = request.get_json()
+            if user['role'] < 10:
+                raise UnAuthorizedException('You are not authorized')
+
+            immunization = Immunization.get_one(data['immunization_id'])
+
+            if immunization:
+                immunization.update()
+                return make_response(jsonify({'message': 'Immunization archived successfully'}), 202)
+            else:
+                raise BadRequestException('No such immunization found')
+
+        except UnAuthorizedException as e:
+            raise UnAuthorizedException(e.error)
+        except BadRequestException as e:
+            raise BadRequestException(e.error)
+        except Exception as e:
+            raise ServerException('There is some error, please contact support')

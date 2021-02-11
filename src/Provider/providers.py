@@ -76,3 +76,26 @@ class ProvidersAPI(Resource):
             raise BadRequestException('Request data in not proper format.')
         except Exception as e:
             raise ServerException('There is some error, please contact support')
+
+    @jwt_required
+    def put(self):
+        try:
+            user = get_jwt_identity()
+            data = request.get_json()
+            if user['role'] < 100:
+                raise UnAuthorizedException('You are not authorized')
+
+            provider = Provider.get_one(data['provider_id'])
+
+            if provider:
+                provider.update()
+                return make_response(jsonify({'message': 'Provider archived successfully'}), 202)
+            else:
+                raise BadRequestException('No such provider found')
+
+        except UnAuthorizedException as e:
+            raise UnAuthorizedException(e.error)
+        except BadRequestException as e:
+            raise BadRequestException(e.error)
+        except Exception as e:
+            raise ServerException('There is some error, please contact support')
