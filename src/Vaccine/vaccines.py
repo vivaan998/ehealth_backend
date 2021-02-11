@@ -22,13 +22,12 @@ class VaccinesAPI(Resource):
             if user['role'] != 100:
                 raise UnAuthorizedException('You are not authorized')
 
-            vaccine = Vaccine.get_all(page, search)
-            if vaccine:
-                prev_page, next_page = pagination('vaccines', vaccine, search)
+            vaccines = Vaccine.get_all(page, search)
+            if vaccines:
                 return make_response(jsonify({
-                    "previous_page": prev_page,
-                    "next_page": next_page,
-                    "result": VACCINE_SCHEMA.dump(vaccine.items, many=True)
+                    "previous_page": vaccines.prev_num,
+                    "next_page": vaccines.next_num,
+                    "result": VACCINE_SCHEMA.dump(vaccines.items, many=True)
                 }), 200)
             else:
                 return make_response(jsonify([]), 200)

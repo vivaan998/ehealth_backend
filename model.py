@@ -268,6 +268,9 @@ class Vaccine(db.Model):
     def get_one(vaccine_id):
         return Vaccine.query.get(vaccine_id)
 
+    @staticmethod
+    def get():
+        return Vaccine.query.filter(Vaccine.active_fl == True).all()
 
 class Appointment(db.Model):
     __tablename__ = 'Appointment'

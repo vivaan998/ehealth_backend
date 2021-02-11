@@ -1,7 +1,7 @@
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import make_response, jsonify, request
-from model import Users, RolePermission, Provider, Practitioner, Patient
+from model import Users, RolePermission, Provider, Practitioner, Patient, Vaccine
 from src.excecptions.app_exception import ServerException, UnAuthorizedException
 from serializer import PractitionerSchema, PatientSchema
 
@@ -64,7 +64,7 @@ class GetPractitionersAPI(Resource):
 
         except Exception as e:
             raise ServerException('There is some error, please contact support')
-        
+
 
 class GetPatientsAPI(Resource):
 
@@ -80,6 +80,27 @@ class GetPatientsAPI(Resource):
                         "patient_id": patient.patient_id,
                         "practitioner_id": patient.practitioner_id,
                         "provider_id": patient.provider_id
+                    })
+                return make_response(jsonify({'data': result}), 200)
+            else:
+                return make_response(jsonify([]), 200)
+
+        except Exception as e:
+            raise ServerException('There is some error, please contact support')
+
+
+class GetVaccinesAPI(Resource):
+
+    @jwt_required
+    def get(self):
+        try:
+            vaccines = Vaccine.get()
+            result = []
+            if vaccines:
+                for vaccine in vaccines:
+                    result.append({
+                        "name": vaccine.name_tx,
+                        "vaccine_id": vaccine.vaccine_id,
                     })
                 return make_response(jsonify({'data': result}), 200)
             else:
