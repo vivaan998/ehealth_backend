@@ -401,18 +401,25 @@ class Users(db.Model):
     def get_name(role, email):
         try:
             if role == 50:
-                name = Provider.get_by_email(email)[0].name_tx
+                provider = Provider.get_by_email(email)[0]
+                name = provider.name_tx
                 designation = 'Provider'
+                user_id = provider.provider_id
             elif role == 10:
-                name = Practitioner.get_by_email(email)[0].first_name + " " + Practitioner.get_by_email(email)[0].last_name
+                practitioner = Practitioner.get_by_email(email)[0]
+                name = practitioner.first_name + " " + practitioner.last_name
                 designation = 'Practitioner'
+                user_id = practitioner.practitioner_id
             elif role == 0:
-                name = Patient.get_by_email(email)[0].first_name + " " + Patient.get_by_email(email)[0].last_name
+                patient = Patient.get_by_email(email)[0]
+                name = patient.first_name + " " + patient.last_name
                 designation = 'Patient'
+                user_id = patient.patient_id
             else:
                 name = 'Super User'
                 designation = 'Admin'
-            return name, designation
+                user_id = 1
+            return name, designation, user_id
         except ex.NoResultFound:
             raise Exception('No user found')
 
