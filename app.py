@@ -4,12 +4,12 @@ from config import db, POSTGRES_DB_URL
 from flask_jwt_extended import JWTManager
 from src.Provider.providers import ProvidersAPI
 from src.Practitioner.practitioners import PractitionersAPI
-from src.Patients.patients import PatientsAPI
+from src.Patient.patients import PatientsAPI
 from src.Vaccine.vaccines import VaccinesAPI
 from src.Authentication.authenticate import LoginAPI
 from src.Common.common import MenuAPI, GetPatientsAPI, GetPractitionersAPI, GetProvidersAPI, GetVaccinesAPI, \
     SuperuserPatientsAPI, SuperuserPractitionersAPI
-from src.Immunization.immunization import ImmunizationAPI
+from src.Immunization.immunizations import ImmunizationAPI
 from flask_restful import Api
 from flask_cors import CORS, cross_origin
 
