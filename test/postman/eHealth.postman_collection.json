@@ -13,7 +13,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMwNDIzNTAsIm5iZiI6MTYxMzA0MjM1MCwianRpIjoiOGUwNjFmZTEtMmEyMi00YmYyLWFhZDQtZGNlMTc5YmQ3NDQ1IiwiZXhwIjoxNjEzNjQ3MTUwLCJpZGVudGl0eSI6eyJpZCI6NiwiZW1haWwiOiJvbW5hdGhhbmlAZ21haWwuY29tIiwicm9sZSI6MH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.xO1n7_WF52J9LLWk3tQnIhHJqA2z2SGBwKE3WErfngg",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4NTgzMTUsIm5iZiI6MTYxMjg1ODMxNSwianRpIjoiZDc3YTE2Y2ItM2Y4Ni00NjUzLWIwY2UtNWVjZDUwNDFjMDhjIiwiZXhwIjoxNjEzNDYzMTE1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0meWLvQfe4VKewJktRaXebVOhiWiEdYkINHEmwuMPGw",
 							"type": "string"
 						}
 					]
@@ -601,7 +601,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMwNDIzNTAsIm5iZiI6MTYxMzA0MjM1MCwianRpIjoiOGUwNjFmZTEtMmEyMi00YmYyLWFhZDQtZGNlMTc5YmQ3NDQ1IiwiZXhwIjoxNjEzNjQ3MTUwLCJpZGVudGl0eSI6eyJpZCI6NiwiZW1haWwiOiJvbW5hdGhhbmlAZ21haWwuY29tIiwicm9sZSI6MH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.xO1n7_WF52J9LLWk3tQnIhHJqA2z2SGBwKE3WErfngg",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4NTgzMTUsIm5iZiI6MTYxMjg1ODMxNSwianRpIjoiZDc3YTE2Y2ItM2Y4Ni00NjUzLWIwY2UtNWVjZDUwNDFjMDhjIiwiZXhwIjoxNjEzNDYzMTE1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0meWLvQfe4VKewJktRaXebVOhiWiEdYkINHEmwuMPGw",
 							"type": "string"
 						}
 					]
@@ -627,6 +627,211 @@
 							"value": "ssg",
 							"disabled": true
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Archive Patient",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4NTgzMTUsIm5iZiI6MTYxMjg1ODMxNSwianRpIjoiZDc3YTE2Y2ItM2Y4Ni00NjUzLWIwY2UtNWVjZDUwNDFjMDhjIiwiZXhwIjoxNjEzNDYzMTE1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0meWLvQfe4VKewJktRaXebVOhiWiEdYkINHEmwuMPGw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"patient_id\": 110\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/patients/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"patients",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Archive Practitioner",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4NTgzMTUsIm5iZiI6MTYxMjg1ODMxNSwianRpIjoiZDc3YTE2Y2ItM2Y4Ni00NjUzLWIwY2UtNWVjZDUwNDFjMDhjIiwiZXhwIjoxNjEzNDYzMTE1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0meWLvQfe4VKewJktRaXebVOhiWiEdYkINHEmwuMPGw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"practitioner_id\": 13\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/practitioners/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"practitioners",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Archive Provider",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4NTgzMTUsIm5iZiI6MTYxMjg1ODMxNSwianRpIjoiZDc3YTE2Y2ItM2Y4Ni00NjUzLWIwY2UtNWVjZDUwNDFjMDhjIiwiZXhwIjoxNjEzNDYzMTE1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0meWLvQfe4VKewJktRaXebVOhiWiEdYkINHEmwuMPGw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"provider_id\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/providers/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"providers",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Archive Immunization",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4NTgzMTUsIm5iZiI6MTYxMjg1ODMxNSwianRpIjoiZDc3YTE2Y2ItM2Y4Ni00NjUzLWIwY2UtNWVjZDUwNDFjMDhjIiwiZXhwIjoxNjEzNDYzMTE1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0meWLvQfe4VKewJktRaXebVOhiWiEdYkINHEmwuMPGw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"immunization_id\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/immunizations/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"immunizations",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Archive Vacccine",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4NTgzMTUsIm5iZiI6MTYxMjg1ODMxNSwianRpIjoiZDc3YTE2Y2ItM2Y4Ni00NjUzLWIwY2UtNWVjZDUwNDFjMDhjIiwiZXhwIjoxNjEzNDYzMTE1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0meWLvQfe4VKewJktRaXebVOhiWiEdYkINHEmwuMPGw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vaccine_id\": 5\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/vaccines/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"vaccines",
+						""
 					]
 				}
 			},
