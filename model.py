@@ -292,6 +292,7 @@ class Appointment(db.Model):
     def __init__(self, data):
         self.patient_id = data.get('patient_id')
         self.practitioner_id = data.get('practitioner_id')
+        self.provider_id = data.get('provider_id')
         self.appointment_date = data.get('appointment_date')
 
     def save(self):
@@ -304,8 +305,117 @@ class Appointment(db.Model):
         db.session.commit()
 
     @staticmethod
-    def get_all():
-        return Appointment.query.all()
+    def get_all(page, search):
+        if not search:
+            query = db.session.query(Appointment).join(Patient, Appointment.patient_id == Patient.patient_id). \
+                join(Practitioner, Appointment.practitioner_id == Practitioner.practitioner_id). \
+                join(Provider, Appointment.provider_id == Provider.provider_id).filter(Appointment.active_fl == True). \
+                order_by(asc(Appointment.appointment_date)).paginate(int(page), PER_PAGE, error_out=True)
+        else:
+            search = search.lower()
+            query = db.session.query(Appointment).join(Patient, Appointment.patient_id == Patient.patient_id). \
+                join(Practitioner, Appointment.practitioner_id == Practitioner.practitioner_id). \
+                join(Provider, Appointment.provider_id == Provider.provider_id).\
+                filter(or_(func.lower(Patient.first_name).contains(search),
+                           func.lower(Provider.name_tx).contains(search),
+                           func.lower(Practitioner.first_name).contains(search)),
+                       Appointment.active_fl == True).order_by(asc(Appointment.appointment_date)).\
+                paginate(int(page), PER_PAGE, error_out=True)
+
+        return [{
+            "appointment_id": model.appointment_id,
+            "patient_id": model.patient_id,
+            "practitioner_id": model.practitioner_id,
+            "provider_id": model.provider_id,
+            "appointment_date": model.appointment_date.strftime("%x"),
+            "appointment_time": model.appointment_date.strftime("%X"),
+            "patient": model.Patient.first_name + " " + model.Patient.last_name,
+            "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
+            "provider": model.Provider.name_tx,
+            "created_at": model.created_dt.strftime("%c")
+        } for model in query.items], query.next_num, query.prev_num
+
+    @staticmethod
+    def get_appointment_by_providers(page, search, provider_id):
+        if not search:
+            query = db.session.query(Appointment).join(Patient, Appointment.patient_id == Patient.patient_id). \
+                join(Practitioner, Appointment.practitioner_id == Practitioner.practitioner_id). \
+                join(Provider, Appointment.provider_id == Provider.provider_id).\
+                filter(Appointment.active_fl == True, Appointment.provider_id == provider_id). \
+                order_by(asc(Appointment.appointment_date)).paginate(int(page), PER_PAGE, error_out=True)
+        else:
+            search = search.lower()
+            query = db.session.query(Appointment).join(Patient, Appointment.patient_id == Patient.patient_id). \
+                join(Practitioner, Appointment.practitioner_id == Practitioner.practitioner_id). \
+                join(Provider, Appointment.provider_id == Provider.provider_id). \
+                filter(or_(func.lower(Patient.first_name).contains(search),
+                           func.lower(Practitioner.first_name).contains(search)),
+                       Appointment.active_fl == True, Appointment.provider_id == provider_id).\
+                order_by(asc(Appointment.appointment_date)).paginate(int(page), PER_PAGE, error_out=True)
+
+        return [{
+            "appointment_id": model.appointment_id,
+            "patient_id": model.patient_id,
+            "practitioner_id": model.practitioner_id,
+            "provider_id": model.provider_id,
+            "appointment_date": model.appointment_date.strftime("%x"),
+            "appointment_time": model.appointment_date.strftime("%X"),
+            "patient": model.Patient.first_name + " " + model.Patient.last_name,
+            "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
+            "provider": model.Provider.name_tx,
+            "created_at": model.created_dt.strftime("%c")
+        } for model in query.items], query.next_num, query.prev_num
+
+    @staticmethod
+    def get_appointment_by_practitioners(page, search, practitioner_id):
+        if not search:
+            query = db.session.query(Appointment).join(Patient, Appointment.patient_id == Patient.patient_id). \
+                join(Practitioner, Appointment.practitioner_id == Practitioner.practitioner_id). \
+                join(Provider, Appointment.provider_id == Provider.provider_id).\
+                filter(Appointment.active_fl == True, Appointment.practitioner_id == practitioner_id). \
+                order_by(asc(Appointment.appointment_date)).paginate(int(page), PER_PAGE, error_out=True)
+        else:
+            search = search.lower()
+            query = db.session.query(Appointment).join(Patient, Appointment.patient_id == Patient.patient_id). \
+                join(Practitioner, Appointment.practitioner_id == Practitioner.practitioner_id). \
+                join(Provider, Appointment.provider_id == Provider.provider_id). \
+                filter(or_(func.lower(Patient.first_name).contains(search)),
+                       Appointment.active_fl == True, Appointment.practitioner_id == practitioner_id).\
+                order_by(asc(Appointment.appointment_date)).paginate(int(page), PER_PAGE, error_out=True)
+
+        return [{
+            "appointment_id": model.appointment_id,
+            "patient_id": model.patient_id,
+            "practitioner_id": model.practitioner_id,
+            "provider_id": model.provider_id,
+            "appointment_date": model.appointment_date.strftime("%x"),
+            "appointment_time": model.appointment_date.strftime("%X"),
+            "patient": model.Patient.first_name + " " + model.Patient.last_name,
+            "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
+            "provider": model.Provider.name_tx,
+            "created_at": model.created_dt.strftime("%c")
+        } for model in query.items], query.next_num, query.prev_num
+
+    @staticmethod
+    def get_appointment_by_patients(page, patient_id):
+        query = db.session.query(Appointment).join(Patient, Appointment.patient_id == Patient.patient_id). \
+            join(Practitioner, Appointment.practitioner_id == Practitioner.practitioner_id). \
+            join(Provider, Appointment.provider_id == Provider.provider_id).\
+            filter(Appointment.active_fl == True, Appointment.patient_id == patient_id). \
+            order_by(asc(Appointment.appointment_date)).paginate(int(page), PER_PAGE, error_out=True)
+
+        return [{
+            "appointment_id": model.appointment_id,
+            "patient_id": model.patient_id,
+            "practitioner_id": model.practitioner_id,
+            "provider_id": model.provider_id,
+            "appointment_date": model.appointment_date.strftime("%x"),
+            "appointment_time": model.appointment_date.strftime("%X"),
+            "patient": model.Patient.first_name + " " + model.Patient.last_name,
+            "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
+            "provider": model.Provider.name_tx,
+            "created_at": model.created_dt.strftime("%c")
+        } for model in query.items], query.next_num, query.prev_num
 
     @staticmethod
     def get_one(appointment_id):
@@ -514,7 +624,18 @@ class Users(db.Model):
 
     @staticmethod
     def get_user(user_email):
-        return Users.query.filter(Users.user_email == user_email).all()
+        user = Users.query.filter(Users.user_email == user_email).all()[0]
+        if user.role == 0:
+            if Patient.get_by_email(user.user_email)[0]:
+                return user
+        elif user[0].role == 10:
+            if Practitioner.get_by_email(user.user_email)[0]:
+                return user
+        elif user[0].role == 50:
+            if Provider.get_by_email(user.user_email)[0]:
+                return user
+        else:
+            return None
 
     @staticmethod
     def get_name(role, email):
