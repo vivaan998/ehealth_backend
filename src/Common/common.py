@@ -1,7 +1,7 @@
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import make_response, jsonify, request
-from model import Users, RolePermission, Provider, Practitioner, Patient, Vaccine
+from model import Users, RolePermission, Provider, Practitioner, Patient, Vaccine, Appointment, Immunization
 from src.excecptions.app_exception import ServerException, UnAuthorizedException
 from serializer import PractitionerSchema, PatientSchema
 
@@ -155,6 +155,140 @@ class SuperuserPatientsAPI(Resource):
                     "previous_page": patients.prev_num,
                     "next_page": patients.next_num,
                     "result": PATIENTS_SCHEMA.dump(patients.items, many=True)
+                }), 200)
+            else:
+                return make_response(jsonify({"result": []}), 200)
+
+        except UnAuthorizedException as e:
+            raise UnAuthorizedException(e.error)
+        except Exception as e:
+            raise ServerException('There is some error, please contact support')
+
+
+class PractitionerAppointmentAPI(Resource):
+
+    @jwt_required
+    def get(self, practitioner_id):
+        try:
+            page = request.args.get('page', 1)
+            search = request.args.get('search', None)
+            user = get_jwt_identity()
+            if user['role'] < 50:
+                raise UnAuthorizedException('You are not authorized')
+
+            appointments, next_num, prev_num = Appointment.get_appointment_by_practitioners(page, search,
+                                                                                            practitioner_id)
+            if appointments:
+                return make_response(jsonify({
+                    "previous_page": prev_num,
+                    "next_page": next_num,
+                    "result": appointments
+                }), 200)
+            else:
+                return make_response(jsonify({"result": []}), 200)
+
+        except UnAuthorizedException as e:
+            raise UnAuthorizedException(e.error)
+        except Exception as e:
+            raise ServerException('There is some error, please contact support')
+
+
+class PractitionerImmunizationAPI(Resource):
+
+    @jwt_required
+    def get(self, practitioner_id):
+        try:
+            page = request.args.get('page', 1)
+            search = request.args.get('search', None)
+            user = get_jwt_identity()
+            if user['role'] < 50:
+                raise UnAuthorizedException('You are not authorized')
+
+            immunizations, next_num, prev_num = Immunization.get_immunization_by_practitioners(page, search, practitioner_id)
+            if immunizations:
+                return make_response(jsonify({
+                    "previous_page": prev_num,
+                    "next_page": next_num,
+                    "result": immunizations
+                }), 200)
+            else:
+                return make_response(jsonify({"result": []}), 200)
+
+        except UnAuthorizedException as e:
+            raise UnAuthorizedException(e.error)
+        except Exception as e:
+            raise ServerException('There is some error, please contact support')
+
+
+class VaccineAdministrationAPI(Resource):
+
+    @jwt_required
+    def get(self, vaccine_id):
+        try:
+            page = request.args.get('page', 1)
+            search = request.args.get('search', None)
+            user = get_jwt_identity()
+            if user['role'] != 100:
+                raise UnAuthorizedException('You are not authorized')
+
+            administered, next_num, prev_num = Immunization.get_vaccines_administered(page, search, vaccine_id)
+            if administered:
+                return make_response(jsonify({
+                    "previous_page": prev_num,
+                    "next_page": next_num,
+                    "result": administered
+                }), 200)
+            else:
+                return make_response(jsonify({"result": []}), 200)
+
+        except UnAuthorizedException as e:
+            raise UnAuthorizedException(e.error)
+        except Exception as e:
+            raise ServerException('There is some error, please contact support')
+
+
+class PatientAppointmentsAPI(Resource):
+
+    @jwt_required
+    def get(self, patient_id):
+        try:
+            page = request.args.get('page', 1)
+            user = get_jwt_identity()
+            if user['role'] < 10:
+                raise UnAuthorizedException('You are not authorized')
+
+            appointments, next_num, prev_num = Appointment.get_appointment_by_patients(page, patient_id)
+            if appointments:
+                return make_response(jsonify({
+                    "previous_page": prev_num,
+                    "next_page": next_num,
+                    "result": appointments
+                }), 200)
+            else:
+                return make_response(jsonify({"result": []}), 200)
+
+        except UnAuthorizedException as e:
+            raise UnAuthorizedException(e.error)
+        except Exception as e:
+            raise ServerException('There is some error, please contact support')
+
+
+class PatientImmunizationsAPI(Resource):
+
+    @jwt_required
+    def get(self, patient_id):
+        try:
+            page = request.args.get('page', 1)
+            user = get_jwt_identity()
+            if user['role'] < 10:
+                raise UnAuthorizedException('You are not authorized')
+
+            immunizations, next_num, prev_num = Immunization.get_immunization_by_patients(page, patient_id)
+            if immunizations:
+                return make_response(jsonify({
+                    "previous_page": prev_num,
+                    "next_page": next_num,
+                    "result": immunizations
                 }), 200)
             else:
                 return make_response(jsonify({"result": []}), 200)

@@ -8,7 +8,8 @@ from src.Patient.patients import PatientsAPI
 from src.Vaccine.vaccines import VaccinesAPI
 from src.Authentication.authenticate import LoginAPI
 from src.Common.common import MenuAPI, GetPatientsAPI, GetPractitionersAPI, GetProvidersAPI, GetVaccinesAPI, \
-    SuperuserPatientsAPI, SuperuserPractitionersAPI
+    SuperuserPatientsAPI, SuperuserPractitionersAPI, PractitionerAppointmentAPI, PractitionerImmunizationAPI, \
+    PatientImmunizationsAPI, PatientAppointmentsAPI, VaccineAdministrationAPI
 from src.Immunization.immunizations import ImmunizationAPI
 from src.Appointment.appointments import AppointmentsAPI
 from src.Vital.vitals import VitalsAPI
@@ -51,6 +52,11 @@ if __name__ == '__main__':
     api.add_resource(ImmunizationAPI, '/api/v1/immunizations/', endpoint='immunizations')
     api.add_resource(AppointmentsAPI, '/api/v1/appointments/', endpoint='appointments')
     api.add_resource(VitalsAPI, '/api/v1/vitals/', endpoint='vitals')
+    api.add_resource(PractitionerAppointmentAPI, '/api/v1/get-appointments-practitioner/<practitioner_id>')
+    api.add_resource(PractitionerImmunizationAPI, '/api/v1/get-immunizations-practitioner/<practitioner_id>')
+    api.add_resource(PatientAppointmentsAPI, '/api/v1/get-appointments-patient/<patient_id>')
+    api.add_resource(PatientImmunizationsAPI, '/api/v1/get-immunizations-patient/<patient_id>')
+    api.add_resource(VaccineAdministrationAPI, '/api/v1/vaccine-administered-to/<vaccine_id>')
 
     @app.errorhandler(AppException)
     def app_error(err):

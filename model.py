@@ -604,6 +604,43 @@ class Immunization(db.Model):
         else:
             return [], None, None
 
+    @staticmethod
+    def get_vaccines_administered(page, search, vaccine_id):
+        if not search:
+            query = db.session.query(Immunization).join(Patient, Immunization.patient_id == Patient.patient_id). \
+                join(Vaccine, Immunization.vaccine_id == Vaccine.vaccine_id). \
+                join(Practitioner, Immunization.practitioner_id == Practitioner.practitioner_id). \
+                join(Provider, Immunization.provider_id == Provider.provider_id). \
+                filter(Immunization.active_fl == True, Immunization.vaccine_id == vaccine_id). \
+                order_by(desc(Immunization.created_dt)).paginate(int(page), PER_PAGE, error_out=True)
+        else:
+            search = search.lower()
+            query = db.session.query(Immunization).join(Patient, Immunization.patient_id == Patient.patient_id). \
+                join(Vaccine, Immunization.vaccine_id == Vaccine.vaccine_id). \
+                join(Practitioner, Immunization.practitioner_id == Practitioner.practitioner_id). \
+                join(Provider, Immunization.provider_id == Provider.provider_id). \
+                filter(or_(func.lower(Patient.first_name).contains(search),
+                           func.lower(Practitioner.first_name).contains(search),
+                           func.lower(Provider.name_tx).contains(search)),
+                       Immunization.active_fl == True, Immunization.vaccine_id == vaccine_id). \
+                order_by(desc(Immunization.created_dt)).paginate(int(page), PER_PAGE, error_out=True)
+
+        if query.items:
+            return [{
+                "immunization_id": model.immunization_id,
+                "patient_id": model.patient_id,
+                "practitioner_id": model.practitioner_id,
+                "provider_id": model.provider_id,
+                "vaccine_id": model.vaccine_id,
+                "administered_dt": model.administered_dt,
+                "patient": model.Patient.first_name + " " + model.Patient.last_name,
+                "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
+                "provider": model.Provider.name_tx,
+                "vaccine": model.Vaccine.name_tx,
+            } for model in query.items], query.next_num, query.prev_num
+        else:
+            return [], None, None
+
 
 class Permissions(db.Model):
     __tablename__ = 'Permissions'

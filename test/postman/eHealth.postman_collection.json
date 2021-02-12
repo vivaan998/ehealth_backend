@@ -44,7 +44,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"appoloadmin@gmail.com\",\n    \"password\": \"appoloadmin\"\n}",
+					"raw": "{\n    \"email\": \"superadmin@gmail.com\",\n    \"password\": \"superadmin\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1071,6 +1071,166 @@
 						"v1",
 						"vitals",
 						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Appointments of given practitioner",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMxMTgxODYsIm5iZiI6MTYxMzExODE4NiwianRpIjoiNWQ5YTJmZmItMGQyMi00Y2ExLTlhZTgtNjUxMjhiZDNkZjI5IiwiZXhwIjoxNjEzNzIyOTg2LCJpZGVudGl0eSI6eyJpZCI6MTEsImVtYWlsIjoiYXBwb2xvYWRtaW5AZ21haWwuY29tIiwicm9sZSI6NTB9LCJmcmVzaCI6ZmFsc2UsInR5cGUiOiJhY2Nlc3MifQ.nL8PLaLc5OyabMxypP0RJ3m8DbGyYNe-th1422eP7wY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/get-appointments-practitioner/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"get-appointments-practitioner",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Appointment of given patient",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMxMTgxODYsIm5iZiI6MTYxMzExODE4NiwianRpIjoiNWQ5YTJmZmItMGQyMi00Y2ExLTlhZTgtNjUxMjhiZDNkZjI5IiwiZXhwIjoxNjEzNzIyOTg2LCJpZGVudGl0eSI6eyJpZCI6MTEsImVtYWlsIjoiYXBwb2xvYWRtaW5AZ21haWwuY29tIiwicm9sZSI6NTB9LCJmcmVzaCI6ZmFsc2UsInR5cGUiOiJhY2Nlc3MifQ.nL8PLaLc5OyabMxypP0RJ3m8DbGyYNe-th1422eP7wY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/get-appointments-patient/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"get-appointments-patient",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Immunization of given patient",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMxMTgxODYsIm5iZiI6MTYxMzExODE4NiwianRpIjoiNWQ5YTJmZmItMGQyMi00Y2ExLTlhZTgtNjUxMjhiZDNkZjI5IiwiZXhwIjoxNjEzNzIyOTg2LCJpZGVudGl0eSI6eyJpZCI6MTEsImVtYWlsIjoiYXBwb2xvYWRtaW5AZ21haWwuY29tIiwicm9sZSI6NTB9LCJmcmVzaCI6ZmFsc2UsInR5cGUiOiJhY2Nlc3MifQ.nL8PLaLc5OyabMxypP0RJ3m8DbGyYNe-th1422eP7wY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/get-immunizations-patient/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"get-immunizations-patient",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Immunization of given practitioner",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMxMTgxODYsIm5iZiI6MTYxMzExODE4NiwianRpIjoiNWQ5YTJmZmItMGQyMi00Y2ExLTlhZTgtNjUxMjhiZDNkZjI5IiwiZXhwIjoxNjEzNzIyOTg2LCJpZGVudGl0eSI6eyJpZCI6MTEsImVtYWlsIjoiYXBwb2xvYWRtaW5AZ21haWwuY29tIiwicm9sZSI6NTB9LCJmcmVzaCI6ZmFsc2UsInR5cGUiOiJhY2Nlc3MifQ.nL8PLaLc5OyabMxypP0RJ3m8DbGyYNe-th1422eP7wY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/get-immunizations-practitioner/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"get-immunizations-practitioner",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vaccine administered to",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMxNDI4MjgsIm5iZiI6MTYxMzE0MjgyOCwianRpIjoiYTBiODc2ZmYtMzczYi00YjQ3LWE2NDUtMWJlNmQwOTM3NjhiIiwiZXhwIjoxNjEzNzQ3NjI4LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.QIhMIiPPXwHw2FhYLGsEoO8nLRQcQVALKvquCNHxvPI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/vaccine-administered-to/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"vaccine-administered-to",
+						"1"
 					]
 				}
 			},
