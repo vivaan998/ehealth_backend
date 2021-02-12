@@ -624,16 +624,17 @@ class Users(db.Model):
 
     @staticmethod
     def get_user(user_email):
-        user = Users.query.filter(Users.user_email == user_email).all()[0]
-        if user.role == 0:
-            if Patient.get_by_email(user.user_email)[0]:
-                return user
-        elif user[0].role == 10:
-            if Practitioner.get_by_email(user.user_email)[0]:
-                return user
-        elif user[0].role == 50:
-            if Provider.get_by_email(user.user_email)[0]:
-                return user
+        user = Users.query.filter(Users.user_email == user_email).all()
+        if user:
+            if user[0].security_role == 0:
+                if Patient.get_by_email(user[0].user_email):
+                    return user[0]
+            elif user[0].security_role == 10:
+                if Practitioner.get_by_email(user[0].user_email):
+                    return user[0]
+            elif user[0].security_role == 50:
+                if Provider.get_by_email(user[0].user_email):
+                    return user[0]
         else:
             return None
 

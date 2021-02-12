@@ -12,9 +12,9 @@ class LoginAPI(Resource):
     def post():
         try:
             data = request.get_json()
-            user = Users.get_user(user_email=data.get('email'))[0]
+            user = Users.get_user(user_email=data.get('email'))
             if not user:
-                raise BadRequestException('No user found with this email address')
+                raise BadRequestException('Not authorized to login')
 
             authorized = user.check_password(data.get('password'))
             if not authorized:

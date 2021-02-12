@@ -52,7 +52,7 @@ class PatientsAPI(Resource):
             data = request.get_json()
 
             if Users.get_user(user_email=data.get('email_tx')):
-                raise BadRequestException(data.get('email_tx') + ' already exists, please login')
+                raise BadRequestException(data.get('email_tx') + ' already exists')
 
             if user['role'] == 100 or user['role'] == 50 or user['role'] == 10:
                 if not data.get('provider_id') and not data.get('practitioner_id'):

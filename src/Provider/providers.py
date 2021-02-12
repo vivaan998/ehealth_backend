@@ -47,7 +47,7 @@ class ProvidersAPI(Resource):
                 raise UnAuthorizedException('You are not authorized')
 
             if Users.get_user(user_email=data.get('email')):
-                raise BadRequestException(data.get('email') + ' already exists, please login')
+                raise BadRequestException(data.get('email') + ' already exists')
 
             provider_data = {
                 "site_admin_email": data.get('email'),
