@@ -321,19 +321,21 @@ class Appointment(db.Model):
                            func.lower(Practitioner.first_name).contains(search)),
                        Appointment.active_fl == True).order_by(asc(Appointment.appointment_date)).\
                 paginate(int(page), PER_PAGE, error_out=True)
-
-        return [{
-            "appointment_id": model.appointment_id,
-            "patient_id": model.patient_id,
-            "practitioner_id": model.practitioner_id,
-            "provider_id": model.provider_id,
-            "appointment_date": model.appointment_date.strftime("%x"),
-            "appointment_time": model.appointment_date.strftime("%X"),
-            "patient": model.Patient.first_name + " " + model.Patient.last_name,
-            "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
-            "provider": model.Provider.name_tx,
-            "created_at": model.created_dt.strftime("%c")
-        } for model in query.items], query.next_num, query.prev_num
+        if query.items:
+            return [{
+                "appointment_id": model.appointment_id,
+                "patient_id": model.patient_id,
+                "practitioner_id": model.practitioner_id,
+                "provider_id": model.provider_id,
+                "appointment_date": model.appointment_date.strftime("%x"),
+                "appointment_time": model.appointment_date.strftime("%X"),
+                "patient": model.Patient.first_name + " " + model.Patient.last_name,
+                "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
+                "provider": model.Provider.name_tx,
+                "created_at": model.created_dt.strftime("%c")
+            } for model in query.items], query.next_num, query.prev_num
+        else:
+            return [], None, None
 
     @staticmethod
     def get_appointment_by_providers(page, search, provider_id):
@@ -353,18 +355,21 @@ class Appointment(db.Model):
                        Appointment.active_fl == True, Appointment.provider_id == provider_id).\
                 order_by(asc(Appointment.appointment_date)).paginate(int(page), PER_PAGE, error_out=True)
 
-        return [{
-            "appointment_id": model.appointment_id,
-            "patient_id": model.patient_id,
-            "practitioner_id": model.practitioner_id,
-            "provider_id": model.provider_id,
-            "appointment_date": model.appointment_date.strftime("%x"),
-            "appointment_time": model.appointment_date.strftime("%X"),
-            "patient": model.Patient.first_name + " " + model.Patient.last_name,
-            "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
-            "provider": model.Provider.name_tx,
-            "created_at": model.created_dt.strftime("%c")
-        } for model in query.items], query.next_num, query.prev_num
+        if query.items:
+            return [{
+                "appointment_id": model.appointment_id,
+                "patient_id": model.patient_id,
+                "practitioner_id": model.practitioner_id,
+                "provider_id": model.provider_id,
+                "appointment_date": model.appointment_date.strftime("%x"),
+                "appointment_time": model.appointment_date.strftime("%X"),
+                "patient": model.Patient.first_name + " " + model.Patient.last_name,
+                "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
+                "provider": model.Provider.name_tx,
+                "created_at": model.created_dt.strftime("%c")
+            } for model in query.items], query.next_num, query.prev_num
+        else:
+            return [], None, None
 
     @staticmethod
     def get_appointment_by_practitioners(page, search, practitioner_id):
@@ -383,18 +388,21 @@ class Appointment(db.Model):
                        Appointment.active_fl == True, Appointment.practitioner_id == practitioner_id).\
                 order_by(asc(Appointment.appointment_date)).paginate(int(page), PER_PAGE, error_out=True)
 
-        return [{
-            "appointment_id": model.appointment_id,
-            "patient_id": model.patient_id,
-            "practitioner_id": model.practitioner_id,
-            "provider_id": model.provider_id,
-            "appointment_date": model.appointment_date.strftime("%x"),
-            "appointment_time": model.appointment_date.strftime("%X"),
-            "patient": model.Patient.first_name + " " + model.Patient.last_name,
-            "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
-            "provider": model.Provider.name_tx,
-            "created_at": model.created_dt.strftime("%c")
-        } for model in query.items], query.next_num, query.prev_num
+        if query.items:
+            return [{
+                "appointment_id": model.appointment_id,
+                "patient_id": model.patient_id,
+                "practitioner_id": model.practitioner_id,
+                "provider_id": model.provider_id,
+                "appointment_date": model.appointment_date.strftime("%x"),
+                "appointment_time": model.appointment_date.strftime("%X"),
+                "patient": model.Patient.first_name + " " + model.Patient.last_name,
+                "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
+                "provider": model.Provider.name_tx,
+                "created_at": model.created_dt.strftime("%c")
+            } for model in query.items], query.next_num, query.prev_num
+        else:
+            return [], None, None
 
     @staticmethod
     def get_appointment_by_patients(page, patient_id):
@@ -404,18 +412,21 @@ class Appointment(db.Model):
             filter(Appointment.active_fl == True, Appointment.patient_id == patient_id). \
             order_by(asc(Appointment.appointment_date)).paginate(int(page), PER_PAGE, error_out=True)
 
-        return [{
-            "appointment_id": model.appointment_id,
-            "patient_id": model.patient_id,
-            "practitioner_id": model.practitioner_id,
-            "provider_id": model.provider_id,
-            "appointment_date": model.appointment_date.strftime("%x"),
-            "appointment_time": model.appointment_date.strftime("%X"),
-            "patient": model.Patient.first_name + " " + model.Patient.last_name,
-            "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
-            "provider": model.Provider.name_tx,
-            "created_at": model.created_dt.strftime("%c")
-        } for model in query.items], query.next_num, query.prev_num
+        if query.items:
+            return [{
+                "appointment_id": model.appointment_id,
+                "patient_id": model.patient_id,
+                "practitioner_id": model.practitioner_id,
+                "provider_id": model.provider_id,
+                "appointment_date": model.appointment_date.strftime("%x"),
+                "appointment_time": model.appointment_date.strftime("%X"),
+                "patient": model.Patient.first_name + " " + model.Patient.last_name,
+                "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
+                "provider": model.Provider.name_tx,
+                "created_at": model.created_dt.strftime("%c")
+            } for model in query.items], query.next_num, query.prev_num
+        else:
+            return [], None, None
 
     @staticmethod
     def get_one(appointment_id):
@@ -471,18 +482,22 @@ class Immunization(db.Model):
                            func.lower(Vaccine.name_tx).contains(search)),
                        Immunization.active_fl == True).order_by(desc(Immunization.created_dt)).\
                 paginate(int(page), PER_PAGE, error_out=True)
-        return [{
-            "immunization_id": model.immunization_id,
-            "patient_id": model.patient_id,
-            "practitioner_id": model.practitioner_id,
-            "provider_id": model.provider_id,
-            "vaccine_id": model.vaccine_id,
-            "administered_dt": model.administered_dt,
-            "patient": model.Patient.first_name + " " + model.Patient.last_name,
-            "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
-            "provider": model.Provider.name_tx,
-            "vaccine": model.Vaccine.name_tx,
-        } for model in query.items], query.next_num, query.prev_num
+
+        if query.items:
+            return [{
+                "immunization_id": model.immunization_id,
+                "patient_id": model.patient_id,
+                "practitioner_id": model.practitioner_id,
+                "provider_id": model.provider_id,
+                "vaccine_id": model.vaccine_id,
+                "administered_dt": model.administered_dt,
+                "patient": model.Patient.first_name + " " + model.Patient.last_name,
+                "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
+                "provider": model.Provider.name_tx,
+                "vaccine": model.Vaccine.name_tx,
+            } for model in query.items], query.next_num, query.prev_num
+        else:
+            return [], None, None
 
     @staticmethod
     def get_one(immunization_id):
@@ -508,18 +523,22 @@ class Immunization(db.Model):
                            func.lower(Vaccine.name_tx).contains(search)),
                        Immunization.active_fl == True, Immunization.provider_id == provider_id).\
                 order_by(desc(Immunization.created_dt)).paginate(int(page), PER_PAGE, error_out=True)
-        return [{
-            "immunization_id": model.immunization_id,
-            "patient_id": model.patient_id,
-            "practitioner_id": model.practitioner_id,
-            "provider_id": model.provider_id,
-            "vaccine_id": model.vaccine_id,
-            "administered_dt": model.administered_dt,
-            "patient": model.Patient.first_name + " " + model.Patient.last_name,
-            "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
-            "provider": model.Provider.name_tx,
-            "vaccine": model.Vaccine.name_tx,
-        } for model in query.items], query.next_num, query.prev_num
+
+        if query.items:
+            return [{
+                "immunization_id": model.immunization_id,
+                "patient_id": model.patient_id,
+                "practitioner_id": model.practitioner_id,
+                "provider_id": model.provider_id,
+                "vaccine_id": model.vaccine_id,
+                "administered_dt": model.administered_dt,
+                "patient": model.Patient.first_name + " " + model.Patient.last_name,
+                "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
+                "provider": model.Provider.name_tx,
+                "vaccine": model.Vaccine.name_tx,
+            } for model in query.items], query.next_num, query.prev_num
+        else:
+            return [], None, None
 
     @staticmethod
     def get_immunization_by_practitioners(page, search, practitioner_id):
@@ -540,18 +559,22 @@ class Immunization(db.Model):
                            func.lower(Vaccine.name_tx).contains(search)),
                        Immunization.active_fl == True, Immunization.practitioner_id == practitioner_id).\
                 order_by(desc(Immunization.created_dt)).paginate(int(page), PER_PAGE, error_out=True)
-        return [{
-            "immunization_id": model.immunization_id,
-            "patient_id": model.patient_id,
-            "practitioner_id": model.practitioner_id,
-            "provider_id": model.provider_id,
-            "vaccine_id": model.vaccine_id,
-            "administered_dt": model.administered_dt,
-            "patient": model.Patient.first_name + " " + model.Patient.last_name,
-            "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
-            "provider": model.Provider.name_tx,
-            "vaccine": model.Vaccine.name_tx,
-        } for model in query.items], query.next_num, query.prev_num
+
+        if query.items:
+            return [{
+                "immunization_id": model.immunization_id,
+                "patient_id": model.patient_id,
+                "practitioner_id": model.practitioner_id,
+                "provider_id": model.provider_id,
+                "vaccine_id": model.vaccine_id,
+                "administered_dt": model.administered_dt,
+                "patient": model.Patient.first_name + " " + model.Patient.last_name,
+                "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
+                "provider": model.Provider.name_tx,
+                "vaccine": model.Vaccine.name_tx,
+            } for model in query.items], query.next_num, query.prev_num
+        else:
+            return [], None, None
 
     @staticmethod
     def get_immunization_by_patients(page, patient_id):
@@ -561,18 +584,22 @@ class Immunization(db.Model):
             join(Provider, Immunization.provider_id == Provider.provider_id). \
             filter(Immunization.active_fl == True, Immunization.patient_id == patient_id).\
             order_by(desc(Immunization.created_dt)).paginate(int(page), PER_PAGE, error_out=True)
-        return [{
-            "immunization_id": model.immunization_id,
-            "patient_id": model.patient_id,
-            "practitioner_id": model.practitioner_id,
-            "provider_id": model.provider_id,
-            "vaccine_id": model.vaccine_id,
-            "administered_dt": model.administered_dt,
-            "patient": model.Patient.first_name + " " + model.Patient.last_name,
-            "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
-            "provider": model.Provider.name_tx,
-            "vaccine": model.Vaccine.name_tx,
-        } for model in query.items], query.next_num, query.prev_num
+
+        if query.items:
+            return [{
+                "immunization_id": model.immunization_id,
+                "patient_id": model.patient_id,
+                "practitioner_id": model.practitioner_id,
+                "provider_id": model.provider_id,
+                "vaccine_id": model.vaccine_id,
+                "administered_dt": model.administered_dt,
+                "patient": model.Patient.first_name + " " + model.Patient.last_name,
+                "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
+                "provider": model.Provider.name_tx,
+                "vaccine": model.Vaccine.name_tx,
+            } for model in query.items], query.next_num, query.prev_num
+        else:
+            return [], None, None
 
 
 class Permissions(db.Model):
