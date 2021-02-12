@@ -38,7 +38,7 @@ class GetProvidersAPI(Resource):
                     })
                 return make_response(jsonify({'data': result}), 200)
             else:
-                return make_response(jsonify([]), 200)
+                return make_response(jsonify({"data": []}), 200)
 
         except Exception as e:
             raise ServerException('There is some error, please contact support')
@@ -60,7 +60,7 @@ class GetPractitionersAPI(Resource):
                     })
                 return make_response(jsonify({'data': result}), 200)
             else:
-                return make_response(jsonify([]), 200)
+                return make_response(jsonify({"data": []}), 200)
 
         except Exception as e:
             raise ServerException('There is some error, please contact support')
@@ -83,7 +83,7 @@ class GetPatientsAPI(Resource):
                     })
                 return make_response(jsonify({'data': result}), 200)
             else:
-                return make_response(jsonify([]), 200)
+                return make_response(jsonify({"data": []}), 200)
 
         except Exception as e:
             raise ServerException('There is some error, please contact support')
@@ -104,7 +104,7 @@ class GetVaccinesAPI(Resource):
                     })
                 return make_response(jsonify({'data': result}), 200)
             else:
-                return make_response(jsonify([]), 200)
+                return make_response(jsonify({"data": []}), 200)
 
         except Exception as e:
             raise ServerException('There is some error, please contact support')
@@ -129,7 +129,7 @@ class SuperuserPractitionersAPI(Resource):
                     "result": PRACTITIONERS_SCHEMA.dump(practitioners.items, many=True)
                 }), 200)
             else:
-                return make_response(jsonify([]), 200)
+                return make_response(jsonify({"result": []}), 200)
 
         except UnAuthorizedException as e:
             raise UnAuthorizedException(e.error)
@@ -157,7 +157,7 @@ class SuperuserPatientsAPI(Resource):
                     "result": PATIENTS_SCHEMA.dump(patients.items, many=True)
                 }), 200)
             else:
-                return make_response(jsonify([]), 200)
+                return make_response(jsonify({"result": []}), 200)
 
         except UnAuthorizedException as e:
             raise UnAuthorizedException(e.error)

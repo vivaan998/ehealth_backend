@@ -28,7 +28,7 @@ class VitalsAPI(Resource):
                     "result": vitals
                 }), 200)
             else:
-                return make_response(jsonify([]), 200)
+                return make_response(jsonify({"result": []}), 200)
 
         except BadRequestException as e:
             raise BadRequestException(e.error)

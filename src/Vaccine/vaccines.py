@@ -30,7 +30,7 @@ class VaccinesAPI(Resource):
                     "result": VACCINE_SCHEMA.dump(vaccines.items, many=True)
                 }), 200)
             else:
-                return make_response(jsonify([]), 200)
+                return make_response(jsonify({"result": []}), 200)
 
         except UnAuthorizedException as e:
             raise UnAuthorizedException(e.error)
