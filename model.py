@@ -665,6 +665,8 @@ class Users(db.Model):
             elif user[0].security_role == 50:
                 if Provider.get_by_email(user[0].user_email):
                     return user[0]
+            else:
+                return user[0]
         else:
             return None
 
