@@ -56,6 +56,15 @@ class AppointmentSchema(NewBaseSchema):
     appointment_date = fields.DateTime()
 
 
+class VitalSchema(NewBaseSchema):
+    vital_id = fields.Int(dump_only=True)
+    bp_systolic = fields.String(required=True, validate=validate.Length(min=1))
+    bp_diastolic = fields.String(required=True, validate=validate.Length(min=1))
+    body_temp = fields.String(required=True, validate=validate.Length(min=1))
+    heart_rate = fields.String(required=True, validate=validate.Length(min=1))
+    memo = fields.String(required=True, validate=validate.Length(max=500))
+
+
 class ImmunizationSchema(NewBaseSchema):
     immunization_id = fields.Int(dump_only=True)
     vaccine_id = fields.Integer(strict=True, required=True)
@@ -67,5 +76,3 @@ class UsersSchema(Schema):
     user_email = fields.Email(strict=True, required=True)
     hash_password = fields.String(required=True, validate=validate.Length(min=1))
     security_role = fields.Integer(required=True, strict=True)
-
-

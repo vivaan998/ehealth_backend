@@ -44,7 +44,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"justin@gmail.com\",\n    \"password\": \"justin\"\n}",
+					"raw": "{\n    \"email\": \"appoloadmin@gmail.com\",\n    \"password\": \"appoloadmin\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -408,7 +408,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/api/v1/get-practitioners/1",
+					"raw": "http://localhost:5000/api/v1/get-practitioners/3",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -418,7 +418,7 @@
 						"api",
 						"v1",
 						"get-practitioners",
-						"1"
+						"3"
 					]
 				}
 			},
@@ -440,7 +440,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/api/v1/get-patients/1",
+					"raw": "http://localhost:5000/api/v1/get-patients/5",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -450,7 +450,7 @@
 						"api",
 						"v1",
 						"get-patients",
-						"1"
+						"5"
 					]
 				}
 			},
@@ -609,7 +609,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/api/v1/immunizations/",
+					"raw": "http://localhost:5000/api/v1/immunizations/?search=ssg",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -624,8 +624,7 @@
 					"query": [
 						{
 							"key": "search",
-							"value": "ssg",
-							"disabled": true
+							"value": "ssg"
 						}
 					]
 				}
@@ -894,7 +893,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/api/v1/appointments/",
+					"raw": "http://localhost:5000/api/v1/appointments/?search=avas",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -905,6 +904,12 @@
 						"v1",
 						"appointments",
 						""
+					],
+					"query": [
+						{
+							"key": "search",
+							"value": "avas"
+						}
 					]
 				}
 			},
@@ -945,6 +950,126 @@
 						"api",
 						"v1",
 						"appointments",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Vitals",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4NTgzMTUsIm5iZiI6MTYxMjg1ODMxNSwianRpIjoiZDc3YTE2Y2ItM2Y4Ni00NjUzLWIwY2UtNWVjZDUwNDFjMDhjIiwiZXhwIjoxNjEzNDYzMTE1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0meWLvQfe4VKewJktRaXebVOhiWiEdYkINHEmwuMPGw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/vitals/?patient_id=4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"vitals",
+						""
+					],
+					"query": [
+						{
+							"key": "patient_id",
+							"value": "4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Vital",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMxMTgxODYsIm5iZiI6MTYxMzExODE4NiwianRpIjoiNWQ5YTJmZmItMGQyMi00Y2ExLTlhZTgtNjUxMjhiZDNkZjI5IiwiZXhwIjoxNjEzNzIyOTg2LCJpZGVudGl0eSI6eyJpZCI6MTEsImVtYWlsIjoiYXBwb2xvYWRtaW5AZ21haWwuY29tIiwicm9sZSI6NTB9LCJmcmVzaCI6ZmFsc2UsInR5cGUiOiJhY2Nlc3MifQ.nL8PLaLc5OyabMxypP0RJ3m8DbGyYNe-th1422eP7wY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"provider_id\": null,\n    \"practitioner_id\": 5,\n    \"patient_id\": 4,\n    \"bp_systolic\": \"0.22\",\n    \"bp_diastolic\": \"1.23\",\n    \"body_temp\": \"90.0F\",\n    \"heart_rate\": \"78\",\n    \"memo\": \"First Vital\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/vitals/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"vitals",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Archive Vital",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4NTgzMTUsIm5iZiI6MTYxMjg1ODMxNSwianRpIjoiZDc3YTE2Y2ItM2Y4Ni00NjUzLWIwY2UtNWVjZDUwNDFjMDhjIiwiZXhwIjoxNjEzNDYzMTE1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0meWLvQfe4VKewJktRaXebVOhiWiEdYkINHEmwuMPGw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vital_id\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/vitals/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"vitals",
 						""
 					]
 				}

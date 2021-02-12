@@ -26,6 +26,7 @@ class Patient(db.Model):
 
     Appointments = db.relationship('Appointment', backref='Patient', lazy="joined")
     Immunizations = db.relationship('Immunization', backref='Patient', lazy="joined")
+    Vital = db.relationship('Vitals', backref='Patient', lazy="joined")
 
     def __init__(self, data):
         self.first_name = data.get('first_name')
@@ -47,7 +48,7 @@ class Patient(db.Model):
     @staticmethod
     def get_all(page, search):
         if not search:
-            return Patient.query.filter(Patient.active_fl == True).order_by(desc(Patient.created_dt)).\
+            return Patient.query.filter(Patient.active_fl == True).order_by(desc(Patient.created_dt)). \
                 paginate(int(page), PER_PAGE, error_out=True)
         else:
             search = search.lower()
@@ -115,7 +116,8 @@ class Practitioner(db.Model):
 
     Appointments = db.relationship('Appointment', backref='Practitioner', lazy="joined")
     Immunizations = db.relationship('Immunization', backref='Practitioner', lazy="joined")
-    Patients = db.relationship('Patient', backref='Practitioner', lazy=True)
+    Patients = db.relationship('Patient', backref='Practitioner', lazy='joined')
+    Vital = db.relationship('Vitals', backref='Practitioner', lazy="joined")
 
     def __init__(self, data):
         self.first_name = data.get('first_name')
@@ -137,7 +139,7 @@ class Practitioner(db.Model):
     @staticmethod
     def get_all(page, search):
         if not search:
-            return Practitioner.query.filter(Practitioner.active_fl == True).order_by(asc(Practitioner.first_name)).\
+            return Practitioner.query.filter(Practitioner.active_fl == True).order_by(asc(Practitioner.first_name)). \
                 paginate(int(page), PER_PAGE, error_out=True)
         else:
             search = search.lower()
@@ -145,7 +147,7 @@ class Practitioner(db.Model):
                                                  func.lower(Practitioner.last_name).contains(search),
                                                  func.lower(Practitioner.email_tx).contains(search),
                                                  func.lower(Practitioner.ic_card_tx).contains(search)),
-                                             Practitioner.active_fl == True).order_by(asc(Practitioner.first_name)).\
+                                             Practitioner.active_fl == True).order_by(asc(Practitioner.first_name)). \
                 paginate(int(page), PER_PAGE, error_out=True)
 
     @staticmethod
@@ -172,7 +174,7 @@ class Practitioner(db.Model):
 
     @staticmethod
     def get_by_email(practitioner_email):
-        return Practitioner.query.filter(Practitioner.email_tx == practitioner_email, Practitioner.active_fl == True).\
+        return Practitioner.query.filter(Practitioner.email_tx == practitioner_email, Practitioner.active_fl == True). \
             all()
 
 
@@ -190,6 +192,7 @@ class Provider(db.Model):
     Patients = db.relationship('Patient', backref='Provider', lazy=True)
     Appointments = db.relationship('Appointment', backref='Provider', lazy="joined")
     Immunizations = db.relationship('Immunization', backref='Provider', lazy="joined")
+    Vital = db.relationship('Vitals', backref='Provider', lazy="joined")
 
     def __init__(self, data):
         self.name_tx = data.get('name_tx')
@@ -213,7 +216,7 @@ class Provider(db.Model):
             search = search.lower()
             return Provider.query.filter(or_(func.lower(Provider.name_tx).contains(search),
                                              func.lower(Provider.site_admin_email).contains(search)),
-                                         Provider.active_fl == True).order_by(asc(Provider.name_tx)).\
+                                         Provider.active_fl == True).order_by(asc(Provider.name_tx)). \
                 paginate(int(page), PER_PAGE, error_out=True)
 
     @staticmethod
@@ -259,13 +262,13 @@ class Vaccine(db.Model):
     @staticmethod
     def get_all(page, search):
         if not search:
-            return Vaccine.query.filter(Vaccine.active_fl == True).order_by(asc(Vaccine.name_tx)).\
+            return Vaccine.query.filter(Vaccine.active_fl == True).order_by(asc(Vaccine.name_tx)). \
                 paginate(int(page), PER_PAGE, error_out=True)
         else:
             search = search.lower()
             return Vaccine.query.filter(or_(func.lower(Vaccine.name_tx).contains(search),
                                             func.lower(Vaccine.description_tx).contains(search)),
-                                        Vaccine.active_fl == True).order_by(asc(Vaccine.name_tx)).\
+                                        Vaccine.active_fl == True).order_by(asc(Vaccine.name_tx)). \
                 paginate(int(page), PER_PAGE, error_out=True)
 
     @staticmethod
@@ -315,11 +318,11 @@ class Appointment(db.Model):
             search = search.lower()
             query = db.session.query(Appointment).join(Patient, Appointment.patient_id == Patient.patient_id). \
                 join(Practitioner, Appointment.practitioner_id == Practitioner.practitioner_id). \
-                join(Provider, Appointment.provider_id == Provider.provider_id).\
+                join(Provider, Appointment.provider_id == Provider.provider_id). \
                 filter(or_(func.lower(Patient.first_name).contains(search),
                            func.lower(Provider.name_tx).contains(search),
                            func.lower(Practitioner.first_name).contains(search)),
-                       Appointment.active_fl == True).order_by(asc(Appointment.appointment_date)).\
+                       Appointment.active_fl == True).order_by(asc(Appointment.appointment_date)). \
                 paginate(int(page), PER_PAGE, error_out=True)
         if query.items:
             return [{
@@ -342,7 +345,7 @@ class Appointment(db.Model):
         if not search:
             query = db.session.query(Appointment).join(Patient, Appointment.patient_id == Patient.patient_id). \
                 join(Practitioner, Appointment.practitioner_id == Practitioner.practitioner_id). \
-                join(Provider, Appointment.provider_id == Provider.provider_id).\
+                join(Provider, Appointment.provider_id == Provider.provider_id). \
                 filter(Appointment.active_fl == True, Appointment.provider_id == provider_id). \
                 order_by(asc(Appointment.appointment_date)).paginate(int(page), PER_PAGE, error_out=True)
         else:
@@ -352,7 +355,7 @@ class Appointment(db.Model):
                 join(Provider, Appointment.provider_id == Provider.provider_id). \
                 filter(or_(func.lower(Patient.first_name).contains(search),
                            func.lower(Practitioner.first_name).contains(search)),
-                       Appointment.active_fl == True, Appointment.provider_id == provider_id).\
+                       Appointment.active_fl == True, Appointment.provider_id == provider_id). \
                 order_by(asc(Appointment.appointment_date)).paginate(int(page), PER_PAGE, error_out=True)
 
         if query.items:
@@ -376,7 +379,7 @@ class Appointment(db.Model):
         if not search:
             query = db.session.query(Appointment).join(Patient, Appointment.patient_id == Patient.patient_id). \
                 join(Practitioner, Appointment.practitioner_id == Practitioner.practitioner_id). \
-                join(Provider, Appointment.provider_id == Provider.provider_id).\
+                join(Provider, Appointment.provider_id == Provider.provider_id). \
                 filter(Appointment.active_fl == True, Appointment.practitioner_id == practitioner_id). \
                 order_by(asc(Appointment.appointment_date)).paginate(int(page), PER_PAGE, error_out=True)
         else:
@@ -385,7 +388,7 @@ class Appointment(db.Model):
                 join(Practitioner, Appointment.practitioner_id == Practitioner.practitioner_id). \
                 join(Provider, Appointment.provider_id == Provider.provider_id). \
                 filter(or_(func.lower(Patient.first_name).contains(search)),
-                       Appointment.active_fl == True, Appointment.practitioner_id == practitioner_id).\
+                       Appointment.active_fl == True, Appointment.practitioner_id == practitioner_id). \
                 order_by(asc(Appointment.appointment_date)).paginate(int(page), PER_PAGE, error_out=True)
 
         if query.items:
@@ -408,7 +411,7 @@ class Appointment(db.Model):
     def get_appointment_by_patients(page, patient_id):
         query = db.session.query(Appointment).join(Patient, Appointment.patient_id == Patient.patient_id). \
             join(Practitioner, Appointment.practitioner_id == Practitioner.practitioner_id). \
-            join(Provider, Appointment.provider_id == Provider.provider_id).\
+            join(Provider, Appointment.provider_id == Provider.provider_id). \
             filter(Appointment.active_fl == True, Appointment.patient_id == patient_id). \
             order_by(asc(Appointment.appointment_date)).paginate(int(page), PER_PAGE, error_out=True)
 
@@ -480,7 +483,7 @@ class Immunization(db.Model):
                            func.lower(Provider.name_tx).contains(search),
                            func.lower(Practitioner.first_name).contains(search),
                            func.lower(Vaccine.name_tx).contains(search)),
-                       Immunization.active_fl == True).order_by(desc(Immunization.created_dt)).\
+                       Immunization.active_fl == True).order_by(desc(Immunization.created_dt)). \
                 paginate(int(page), PER_PAGE, error_out=True)
 
         if query.items:
@@ -509,7 +512,7 @@ class Immunization(db.Model):
             query = db.session.query(Immunization).join(Patient, Immunization.patient_id == Patient.patient_id). \
                 join(Vaccine, Immunization.vaccine_id == Vaccine.vaccine_id). \
                 join(Practitioner, Immunization.practitioner_id == Practitioner.practitioner_id). \
-                join(Provider, Immunization.provider_id == Provider.provider_id).\
+                join(Provider, Immunization.provider_id == Provider.provider_id). \
                 filter(Immunization.active_fl == True, Immunization.provider_id == provider_id). \
                 order_by(desc(Immunization.created_dt)).paginate(int(page), PER_PAGE, error_out=True)
         else:
@@ -521,7 +524,7 @@ class Immunization(db.Model):
                 filter(or_(func.lower(Patient.first_name).contains(search),
                            func.lower(Practitioner.first_name).contains(search),
                            func.lower(Vaccine.name_tx).contains(search)),
-                       Immunization.active_fl == True, Immunization.provider_id == provider_id).\
+                       Immunization.active_fl == True, Immunization.provider_id == provider_id). \
                 order_by(desc(Immunization.created_dt)).paginate(int(page), PER_PAGE, error_out=True)
 
         if query.items:
@@ -546,7 +549,7 @@ class Immunization(db.Model):
             query = db.session.query(Immunization).join(Patient, Immunization.patient_id == Patient.patient_id). \
                 join(Vaccine, Immunization.vaccine_id == Vaccine.vaccine_id). \
                 join(Practitioner, Immunization.practitioner_id == Practitioner.practitioner_id). \
-                join(Provider, Immunization.provider_id == Provider.provider_id).\
+                join(Provider, Immunization.provider_id == Provider.provider_id). \
                 filter(Immunization.active_fl == True, Immunization.practitioner_id == practitioner_id). \
                 order_by(desc(Immunization.created_dt)).paginate(int(page), PER_PAGE, error_out=True)
         else:
@@ -557,7 +560,7 @@ class Immunization(db.Model):
                 join(Provider, Immunization.provider_id == Provider.provider_id). \
                 filter(or_(func.lower(Patient.first_name).contains(search),
                            func.lower(Vaccine.name_tx).contains(search)),
-                       Immunization.active_fl == True, Immunization.practitioner_id == practitioner_id).\
+                       Immunization.active_fl == True, Immunization.practitioner_id == practitioner_id). \
                 order_by(desc(Immunization.created_dt)).paginate(int(page), PER_PAGE, error_out=True)
 
         if query.items:
@@ -582,7 +585,7 @@ class Immunization(db.Model):
             join(Vaccine, Immunization.vaccine_id == Vaccine.vaccine_id). \
             join(Practitioner, Immunization.practitioner_id == Practitioner.practitioner_id). \
             join(Provider, Immunization.provider_id == Provider.provider_id). \
-            filter(Immunization.active_fl == True, Immunization.patient_id == patient_id).\
+            filter(Immunization.active_fl == True, Immunization.patient_id == patient_id). \
             order_by(desc(Immunization.created_dt)).paginate(int(page), PER_PAGE, error_out=True)
 
         if query.items:
@@ -711,3 +714,70 @@ class Logs(db.Model):
     def save(self):
         db.session.add(self)
         db.session.commit()
+
+
+class Vitals(db.Model):
+    __tablename__ = 'Vitals'
+
+    vital_id = db.Column(db.Integer, primary_key=True)
+    patient_id = db.Column(db.Integer, db.ForeignKey('Patient.patient_id'), nullable=False)
+    practitioner_id = db.Column(db.Integer, db.ForeignKey('Practitioner.practitioner_id'), nullable=False)
+    provider_id = db.Column(db.Integer, db.ForeignKey('Provider.provider_id'), nullable=False)
+    bp_systolic = db.Column(db.String(10), nullable=False)
+    bp_diastolic = db.Column(db.String(10), nullable=False)
+    body_temp = db.Column(db.String(10), nullable=False)
+    heart_rate = db.Column(db.String(10), nullable=False)
+    memo = db.Column(db.String(500), nullable=True)
+    active_fl = db.Column(db.Boolean(), default=1)
+    created_dt = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    update_dt = db.Column(db.DateTime(timezone=True), nullable=True)
+
+    def __init__(self, data):
+        self.patient_id = data.get('patient_id')
+        self.provider_id = data.get('provider_id')
+        self.practitioner_id = data.get('practitioner_id')
+        self.bp_systolic = data.get('bp_systolic')
+        self.body_temp = data.get('body_temp')
+        self.bp_diastolic = data.get('bp_diastolic')
+        self.heart_rate = data.get('heart_rate')
+        self.memo = data.get('memo')
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def update(self):
+        self.active_fl = 1
+        self.update_dt = func.now()
+        db.session.commit()
+
+    @staticmethod
+    def get_vital_by_patients(page, patient_id):
+        query = db.session.query(Vitals).join(Patient, Vitals.patient_id == Patient.patient_id). \
+            join(Practitioner, Vitals.practitioner_id == Practitioner.practitioner_id). \
+            join(Provider, Vitals.provider_id == Provider.provider_id). \
+            filter(Vitals.active_fl == True, Vitals.patient_id == patient_id). \
+            order_by(asc(Vitals.created_dt)).paginate(int(page), PER_PAGE, error_out=True)
+
+        if query.items:
+            return [{
+                "vital_id": model.vital_id,
+                "patient_id": model.patient_id,
+                "practitioner_id": model.practitioner_id,
+                "provider_id": model.provider_id,
+                "bp_systolic": model.bp_systolic,
+                "bp_diastolic": model.bp_diastolic,
+                "body_temp": model.body_temp,
+                "heart_rate": model.heart_rate,
+                "memo": model.memo,
+                "created_at": model.created_dt,
+                "patient": model.Patient.first_name + " " + model.Patient.last_name,
+                "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
+                "provider": model.Provider.name_tx,
+            } for model in query.items], query.next_num, query.prev_num
+        else:
+            return [], None, None
+
+    @staticmethod
+    def get_one(vital_id):
+        return Vitals.query.get(vital_id)

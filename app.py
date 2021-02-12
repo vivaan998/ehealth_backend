@@ -11,6 +11,7 @@ from src.Common.common import MenuAPI, GetPatientsAPI, GetPractitionersAPI, GetP
     SuperuserPatientsAPI, SuperuserPractitionersAPI
 from src.Immunization.immunizations import ImmunizationAPI
 from src.Appointment.appointments import AppointmentsAPI
+from src.Vital.vitals import VitalsAPI
 from flask_restful import Api
 from flask_cors import CORS
 
@@ -23,13 +24,13 @@ def create_app():
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = POSTGRES_DB_URL
     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     flask_app.config['JWT_SECRET_KEY'] = 't1NP63m4wnBg6nyHYKfmc2TpCOGI4nss'
+    db.init_app(flask_app)
 
     return flask_app
 
 
 if __name__ == '__main__':
     app = create_app()
-    db.init_app(app)
     jwt = JWTManager(app)
     api = Api(app)
     cors = CORS(app)
@@ -49,6 +50,7 @@ if __name__ == '__main__':
     api.add_resource(SuperuserPatientsAPI, '/api/v1/super-user-patients/<practitioner_id>')
     api.add_resource(ImmunizationAPI, '/api/v1/immunizations/', endpoint='immunizations')
     api.add_resource(AppointmentsAPI, '/api/v1/appointments/', endpoint='appointments')
+    api.add_resource(VitalsAPI, '/api/v1/vitals/', endpoint='vitals')
 
     @app.errorhandler(AppException)
     def app_error(err):
