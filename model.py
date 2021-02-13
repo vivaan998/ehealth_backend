@@ -336,9 +336,9 @@ class Appointment(db.Model):
                 "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
                 "provider": model.Provider.name_tx,
                 "created_at": model.created_dt.strftime("%c")
-            } for model in query.items], query.next_num, query.prev_num
+            } for model in query.items], query.next_num, query.prev_num, query.total
         else:
-            return [], None, None
+            return [], None, None, 0
 
     @staticmethod
     def get_appointment_by_providers(page, search, provider_id):
@@ -370,9 +370,9 @@ class Appointment(db.Model):
                 "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
                 "provider": model.Provider.name_tx,
                 "created_at": model.created_dt.strftime("%c")
-            } for model in query.items], query.next_num, query.prev_num
+            } for model in query.items], query.next_num, query.prev_num, query.total
         else:
-            return [], None, None
+            return [], None, None, 0
 
     @staticmethod
     def get_appointment_by_practitioners(page, search, practitioner_id):
@@ -403,9 +403,9 @@ class Appointment(db.Model):
                 "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
                 "provider": model.Provider.name_tx,
                 "created_at": model.created_dt.strftime("%c")
-            } for model in query.items], query.next_num, query.prev_num
+            } for model in query.items], query.next_num, query.prev_num, query.total
         else:
-            return [], None, None
+            return [], None, None, 0
 
     @staticmethod
     def get_appointment_by_patients(page, patient_id):
@@ -427,9 +427,9 @@ class Appointment(db.Model):
                 "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
                 "provider": model.Provider.name_tx,
                 "created_at": model.created_dt.strftime("%c")
-            } for model in query.items], query.next_num, query.prev_num
+            } for model in query.items], query.next_num, query.prev_num, query.total
         else:
-            return [], None, None
+            return [], None, None, 0
 
     @staticmethod
     def get_one(appointment_id):
@@ -498,9 +498,9 @@ class Immunization(db.Model):
                 "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
                 "provider": model.Provider.name_tx,
                 "vaccine": model.Vaccine.name_tx,
-            } for model in query.items], query.next_num, query.prev_num
+            } for model in query.items], query.next_num, query.prev_num, query.total
         else:
-            return [], None, None
+            return [], None, None, 0
 
     @staticmethod
     def get_one(immunization_id):
@@ -539,9 +539,9 @@ class Immunization(db.Model):
                 "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
                 "provider": model.Provider.name_tx,
                 "vaccine": model.Vaccine.name_tx,
-            } for model in query.items], query.next_num, query.prev_num
+            } for model in query.items], query.next_num, query.prev_num, query.total
         else:
-            return [], None, None
+            return [], None, None, 0
 
     @staticmethod
     def get_immunization_by_practitioners(page, search, practitioner_id):
@@ -575,9 +575,9 @@ class Immunization(db.Model):
                 "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
                 "provider": model.Provider.name_tx,
                 "vaccine": model.Vaccine.name_tx,
-            } for model in query.items], query.next_num, query.prev_num
+            } for model in query.items], query.next_num, query.prev_num, query.total
         else:
-            return [], None, None
+            return [], None, None, 0
 
     @staticmethod
     def get_immunization_by_patients(page, patient_id):
@@ -600,9 +600,9 @@ class Immunization(db.Model):
                 "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
                 "provider": model.Provider.name_tx,
                 "vaccine": model.Vaccine.name_tx,
-            } for model in query.items], query.next_num, query.prev_num
+            } for model in query.items], query.next_num, query.prev_num, query.total
         else:
-            return [], None, None
+            return [], None, None, 0
 
     @staticmethod
     def get_vaccines_administered(page, search, vaccine_id):
@@ -611,7 +611,7 @@ class Immunization(db.Model):
                 join(Vaccine, Immunization.vaccine_id == Vaccine.vaccine_id). \
                 join(Practitioner, Immunization.practitioner_id == Practitioner.practitioner_id). \
                 join(Provider, Immunization.provider_id == Provider.provider_id). \
-                filter(Immunization.active_fl == True, Immunization.vaccine_id == vaccine_id). \
+                filter(Immunization.vaccine_id == vaccine_id). \
                 order_by(desc(Immunization.created_dt)).paginate(int(page), PER_PAGE, error_out=True)
         else:
             search = search.lower()
@@ -622,7 +622,7 @@ class Immunization(db.Model):
                 filter(or_(func.lower(Patient.first_name).contains(search),
                            func.lower(Practitioner.first_name).contains(search),
                            func.lower(Provider.name_tx).contains(search)),
-                       Immunization.active_fl == True, Immunization.vaccine_id == vaccine_id). \
+                       Immunization.vaccine_id == vaccine_id). \
                 order_by(desc(Immunization.created_dt)).paginate(int(page), PER_PAGE, error_out=True)
 
         if query.items:
@@ -637,9 +637,9 @@ class Immunization(db.Model):
                 "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
                 "provider": model.Provider.name_tx,
                 "vaccine": model.Vaccine.name_tx,
-            } for model in query.items], query.next_num, query.prev_num
+            } for model in query.items], query.next_num, query.prev_num, query.total
         else:
-            return [], None, None
+            return [], None, None, 0
 
 
 class Permissions(db.Model):
@@ -813,9 +813,9 @@ class Vitals(db.Model):
                 "patient": model.Patient.first_name + " " + model.Patient.last_name,
                 "practitioner": model.Practitioner.first_name + " " + model.Practitioner.last_name,
                 "provider": model.Provider.name_tx,
-            } for model in query.items], query.next_num, query.prev_num
+            } for model in query.items], query.next_num, query.prev_num, query.total
         else:
-            return [], None, None
+            return [], None, None, 0
 
     @staticmethod
     def get_one(vital_id):

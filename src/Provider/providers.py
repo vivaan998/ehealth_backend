@@ -1,8 +1,9 @@
+import math
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import make_response, request, jsonify
 from marshmallow import ValidationError
-from model import Users, Provider
+from model import Users, Provider, PER_PAGE
 from serializer import ProviderSchema, UsersSchema
 from config import PROVIDER
 from src.excecptions.app_exception import BadRequestException, UnAuthorizedException, ServerException
@@ -28,7 +29,9 @@ class ProvidersAPI(Resource):
                 return make_response(jsonify({
                     "previous_page": providers.prev_num,
                     "next_page": providers.next_num,
-                    "result": PROVIDERS_SCHEMA.dump(providers.items, many=True)
+                    "result": PROVIDERS_SCHEMA.dump(providers.items, many=True),
+                    "total_count": providers.total,
+                    "total_pages": math.ceil(providers.total / PER_PAGE)
                 }), 200)
             else:
                 return make_response(jsonify({"result": []}), 200)

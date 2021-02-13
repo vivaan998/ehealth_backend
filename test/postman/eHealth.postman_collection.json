@@ -117,7 +117,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI2MDg4NjAsIm5iZiI6MTYxMjYwODg2MCwianRpIjoiOWY2YjkzZTktNzk0NS00NjdjLWIzMGItM2RlYzA0MGU2OWNjIiwiZXhwIjoxNjEzMjEzNjYwLCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.mQT8X5gZ7X_gPi-20b5T8NcP-RYswX3ZeJRC5WnFo0w",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMxNDI4MjgsIm5iZiI6MTYxMzE0MjgyOCwianRpIjoiYTBiODc2ZmYtMzczYi00YjQ3LWE2NDUtMWJlNmQwOTM3NjhiIiwiZXhwIjoxNjEzNzQ3NjI4LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.QIhMIiPPXwHw2FhYLGsEoO8nLRQcQVALKvquCNHxvPI",
 							"type": "string"
 						}
 					]
@@ -149,7 +149,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI3ODA3OTUsIm5iZiI6MTYxMjc4MDc5NSwianRpIjoiODM0OTY4NmMtYjkzNS00MjJjLWIyNGMtMTdhYzRlNzRhYjNhIiwiZXhwIjoxNjEzMzg1NTk1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0aZYuVbFwkCC9z1ITIBtuAFZaPYmovGcqHeFlYDm3LY",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMxNDI4MjgsIm5iZiI6MTYxMzE0MjgyOCwianRpIjoiYTBiODc2ZmYtMzczYi00YjQ3LWE2NDUtMWJlNmQwOTM3NjhiIiwiZXhwIjoxNjEzNzQ3NjI4LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.QIhMIiPPXwHw2FhYLGsEoO8nLRQcQVALKvquCNHxvPI",
 							"type": "string"
 						}
 					]
@@ -609,7 +609,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/api/v1/immunizations/?search=ssg",
+					"raw": "http://localhost:5000/api/v1/immunizations/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -620,12 +620,6 @@
 						"v1",
 						"immunizations",
 						""
-					],
-					"query": [
-						{
-							"key": "search",
-							"value": "ssg"
-						}
 					]
 				}
 			},
@@ -893,7 +887,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/api/v1/appointments/?search=avas",
+					"raw": "http://localhost:5000/api/v1/appointments/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -904,12 +898,6 @@
 						"v1",
 						"appointments",
 						""
-					],
-					"query": [
-						{
-							"key": "search",
-							"value": "avas"
-						}
 					]
 				}
 			},
@@ -1092,7 +1080,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/api/v1/get-appointments-practitioner/5",
+					"raw": "http://localhost:5000/api/v1/get-appointments-practitioner/12",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1102,7 +1090,7 @@
 						"api",
 						"v1",
 						"get-appointments-practitioner",
-						"5"
+						"12"
 					]
 				}
 			},
@@ -1230,6 +1218,38 @@
 						"api",
 						"v1",
 						"vaccine-administered-to",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Appointments of a given provider",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMxNDI4MjgsIm5iZiI6MTYxMzE0MjgyOCwianRpIjoiYTBiODc2ZmYtMzczYi00YjQ3LWE2NDUtMWJlNmQwOTM3NjhiIiwiZXhwIjoxNjEzNzQ3NjI4LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.QIhMIiPPXwHw2FhYLGsEoO8nLRQcQVALKvquCNHxvPI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/get-appointments-provider/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"get-appointments-provider",
 						"1"
 					]
 				}

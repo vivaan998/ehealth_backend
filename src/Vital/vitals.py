@@ -1,8 +1,9 @@
+import math
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import make_response, request, jsonify
 from marshmallow import ValidationError
-from model import Provider, Practitioner, Patient, Vitals
+from model import Provider, Practitioner, Patient, Vitals, PER_PAGE
 from serializer import VitalSchema
 from src.excecptions.app_exception import BadRequestException, UnAuthorizedException, ServerException
 
@@ -19,13 +20,15 @@ class VitalsAPI(Resource):
             if not patient_id:
                 raise BadRequestException('Patient ID missing, please check url')
 
-            vitals, next_num, prev_num = Vitals.get_vital_by_patients(page, patient_id=patient_id)
+            vitals, next_num, prev_num, total = Vitals.get_vital_by_patients(page, patient_id=patient_id)
 
             if vitals:
                 return make_response(jsonify({
                     "previous_page": prev_num,
                     "next_page": next_num,
-                    "result": vitals
+                    "result": vitals,
+                    "total_count": total,
+                    "total_pages": math.ceil(total / PER_PAGE)
                 }), 200)
             else:
                 return make_response(jsonify({"result": []}), 200)

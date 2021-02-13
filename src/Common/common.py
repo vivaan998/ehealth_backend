@@ -1,7 +1,8 @@
+import math
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import make_response, jsonify, request
-from model import Users, RolePermission, Provider, Practitioner, Patient, Vaccine, Appointment, Immunization
+from model import Users, RolePermission, Provider, Practitioner, Patient, Vaccine, Appointment, Immunization, PER_PAGE
 from src.excecptions.app_exception import ServerException, UnAuthorizedException
 from serializer import PractitionerSchema, PatientSchema
 
@@ -126,7 +127,9 @@ class SuperuserPractitionersAPI(Resource):
                 return make_response(jsonify({
                     "previous_page": practitioners.prev_num,
                     "next_page": practitioners.next_num,
-                    "result": PRACTITIONERS_SCHEMA.dump(practitioners.items, many=True)
+                    "result": PRACTITIONERS_SCHEMA.dump(practitioners.items, many=True),
+                    "total_count": practitioners.total,
+                    "total_pages": math.ceil(practitioners.total / PER_PAGE)
                 }), 200)
             else:
                 return make_response(jsonify({"result": []}), 200)
@@ -154,7 +157,39 @@ class SuperuserPatientsAPI(Resource):
                 return make_response(jsonify({
                     "previous_page": patients.prev_num,
                     "next_page": patients.next_num,
-                    "result": PATIENTS_SCHEMA.dump(patients.items, many=True)
+                    "result": PATIENTS_SCHEMA.dump(patients.items, many=True),
+                    "total_count": patients.total,
+                    "total_pages": math.ceil(patients.total / PER_PAGE)
+                }), 200)
+            else:
+                return make_response(jsonify({"result": []}), 200)
+
+        except UnAuthorizedException as e:
+            raise UnAuthorizedException(e.error)
+        except Exception as e:
+            raise ServerException('There is some error, please contact support')
+
+
+class ProviderAppointmentsAPI(Resource):
+
+    @jwt_required
+    def get(self, provider_id):
+        try:
+            page = request.args.get('page', 1)
+            search = request.args.get('search', None)
+            user = get_jwt_identity()
+
+            if user['role'] != 100:
+                raise UnAuthorizedException('You are not authorized')
+
+            appointments, next_num, prev_num, total = Appointment.get_appointment_by_providers(page, search, provider_id)
+            if appointments:
+                return make_response(jsonify({
+                    "previous_page": prev_num,
+                    "next_page": next_num,
+                    "result": appointments,
+                    "total_count": total,
+                    "total_pages": math.ceil(total / PER_PAGE)
                 }), 200)
             else:
                 return make_response(jsonify({"result": []}), 200)
@@ -176,13 +211,15 @@ class PractitionerAppointmentAPI(Resource):
             if user['role'] < 50:
                 raise UnAuthorizedException('You are not authorized')
 
-            appointments, next_num, prev_num = Appointment.get_appointment_by_practitioners(page, search,
-                                                                                            practitioner_id)
+            appointments, next_num, prev_num, total = Appointment.get_appointment_by_practitioners(page, search,
+                                                                                                   practitioner_id)
             if appointments:
                 return make_response(jsonify({
                     "previous_page": prev_num,
                     "next_page": next_num,
-                    "result": appointments
+                    "result": appointments,
+                    "total_count": total,
+                    "total_pages": math.ceil(total / PER_PAGE)
                 }), 200)
             else:
                 return make_response(jsonify({"result": []}), 200)
@@ -204,12 +241,15 @@ class PractitionerImmunizationAPI(Resource):
             if user['role'] < 50:
                 raise UnAuthorizedException('You are not authorized')
 
-            immunizations, next_num, prev_num = Immunization.get_immunization_by_practitioners(page, search, practitioner_id)
+            immunizations, next_num, prev_num, total = Immunization.get_immunization_by_practitioners(page, search,
+                                                                                                      practitioner_id)
             if immunizations:
                 return make_response(jsonify({
                     "previous_page": prev_num,
                     "next_page": next_num,
-                    "result": immunizations
+                    "result": immunizations,
+                    "total_count": total,
+                    "total_pages": math.ceil(total / PER_PAGE)
                 }), 200)
             else:
                 return make_response(jsonify({"result": []}), 200)
@@ -231,12 +271,14 @@ class VaccineAdministrationAPI(Resource):
             if user['role'] != 100:
                 raise UnAuthorizedException('You are not authorized')
 
-            administered, next_num, prev_num = Immunization.get_vaccines_administered(page, search, vaccine_id)
+            administered, next_num, prev_num, total = Immunization.get_vaccines_administered(page, search, vaccine_id)
             if administered:
                 return make_response(jsonify({
                     "previous_page": prev_num,
                     "next_page": next_num,
-                    "result": administered
+                    "result": administered,
+                    "total_count": total,
+                    "total_pages": math.ceil(total / PER_PAGE)
                 }), 200)
             else:
                 return make_response(jsonify({"result": []}), 200)
@@ -257,12 +299,14 @@ class PatientAppointmentsAPI(Resource):
             if user['role'] < 10:
                 raise UnAuthorizedException('You are not authorized')
 
-            appointments, next_num, prev_num = Appointment.get_appointment_by_patients(page, patient_id)
+            appointments, next_num, prev_num, total = Appointment.get_appointment_by_patients(page, patient_id)
             if appointments:
                 return make_response(jsonify({
                     "previous_page": prev_num,
                     "next_page": next_num,
-                    "result": appointments
+                    "result": appointments,
+                    "total_count": total,
+                    "total_pages": math.ceil(total / PER_PAGE)
                 }), 200)
             else:
                 return make_response(jsonify({"result": []}), 200)
@@ -283,12 +327,14 @@ class PatientImmunizationsAPI(Resource):
             if user['role'] < 10:
                 raise UnAuthorizedException('You are not authorized')
 
-            immunizations, next_num, prev_num = Immunization.get_immunization_by_patients(page, patient_id)
+            immunizations, next_num, prev_num, total = Immunization.get_immunization_by_patients(page, patient_id)
             if immunizations:
                 return make_response(jsonify({
                     "previous_page": prev_num,
                     "next_page": next_num,
-                    "result": immunizations
+                    "result": immunizations,
+                    "total_count": total,
+                    "total_pages": math.ceil(total / PER_PAGE)
                 }), 200)
             else:
                 return make_response(jsonify({"result": []}), 200)

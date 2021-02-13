@@ -1,8 +1,9 @@
+import math
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import make_response, request, jsonify
 from marshmallow import ValidationError
-from model import Provider, Practitioner, Immunization, Patient
+from model import Provider, Practitioner, Immunization, Patient, PER_PAGE
 from serializer import ImmunizationSchema
 from src.excecptions.app_exception import BadRequestException, UnAuthorizedException, ServerException
 
@@ -19,24 +20,27 @@ class ImmunizationAPI(Resource):
             user = get_jwt_identity()
 
             if user['role'] == 100:
-                immunization, next_num, prev_num = Immunization.get_all(page, search)
+                immunization, next_num, prev_num, total = Immunization.get_all(page, search)
 
             elif user['role'] == 50:
                 provider_id = Provider.get_by_email(user['email'])[0].provider_id
-                immunization, next_num, prev_num = Immunization.get_immunization_by_providers(page, search, provider_id)
+                immunization, next_num, prev_num, total = Immunization.get_immunization_by_providers(page, search,
+                                                                                                     provider_id)
             elif user['role'] == 10:
                 practitioner_id = Practitioner.get_by_email(user['email'])[0].practitioner_id
-                immunization, next_num, prev_num = Immunization.get_immunization_by_practitioners(page, search,
-                                                                                                  practitioner_id)
+                immunization, next_num, prev_num, total = Immunization.get_immunization_by_practitioners(page, search,
+                                                                                                         practitioner_id)
             else:
                 patient_id = Patient.get_by_email(user['email'])[0].patient_id
-                immunization, next_num, prev_num = Immunization.get_immunization_by_patients(page, patient_id)
+                immunization, next_num, prev_num, total = Immunization.get_immunization_by_patients(page, patient_id)
 
             if immunization:
                 return make_response(jsonify({
                     "previous_page": prev_num,
                     "next_page": next_num,
-                    "result": immunization
+                    "result": immunization,
+                    "total_count": total,
+                    "total_pages": math.ceil(total / PER_PAGE)
                 }), 200)
             else:
                 return make_response(jsonify({"result": []}), 200)
