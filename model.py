@@ -715,21 +715,30 @@ class Users(db.Model):
                 name = provider.name_tx
                 designation = 'Provider'
                 user_id = provider.provider_id
+                practitioner_name = None
+                provider_name = None
             elif role == 10:
                 practitioner = Practitioner.get_by_email(email)[0]
                 name = practitioner.first_name + " " + practitioner.last_name
                 designation = 'Practitioner'
                 user_id = practitioner.practitioner_id
+                practitioner_name = None
+                provider_name = Provider.get_one(practitioner.provider_id).name_tx
             elif role == 0:
                 patient = Patient.get_by_email(email)[0]
                 name = patient.first_name + " " + patient.last_name
                 designation = 'Patient'
                 user_id = patient.patient_id
+                temp = Practitioner.get_one(patient.practitioner_id)
+                practitioner_name = temp.first_name + " " + temp.last_name
+                provider_name = Provider.get_one(patient.provider_id).name_tx
             else:
                 name = 'Super User'
                 designation = 'Admin'
                 user_id = 1
-            return name, designation, user_id
+                practitioner_name = None
+                provider_name = None
+            return name, designation, user_id, practitioner_name, provider_name
         except ex.NoResultFound:
             raise Exception('No user found')
 

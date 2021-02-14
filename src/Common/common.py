@@ -17,9 +17,24 @@ class MenuAPI(Resource):
         try:
             user = get_jwt_identity()
             menu = RolePermission.get_permissions(user['role'])
-            name, designation, user_id = Users.get_name(user['role'], user['email'])
+            name, designation, user_id, practitioner_name, provider_name = Users.get_name(user['role'], user['email'])
             return make_response(jsonify({'menu': menu, 'data': {'name': name, 'designation': designation,
-                                                                 'role': user['role'], 'id': user_id}}), 200)
+                                                                 'role': user['role'], 'id': user_id,
+                                                                 'practitioner': practitioner_name, 'provider':
+                                                                     provider_name}}), 200)
+        except Exception as e:
+            raise ServerException('There is some error, please contact support')
+
+
+class PatientDetailAPI(Resource):
+
+    @jwt_required
+    def get(self, patient_id):
+        try:
+            patient = Patient.get_one(patient_id)
+            name = patient.first_name + " " + patient.last_name
+            return make_response(jsonify({'patient_id': patient.patient_id, 'patient_name': name,
+                                          'patient_email': patient.email_tx}), 200)
         except Exception as e:
             raise ServerException('There is some error, please contact support')
 

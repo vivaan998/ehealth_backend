@@ -9,7 +9,7 @@ from src.Vaccine.vaccines import VaccinesAPI
 from src.Authentication.authenticate import LoginAPI
 from src.Common.common import MenuAPI, GetPatientsAPI, GetPractitionersAPI, GetProvidersAPI, GetVaccinesAPI, \
     SuperuserPatientsAPI, SuperuserPractitionersAPI, PractitionerAppointmentAPI, PractitionerImmunizationAPI, \
-    PatientImmunizationsAPI, PatientAppointmentsAPI, VaccineAdministrationAPI, ProviderAppointmentsAPI
+    PatientImmunizationsAPI, PatientAppointmentsAPI, VaccineAdministrationAPI, ProviderAppointmentsAPI, PatientDetailAPI
 from src.Immunization.immunizations import ImmunizationAPI
 from src.Appointment.appointments import AppointmentsAPI
 from src.Vital.vitals import VitalsAPI
@@ -58,6 +58,7 @@ if __name__ == '__main__':
     api.add_resource(PatientImmunizationsAPI, '/api/v1/get-immunizations-patient/<patient_id>')
     api.add_resource(VaccineAdministrationAPI, '/api/v1/vaccine-administered-to/<vaccine_id>')
     api.add_resource(ProviderAppointmentsAPI, '/api/v1/get-appointments-provider/<provider_id>')
+    api.add_resource(PatientDetailAPI, '/api/v1/get-patient-detail/<patient_id>')
 
     @app.errorhandler(AppException)
     def app_error(err):

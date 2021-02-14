@@ -13,7 +13,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4NTgzMTUsIm5iZiI6MTYxMjg1ODMxNSwianRpIjoiZDc3YTE2Y2ItM2Y4Ni00NjUzLWIwY2UtNWVjZDUwNDFjMDhjIiwiZXhwIjoxNjEzNDYzMTE1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0meWLvQfe4VKewJktRaXebVOhiWiEdYkINHEmwuMPGw",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMyODkyMTcsIm5iZiI6MTYxMzI4OTIxNywianRpIjoiNmJlZTg0YmUtNjMyNy00YzQ2LTg5NzgtN2Y3MTUyOWY4MGM4IiwiZXhwIjoxNjEzODk0MDE3LCJpZGVudGl0eSI6eyJpZCI6MywiZW1haWwiOiJ2aXZla0BnbWFpbC5jb20iLCJyb2xlIjoxMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.UBmy_qDtsvAWMjv46lBW8OM0RX4wHQYK7oAX306xgfQ",
 							"type": "string"
 						}
 					]
@@ -44,7 +44,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"superadmin@gmail.com\",\n    \"password\": \"superadmin\"\n}",
+					"raw": "{\n    \"email\": \"vivek@gmail.com\",\n    \"password\": \"vivek\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1251,6 +1251,38 @@
 						"v1",
 						"get-appointments-provider",
 						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patient Details",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMxNDI4MjgsIm5iZiI6MTYxMzE0MjgyOCwianRpIjoiYTBiODc2ZmYtMzczYi00YjQ3LWE2NDUtMWJlNmQwOTM3NjhiIiwiZXhwIjoxNjEzNzQ3NjI4LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.QIhMIiPPXwHw2FhYLGsEoO8nLRQcQVALKvquCNHxvPI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/get-patient-detail/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"get-patient-detail",
+						"2"
 					]
 				}
 			},
