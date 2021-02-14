@@ -1,8 +1,11 @@
+import datetime
+from collections import OrderedDict
+
 import sqlalchemy.orm.exc as ex
 from sqlalchemy.sql import func
 from sqlalchemy.ext.declarative import declarative_base
 from config import db
-from sqlalchemy import or_, desc, asc
+from sqlalchemy import or_, desc, asc, extract
 from werkzeug.security import generate_password_hash, check_password_hash
 
 Base = declarative_base()
@@ -226,6 +229,10 @@ class Provider(db.Model):
     @staticmethod
     def get():
         return Provider.query.filter(Provider.active_fl == True).all()
+
+    @staticmethod
+    def get_provider():
+        return Provider.query.all()
 
     @staticmethod
     def get_by_email(provider_email):
@@ -464,6 +471,63 @@ class Immunization(db.Model):
         self.active_fl = 0
         self.update_dt = func.now()
         db.session.commit()
+
+    @staticmethod
+    def provider_immunization_chart():
+        query = db.session.query(Immunization.provider_id, func.count(Immunization.immunization_id)). \
+            group_by(Immunization.provider_id).all()
+
+        providers = [provider.provider_id for provider in Provider.get_provider()]
+        result = []
+
+        for q in query:
+            result.append({
+                "provider_id": q[0],
+                "provider": Provider.get_one(q[0]).name_tx,
+                "total_immunizations": q[1]
+            })
+            providers.remove(q[0])
+
+        for provider in providers:
+            result.append({
+                "provider_id": provider,
+                "provider": Provider.get_one(provider).name_tx,
+                "total_immunizations": 0
+            })
+        result.sort(key=lambda x: x['provider'])
+        return result
+
+    @staticmethod
+    def monthly_immunization_chart():
+        date_today = datetime.datetime.now()
+        expiry = date_today - datetime.timedelta(days=365)
+        calendar_dict = OrderedDict(((expiry + datetime.timedelta(_)).strftime("%Y-%b"), 0)
+                                    for _ in range((date_today - expiry).days))
+
+        query = db.session.query(extract('month', Immunization.administered_dt),
+                                 extract('year', Immunization.administered_dt),
+                                 func.count(Immunization.immunization_id)). \
+            filter(Immunization.administered_dt >= expiry). \
+            group_by(extract('month', Immunization.administered_dt),
+                     extract('year', Immunization.administered_dt)).all()
+
+        result = []
+        for q in query:
+            month = datetime.date(year=int(q[1]), month=int(q[0]), day=1).strftime("%Y-%b")
+            result.append({
+                "month": month,
+                "total_immunizations": int(q[2])
+            })
+            calendar_dict.pop(month)
+
+        for key, value in calendar_dict.items():
+            result.append({
+                "month": key,
+                "total_immunizations": value
+            })
+
+        result.sort(key=lambda x: datetime.datetime.strptime(x['month'], '%Y-%b'))
+        return result
 
     @staticmethod
     def get_all(page, search):
