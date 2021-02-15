@@ -12,7 +12,7 @@ from src.Common.common import MenuAPI, GetPatientsAPI, GetPractitionersAPI, GetP
     PatientImmunizationsAPI, PatientAppointmentsAPI, VaccineAdministrationAPI, ProviderAppointmentsAPI, PatientDetailAPI
 from src.Immunization.immunizations import ImmunizationAPI
 from src.Appointment.appointments import AppointmentsAPI
-from src.Dashboard.dashboard import ProviderImmunizationChart, MonthlyImmunizationChart
+from src.Dashboard.dashboard import ProviderImmunizationChart, MonthlyImmunizationChart, WeeklyAppointmentChart
 from src.Vital.vitals import VitalsAPI
 from flask_restful import Api
 from flask_cors import CORS
@@ -62,6 +62,7 @@ if __name__ == '__main__':
     api.add_resource(PatientDetailAPI, '/api/v1/get-patient-detail/<patient_id>')
     api.add_resource(ProviderImmunizationChart, '/api/v1/provider-immunizations/')
     api.add_resource(MonthlyImmunizationChart, '/api/v1/monthly-immunizations/')
+    api.add_resource(WeeklyAppointmentChart, '/api/v1/weekly-appointments/')
 
     @app.errorhandler(AppException)
     def app_error(err):

@@ -1349,6 +1349,38 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Weekly Appointments",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMyODkyMTcsIm5iZiI6MTYxMzI4OTIxNywianRpIjoiNmJlZTg0YmUtNjMyNy00YzQ2LTg5NzgtN2Y3MTUyOWY4MGM4IiwiZXhwIjoxNjEzODk0MDE3LCJpZGVudGl0eSI6eyJpZCI6MywiZW1haWwiOiJ2aXZla0BnbWFpbC5jb20iLCJyb2xlIjoxMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.UBmy_qDtsvAWMjv46lBW8OM0RX4wHQYK7oAX306xgfQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/weekly-appointments/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"weekly-appointments",
+						""
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

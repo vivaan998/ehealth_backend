@@ -442,6 +442,46 @@ class Appointment(db.Model):
     def get_one(appointment_id):
         return Appointment.query.get(appointment_id)
 
+    @staticmethod
+    def appointments_chart():
+        date_today = datetime.datetime.now()
+        week_1 = date_today + datetime.timedelta(weeks=1)
+        week_2 = date_today + datetime.timedelta(weeks=2)
+        week_3 = date_today + datetime.timedelta(weeks=3)
+        week_4 = date_today + datetime.timedelta(weeks=4)
+        week_5 = date_today + datetime.timedelta(weeks=5)
+        week_6 = date_today + datetime.timedelta(weeks=6)
+        last_week = date_today + datetime.timedelta(weeks=7)
+
+        week_dict = {
+            1: week_1,
+            2: week_2,
+            3: week_3,
+            4: week_4,
+            5: week_5,
+            6: week_6,
+        }
+
+        result = []
+
+        for key, value in week_dict.items():
+            if key == 1:
+                query = db.session.query(Appointment).filter\
+                (Appointment.appointment_date >= date_today, Appointment.appointment_date <= week_dict[key]).count()
+            elif key != 6:
+                query = db.session.query(Appointment).filter\
+                (Appointment.appointment_date >= week_dict[key], Appointment.appointment_date <= week_dict[key+1]).count()
+            else:
+                query = db.session.query(Appointment).filter\
+                (Appointment.appointment_date >= week_dict[key], Appointment.appointment_date <= last_week).count()
+		
+            result.append({
+                "Week": key,
+                "total_appointments": query
+            })
+
+        return result
+
 
 class Immunization(db.Model):
     __tablename__ = 'Immunization'
