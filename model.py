@@ -462,6 +462,16 @@ class Appointment(db.Model):
             6: week_6,
         }
 
+        name = {
+            1:'Week-1',
+            2:'Week-2',
+            3:'Week-3',
+            4:'Week-4',
+            5:'Week-5',
+            6:'Week-6',
+            7:'Week-7'
+        }
+
         result = []
 
         for key, value in week_dict.items():
@@ -476,7 +486,7 @@ class Appointment(db.Model):
                 (Appointment.appointment_date >= week_dict[key], Appointment.appointment_date <= last_week).count()
 		
             result.append({
-                "Week": key,
+                "Week": name[key],
                 "total_appointments": query
             })
 
