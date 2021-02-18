@@ -1,0 +1,1386 @@
+{
+	"info": {
+		"_postman_id": "f65f7c4e-d141-4a1f-bcdf-6e90b0c9308f",
+		"name": "eHealth",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Menu Listing",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMyODkyMTcsIm5iZiI6MTYxMzI4OTIxNywianRpIjoiNmJlZTg0YmUtNjMyNy00YzQ2LTg5NzgtN2Y3MTUyOWY4MGM4IiwiZXhwIjoxNjEzODk0MDE3LCJpZGVudGl0eSI6eyJpZCI6MywiZW1haWwiOiJ2aXZla0BnbWFpbC5jb20iLCJyb2xlIjoxMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.UBmy_qDtsvAWMjv46lBW8OM0RX4wHQYK7oAX306xgfQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/auth/menu",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"menu"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login and authenticate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"vivek@gmail.com\",\n    \"password\": \"vivek\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Provider",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4NTgzMTUsIm5iZiI6MTYxMjg1ODMxNSwianRpIjoiZDc3YTE2Y2ItM2Y4Ni00NjUzLWIwY2UtNWVjZDUwNDFjMDhjIiwiZXhwIjoxNjEzNDYzMTE1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0meWLvQfe4VKewJktRaXebVOhiWiEdYkINHEmwuMPGw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"KD Hospital\",\n    \"email\": \"kdadmin@gmail.com\",\n    \"password\": \"kdadmin\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/providers/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"providers",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Providers",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMxNDI4MjgsIm5iZiI6MTYxMzE0MjgyOCwianRpIjoiYTBiODc2ZmYtMzczYi00YjQ3LWE2NDUtMWJlNmQwOTM3NjhiIiwiZXhwIjoxNjEzNzQ3NjI4LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.QIhMIiPPXwHw2FhYLGsEoO8nLRQcQVALKvquCNHxvPI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/providers/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"providers",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Practitioners",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMxNDI4MjgsIm5iZiI6MTYxMzE0MjgyOCwianRpIjoiYTBiODc2ZmYtMzczYi00YjQ3LWE2NDUtMWJlNmQwOTM3NjhiIiwiZXhwIjoxNjEzNzQ3NjI4LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.QIhMIiPPXwHw2FhYLGsEoO8nLRQcQVALKvquCNHxvPI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/practitioners/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"practitioners",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Practitioners",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI2ODMzMjMsIm5iZiI6MTYxMjY4MzMyMywianRpIjoiNmNkMjc3YjgtYjA4Ny00MDUwLWFmYjEtMzcxNTdiM2M3ZmE4IiwiZXhwIjoxNjEzMjg4MTIzLCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.aHNPk7wtvY5_0HhkNsIZtHHh-wGwjKQh1CokFgIcqIs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"first_name\": \"Khushi\",\n    \"last_name\": \"Nathani\",\n    \"email_tx\": \"khusi@gmail.com\",\n    \"ic_card_tx\": \"BASC-0910-a00CD\",\n    \"provider_id\": 3,\n    \"doctor_fl\": 0,\n    \"password\": \"khusi\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/practitioners/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"practitioners",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Patients",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4NTgzMTUsIm5iZiI6MTYxMjg1ODMxNSwianRpIjoiZDc3YTE2Y2ItM2Y4Ni00NjUzLWIwY2UtNWVjZDUwNDFjMDhjIiwiZXhwIjoxNjEzNDYzMTE1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0meWLvQfe4VKewJktRaXebVOhiWiEdYkINHEmwuMPGw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/patients/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"patients",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Patient",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMwMjU0OTQsIm5iZiI6MTYxMzAyNTQ5NCwianRpIjoiMjA2MTk5ZDAtOGRjMy00ODE3LTk4ZjctNjNkMzUzNTk2ODQxIiwiZXhwIjoxNjEzNjMwMjk0LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.KZ1mtU4gSZo-e_3F37TLTyhQQEcwuDqB33_QxNsWDsg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"first_name\": \"Jayesh\",\n    \"last_name\": \"Parmar\",\n    \"email_tx\": \"jayesh@gmail.com\",\n    \"ic_card_tx\": \"123z-ab23-scs23a\",\n    \"provider_id\": 4,\n    \"practitioner_id\": 9,\n    \"password\": \"jayesh\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/patients/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"patients",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Vaccine",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4NTgzMTUsIm5iZiI6MTYxMjg1ODMxNSwianRpIjoiZDc3YTE2Y2ItM2Y4Ni00NjUzLWIwY2UtNWVjZDUwNDFjMDhjIiwiZXhwIjoxNjEzNDYzMTE1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0meWLvQfe4VKewJktRaXebVOhiWiEdYkINHEmwuMPGw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name_tx\": \"Covaxin\",\n    \"doses_required\": 3,\n    \"description_tx\": \"Indian vaccine to shield corona\"\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/vaccines/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"vaccines",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Vaccines",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4NTgzMTUsIm5iZiI6MTYxMjg1ODMxNSwianRpIjoiZDc3YTE2Y2ItM2Y4Ni00NjUzLWIwY2UtNWVjZDUwNDFjMDhjIiwiZXhwIjoxNjEzNDYzMTE1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0meWLvQfe4VKewJktRaXebVOhiWiEdYkINHEmwuMPGw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/vaccines/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"vaccines",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Providers",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4Njk3MDksIm5iZiI6MTYxMjg2OTcwOSwianRpIjoiZGNiYWQyNDQtNGM3YS00MzMyLWEwYzUtODU3NTNmNDVhNTU1IiwiZXhwIjoxNjEzNDc0NTA5LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.008vd69JXQVhyFtXQHd863GTbatj_E-5j8Q-5XNpZvA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/get-providers/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"get-providers",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Practitioners of Provider",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4Njk3MDksIm5iZiI6MTYxMjg2OTcwOSwianRpIjoiZGNiYWQyNDQtNGM3YS00MzMyLWEwYzUtODU3NTNmNDVhNTU1IiwiZXhwIjoxNjEzNDc0NTA5LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.008vd69JXQVhyFtXQHd863GTbatj_E-5j8Q-5XNpZvA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/get-practitioners/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"get-practitioners",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Patients of Practitioner",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4Njk3MDksIm5iZiI6MTYxMjg2OTcwOSwianRpIjoiZGNiYWQyNDQtNGM3YS00MzMyLWEwYzUtODU3NTNmNDVhNTU1IiwiZXhwIjoxNjEzNDc0NTA5LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.008vd69JXQVhyFtXQHd863GTbatj_E-5j8Q-5XNpZvA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/get-patients/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"get-patients",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Superuser Practitioners",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMwMjU0OTQsIm5iZiI6MTYxMzAyNTQ5NCwianRpIjoiMjA2MTk5ZDAtOGRjMy00ODE3LTk4ZjctNjNkMzUzNTk2ODQxIiwiZXhwIjoxNjEzNjMwMjk0LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.KZ1mtU4gSZo-e_3F37TLTyhQQEcwuDqB33_QxNsWDsg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/super-user-practitioner/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"super-user-practitioner",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Superuser Patients",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMwMjU0OTQsIm5iZiI6MTYxMzAyNTQ5NCwianRpIjoiMjA2MTk5ZDAtOGRjMy00ODE3LTk4ZjctNjNkMzUzNTk2ODQxIiwiZXhwIjoxNjEzNjMwMjk0LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.KZ1mtU4gSZo-e_3F37TLTyhQQEcwuDqB33_QxNsWDsg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/super-user-patients/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"super-user-patients",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Vaccines",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMwMjU0OTQsIm5iZiI6MTYxMzAyNTQ5NCwianRpIjoiMjA2MTk5ZDAtOGRjMy00ODE3LTk4ZjctNjNkMzUzNTk2ODQxIiwiZXhwIjoxNjEzNjMwMjk0LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.KZ1mtU4gSZo-e_3F37TLTyhQQEcwuDqB33_QxNsWDsg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/get-vaccines/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"get-vaccines",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Immunization",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMwNDIzNTAsIm5iZiI6MTYxMzA0MjM1MCwianRpIjoiOGUwNjFmZTEtMmEyMi00YmYyLWFhZDQtZGNlMTc5YmQ3NDQ1IiwiZXhwIjoxNjEzNjQ3MTUwLCJpZGVudGl0eSI6eyJpZCI6NiwiZW1haWwiOiJvbW5hdGhhbmlAZ21haWwuY29tIiwicm9sZSI6MH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.xO1n7_WF52J9LLWk3tQnIhHJqA2z2SGBwKE3WErfngg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"patient_id\": 5,\n    \"practitioner_id\": 2,\n    \"provider_id\": 1,\n    \"vaccine_id\": 1,\n    \"administered_dt\": \"2021-02-11 15:53:10.579394\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/immunizations/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"immunizations",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Immunizations",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4NTgzMTUsIm5iZiI6MTYxMjg1ODMxNSwianRpIjoiZDc3YTE2Y2ItM2Y4Ni00NjUzLWIwY2UtNWVjZDUwNDFjMDhjIiwiZXhwIjoxNjEzNDYzMTE1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0meWLvQfe4VKewJktRaXebVOhiWiEdYkINHEmwuMPGw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/immunizations/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"immunizations",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Archive Patient",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4NTgzMTUsIm5iZiI6MTYxMjg1ODMxNSwianRpIjoiZDc3YTE2Y2ItM2Y4Ni00NjUzLWIwY2UtNWVjZDUwNDFjMDhjIiwiZXhwIjoxNjEzNDYzMTE1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0meWLvQfe4VKewJktRaXebVOhiWiEdYkINHEmwuMPGw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"patient_id\": 14\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/patients/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"patients",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Archive Practitioner",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4NTgzMTUsIm5iZiI6MTYxMjg1ODMxNSwianRpIjoiZDc3YTE2Y2ItM2Y4Ni00NjUzLWIwY2UtNWVjZDUwNDFjMDhjIiwiZXhwIjoxNjEzNDYzMTE1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0meWLvQfe4VKewJktRaXebVOhiWiEdYkINHEmwuMPGw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"practitioner_id\": 13\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/practitioners/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"practitioners",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Archive Provider",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4NTgzMTUsIm5iZiI6MTYxMjg1ODMxNSwianRpIjoiZDc3YTE2Y2ItM2Y4Ni00NjUzLWIwY2UtNWVjZDUwNDFjMDhjIiwiZXhwIjoxNjEzNDYzMTE1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0meWLvQfe4VKewJktRaXebVOhiWiEdYkINHEmwuMPGw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"provider_id\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/providers/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"providers",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Archive Immunization",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4NTgzMTUsIm5iZiI6MTYxMjg1ODMxNSwianRpIjoiZDc3YTE2Y2ItM2Y4Ni00NjUzLWIwY2UtNWVjZDUwNDFjMDhjIiwiZXhwIjoxNjEzNDYzMTE1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0meWLvQfe4VKewJktRaXebVOhiWiEdYkINHEmwuMPGw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"immunization_id\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/immunizations/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"immunizations",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Archive Vacccine",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4NTgzMTUsIm5iZiI6MTYxMjg1ODMxNSwianRpIjoiZDc3YTE2Y2ItM2Y4Ni00NjUzLWIwY2UtNWVjZDUwNDFjMDhjIiwiZXhwIjoxNjEzNDYzMTE1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0meWLvQfe4VKewJktRaXebVOhiWiEdYkINHEmwuMPGw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vaccine_id\": 5\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/vaccines/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"vaccines",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Appointment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMwNjA4MDYsIm5iZiI6MTYxMzA2MDgwNiwianRpIjoiYmM3MmUxMDAtZDc2Ni00YWQ5LWI3MWEtN2IyMmZiMzhiZTIzIiwiZXhwIjoxNjEzNjY1NjA2LCJpZGVudGl0eSI6eyJpZCI6MywiZW1haWwiOiJ2aXZla0BnbWFpbC5jb20iLCJyb2xlIjoxMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.WR0OsBbeGwAx03Y4CHO9A96ey7RJjLfKRYCdnRtDfUY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"provider_id\": null,\n    \"practitioner_id\": null,\n    \"patient_id\": 3,\n    \"appointment_date\": \"2021-02-18 21:57:48.632915\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/appointments/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"appointments",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Appointments",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4NTgzMTUsIm5iZiI6MTYxMjg1ODMxNSwianRpIjoiZDc3YTE2Y2ItM2Y4Ni00NjUzLWIwY2UtNWVjZDUwNDFjMDhjIiwiZXhwIjoxNjEzNDYzMTE1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0meWLvQfe4VKewJktRaXebVOhiWiEdYkINHEmwuMPGw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/appointments/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"appointments",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Archive Appointment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4NTgzMTUsIm5iZiI6MTYxMjg1ODMxNSwianRpIjoiZDc3YTE2Y2ItM2Y4Ni00NjUzLWIwY2UtNWVjZDUwNDFjMDhjIiwiZXhwIjoxNjEzNDYzMTE1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0meWLvQfe4VKewJktRaXebVOhiWiEdYkINHEmwuMPGw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"appointment_id\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/appointments/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"appointments",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Vitals",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4NTgzMTUsIm5iZiI6MTYxMjg1ODMxNSwianRpIjoiZDc3YTE2Y2ItM2Y4Ni00NjUzLWIwY2UtNWVjZDUwNDFjMDhjIiwiZXhwIjoxNjEzNDYzMTE1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0meWLvQfe4VKewJktRaXebVOhiWiEdYkINHEmwuMPGw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/vitals/?patient_id=4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"vitals",
+						""
+					],
+					"query": [
+						{
+							"key": "patient_id",
+							"value": "4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Vital",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMxMTgxODYsIm5iZiI6MTYxMzExODE4NiwianRpIjoiNWQ5YTJmZmItMGQyMi00Y2ExLTlhZTgtNjUxMjhiZDNkZjI5IiwiZXhwIjoxNjEzNzIyOTg2LCJpZGVudGl0eSI6eyJpZCI6MTEsImVtYWlsIjoiYXBwb2xvYWRtaW5AZ21haWwuY29tIiwicm9sZSI6NTB9LCJmcmVzaCI6ZmFsc2UsInR5cGUiOiJhY2Nlc3MifQ.nL8PLaLc5OyabMxypP0RJ3m8DbGyYNe-th1422eP7wY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"provider_id\": null,\n    \"practitioner_id\": 5,\n    \"patient_id\": 4,\n    \"bp_systolic\": \"0.22\",\n    \"bp_diastolic\": \"1.23\",\n    \"body_temp\": \"90.0F\",\n    \"heart_rate\": \"78\",\n    \"memo\": \"First Vital\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/vitals/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"vitals",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Archive Vital",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTI4NTgzMTUsIm5iZiI6MTYxMjg1ODMxNSwianRpIjoiZDc3YTE2Y2ItM2Y4Ni00NjUzLWIwY2UtNWVjZDUwNDFjMDhjIiwiZXhwIjoxNjEzNDYzMTE1LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.0meWLvQfe4VKewJktRaXebVOhiWiEdYkINHEmwuMPGw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vital_id\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/vitals/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"vitals",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Appointments of given practitioner",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMxMTgxODYsIm5iZiI6MTYxMzExODE4NiwianRpIjoiNWQ5YTJmZmItMGQyMi00Y2ExLTlhZTgtNjUxMjhiZDNkZjI5IiwiZXhwIjoxNjEzNzIyOTg2LCJpZGVudGl0eSI6eyJpZCI6MTEsImVtYWlsIjoiYXBwb2xvYWRtaW5AZ21haWwuY29tIiwicm9sZSI6NTB9LCJmcmVzaCI6ZmFsc2UsInR5cGUiOiJhY2Nlc3MifQ.nL8PLaLc5OyabMxypP0RJ3m8DbGyYNe-th1422eP7wY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/get-appointments-practitioner/12",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"get-appointments-practitioner",
+						"12"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Appointment of given patient",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMxMTgxODYsIm5iZiI6MTYxMzExODE4NiwianRpIjoiNWQ5YTJmZmItMGQyMi00Y2ExLTlhZTgtNjUxMjhiZDNkZjI5IiwiZXhwIjoxNjEzNzIyOTg2LCJpZGVudGl0eSI6eyJpZCI6MTEsImVtYWlsIjoiYXBwb2xvYWRtaW5AZ21haWwuY29tIiwicm9sZSI6NTB9LCJmcmVzaCI6ZmFsc2UsInR5cGUiOiJhY2Nlc3MifQ.nL8PLaLc5OyabMxypP0RJ3m8DbGyYNe-th1422eP7wY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/get-appointments-patient/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"get-appointments-patient",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Immunization of given patient",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMxMTgxODYsIm5iZiI6MTYxMzExODE4NiwianRpIjoiNWQ5YTJmZmItMGQyMi00Y2ExLTlhZTgtNjUxMjhiZDNkZjI5IiwiZXhwIjoxNjEzNzIyOTg2LCJpZGVudGl0eSI6eyJpZCI6MTEsImVtYWlsIjoiYXBwb2xvYWRtaW5AZ21haWwuY29tIiwicm9sZSI6NTB9LCJmcmVzaCI6ZmFsc2UsInR5cGUiOiJhY2Nlc3MifQ.nL8PLaLc5OyabMxypP0RJ3m8DbGyYNe-th1422eP7wY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/get-immunizations-patient/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"get-immunizations-patient",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Immunization of given practitioner",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMxMTgxODYsIm5iZiI6MTYxMzExODE4NiwianRpIjoiNWQ5YTJmZmItMGQyMi00Y2ExLTlhZTgtNjUxMjhiZDNkZjI5IiwiZXhwIjoxNjEzNzIyOTg2LCJpZGVudGl0eSI6eyJpZCI6MTEsImVtYWlsIjoiYXBwb2xvYWRtaW5AZ21haWwuY29tIiwicm9sZSI6NTB9LCJmcmVzaCI6ZmFsc2UsInR5cGUiOiJhY2Nlc3MifQ.nL8PLaLc5OyabMxypP0RJ3m8DbGyYNe-th1422eP7wY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/get-immunizations-practitioner/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"get-immunizations-practitioner",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vaccine administered to",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMxNDI4MjgsIm5iZiI6MTYxMzE0MjgyOCwianRpIjoiYTBiODc2ZmYtMzczYi00YjQ3LWE2NDUtMWJlNmQwOTM3NjhiIiwiZXhwIjoxNjEzNzQ3NjI4LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.QIhMIiPPXwHw2FhYLGsEoO8nLRQcQVALKvquCNHxvPI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/vaccine-administered-to/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"vaccine-administered-to",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Appointments of a given provider",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMxNDI4MjgsIm5iZiI6MTYxMzE0MjgyOCwianRpIjoiYTBiODc2ZmYtMzczYi00YjQ3LWE2NDUtMWJlNmQwOTM3NjhiIiwiZXhwIjoxNjEzNzQ3NjI4LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.QIhMIiPPXwHw2FhYLGsEoO8nLRQcQVALKvquCNHxvPI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/get-appointments-provider/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"get-appointments-provider",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patient Details",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMxNDI4MjgsIm5iZiI6MTYxMzE0MjgyOCwianRpIjoiYTBiODc2ZmYtMzczYi00YjQ3LWE2NDUtMWJlNmQwOTM3NjhiIiwiZXhwIjoxNjEzNzQ3NjI4LCJpZGVudGl0eSI6eyJpZCI6MSwiZW1haWwiOiJzdXBlcmFkbWluQGdtYWlsLmNvbSIsInJvbGUiOjEwMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.QIhMIiPPXwHw2FhYLGsEoO8nLRQcQVALKvquCNHxvPI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/get-patient-detail/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"get-patient-detail",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Proivder Immunization Chart",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMyODkyMTcsIm5iZiI6MTYxMzI4OTIxNywianRpIjoiNmJlZTg0YmUtNjMyNy00YzQ2LTg5NzgtN2Y3MTUyOWY4MGM4IiwiZXhwIjoxNjEzODk0MDE3LCJpZGVudGl0eSI6eyJpZCI6MywiZW1haWwiOiJ2aXZla0BnbWFpbC5jb20iLCJyb2xlIjoxMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.UBmy_qDtsvAWMjv46lBW8OM0RX4wHQYK7oAX306xgfQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/api/v1/provider-immunizations/",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"provider-immunizations",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Montly Immunizations",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMyODkyMTcsIm5iZiI6MTYxMzI4OTIxNywianRpIjoiNmJlZTg0YmUtNjMyNy00YzQ2LTg5NzgtN2Y3MTUyOWY4MGM4IiwiZXhwIjoxNjEzODk0MDE3LCJpZGVudGl0eSI6eyJpZCI6MywiZW1haWwiOiJ2aXZla0BnbWFpbC5jb20iLCJyb2xlIjoxMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.UBmy_qDtsvAWMjv46lBW8OM0RX4wHQYK7oAX306xgfQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/api/v1/monthly-immunizations/",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"monthly-immunizations",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Weekly Appointments",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MTMyODkyMTcsIm5iZiI6MTYxMzI4OTIxNywianRpIjoiNmJlZTg0YmUtNjMyNy00YzQ2LTg5NzgtN2Y3MTUyOWY4MGM4IiwiZXhwIjoxNjEzODk0MDE3LCJpZGVudGl0eSI6eyJpZCI6MywiZW1haWwiOiJ2aXZla0BnbWFpbC5jb20iLCJyb2xlIjoxMH0sImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.UBmy_qDtsvAWMjv46lBW8OM0RX4wHQYK7oAX306xgfQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/v1/weekly-appointments/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"weekly-appointments",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
