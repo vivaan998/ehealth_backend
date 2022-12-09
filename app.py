@@ -8,9 +8,11 @@ from src.Patient.patients import PatientsAPI
 from src.Vaccine.vaccines import VaccinesAPI
 from src.Authentication.authenticate import LoginAPI
 from src.Common.common import MenuAPI, GetPatientsAPI, GetPractitionersAPI, GetProvidersAPI, GetVaccinesAPI, \
-    SuperuserPatientsAPI, SuperuserPractitionersAPI
+    SuperuserPatientsAPI, SuperuserPractitionersAPI, PractitionerAppointmentAPI, PractitionerImmunizationAPI, \
+    PatientImmunizationsAPI, PatientAppointmentsAPI, VaccineAdministrationAPI, ProviderAppointmentsAPI, PatientDetailAPI
 from src.Immunization.immunizations import ImmunizationAPI
 from src.Appointment.appointments import AppointmentsAPI
+from src.Vital.vitals import VitalsAPI
 from flask_restful import Api
 from flask_cors import CORS
 
@@ -23,13 +25,13 @@ def create_app():
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = POSTGRES_DB_URL
     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     flask_app.config['JWT_SECRET_KEY'] = 't1NP63m4wnBg6nyHYKfmc2TpCOGI4nss'
+    db.init_app(flask_app)
 
     return flask_app
 
 
 if __name__ == '__main__':
     app = create_app()
-    db.init_app(app)
     jwt = JWTManager(app)
     api = Api(app)
     cors = CORS(app)
@@ -49,6 +51,14 @@ if __name__ == '__main__':
     api.add_resource(SuperuserPatientsAPI, '/api/v1/super-user-patients/<practitioner_id>')
     api.add_resource(ImmunizationAPI, '/api/v1/immunizations/', endpoint='immunizations')
     api.add_resource(AppointmentsAPI, '/api/v1/appointments/', endpoint='appointments')
+    api.add_resource(VitalsAPI, '/api/v1/vitals/', endpoint='vitals')
+    api.add_resource(PractitionerAppointmentAPI, '/api/v1/get-appointments-practitioner/<practitioner_id>')
+    api.add_resource(PractitionerImmunizationAPI, '/api/v1/get-immunizations-practitioner/<practitioner_id>')
+    api.add_resource(PatientAppointmentsAPI, '/api/v1/get-appointments-patient/<patient_id>')
+    api.add_resource(PatientImmunizationsAPI, '/api/v1/get-immunizations-patient/<patient_id>')
+    api.add_resource(VaccineAdministrationAPI, '/api/v1/vaccine-administered-to/<vaccine_id>')
+    api.add_resource(ProviderAppointmentsAPI, '/api/v1/get-appointments-provider/<provider_id>')
+    api.add_resource(PatientDetailAPI, '/api/v1/get-patient-detail/<patient_id>')
 
     @app.errorhandler(AppException)
     def app_error(err):

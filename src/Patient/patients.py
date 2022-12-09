@@ -1,8 +1,9 @@
+import math
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import make_response, request, jsonify
 from marshmallow import ValidationError
-from model import Users, Practitioner, Patient, Provider
+from model import Users, Practitioner, Patient, Provider, PER_PAGE
 from serializer import PatientSchema, UsersSchema
 from config import PATIENT
 from src.excecptions.app_exception import BadRequestException, UnAuthorizedException, ServerException
@@ -35,10 +36,12 @@ class PatientsAPI(Resource):
                 return make_response(jsonify({
                     "previous_page": patients.prev_num,
                     "next_page": patients.next_num,
-                    "result": PATIENTS_SCHEMA.dump(patients.items, many=True)
+                    "result": PATIENTS_SCHEMA.dump(patients.items, many=True),
+                    "total_count": patients.total,
+                    "total_pages": math.ceil(patients.total / PER_PAGE)
                 }), 200)
             else:
-                return make_response(jsonify([]), 200)
+                return make_response(jsonify({"result": []}), 200)
 
         except UnAuthorizedException as e:
             raise UnAuthorizedException(e.error)

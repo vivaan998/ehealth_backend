@@ -2,10 +2,11 @@ from flask_restful import Resource
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import make_response, request, jsonify
 from marshmallow import ValidationError
-from model import Users, Practitioner, Provider
+from model import Users, Practitioner, Provider, PER_PAGE
 from serializer import PractitionerSchema, UsersSchema
 from config import PRACTITIONER
 from src.excecptions.app_exception import BadRequestException, UnAuthorizedException, ServerException
+import math
 
 PRACTITIONERS_SCHEMA = PractitionerSchema()
 USER_SCHEMA = UsersSchema()
@@ -32,10 +33,12 @@ class PractitionersAPI(Resource):
                 return make_response(jsonify({
                     "previous_page": practitioners.prev_num,
                     "next_page": practitioners.next_num,
-                    "result": PRACTITIONERS_SCHEMA.dump(practitioners.items, many=True)
+                    "result": PRACTITIONERS_SCHEMA.dump(practitioners.items, many=True),
+                    "total_count": practitioners.total,
+                    "total_pages": math.ceil(practitioners.total/PER_PAGE)
                 }), 200)
             else:
-                return make_response(jsonify([]), 200)
+                return make_response(jsonify({"result": []}), 200)
 
         except UnAuthorizedException as e:
             raise UnAuthorizedException(e.error)

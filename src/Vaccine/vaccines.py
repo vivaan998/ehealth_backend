@@ -1,11 +1,12 @@
+import math
+
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import make_response, request, jsonify
 from marshmallow import ValidationError
-from model import Vaccine
+from model import Vaccine, PER_PAGE
 from serializer import VaccineSchema
 from src.excecptions.app_exception import BadRequestException, UnAuthorizedException, ServerException
-from src.excecptions.pagination import pagination
 
 VACCINE_SCHEMA = VaccineSchema()
 
@@ -27,10 +28,12 @@ class VaccinesAPI(Resource):
                 return make_response(jsonify({
                     "previous_page": vaccines.prev_num,
                     "next_page": vaccines.next_num,
-                    "result": VACCINE_SCHEMA.dump(vaccines.items, many=True)
+                    "result": VACCINE_SCHEMA.dump(vaccines.items, many=True),
+                    "total_count": vaccines.total,
+                    "total_pages": math.ceil(vaccines.total / PER_PAGE)
                 }), 200)
             else:
-                return make_response(jsonify([]), 200)
+                return make_response(jsonify({"result": []}), 200)
 
         except UnAuthorizedException as e:
             raise UnAuthorizedException(e.error)
