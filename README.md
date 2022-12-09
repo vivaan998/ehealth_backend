@@ -33,7 +33,7 @@ This Project is developed using **Flask** and **SQLAlchemy**.
 Clone the repository:
 
 ```
-$ https://gitlab.com/harshil.99/ehealth_backend.git
+$ https://github.com/<user_name>/ehealth_backend.git
 ```
 
 Installing the Requirements::
